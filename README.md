@@ -1,6 +1,6 @@
 # My Personal Website
 
-This is a showcase of my work as a Garrett.
+This is a showcase of my work as Garrett.
 
 ### Structure
 * index.html: Main page
