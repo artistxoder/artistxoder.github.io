@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #0f0f0f;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#gameCanvas {
+    border: 2px solid #00ff00;
+    background: repeating-linear-gradient(
+        0deg,
+        #0f0f0f,
+        #0f0f0f 10px,
+        #0d0d0d 10px,
+        #0d0d0d 20px
+    );
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
+}
