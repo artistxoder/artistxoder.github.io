@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raspberry Pi Pico 2 OLED Project Code</title>
+<style>
+  body {
+    font-family: "Courier New", monospace;
+    background-color: #0d0d0d;
+    color: #00ff00;
+    margin: 20px;
+  }
+  h1, h2, h3, p {
+    color: #00ff00;
+  }
+  ul {
+    color: #00ff00;
+  }
+  pre {
+    background-color: #1a1a1a;
+    color: #00ff00;
+    padding: 10px;
+    border: 1px solid #333333;
+    overflow-x: auto;
+  }
+  .credit {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #33cc33;
+  }
+  .pico-image {
+    margin-top: 20px;
+    border: 2px solid #00ff00;
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
+
+<h1>Raspberry Pi Pico 2 Project Code and Wiring Instructions</h1>
+
+<h2>Instructions</h2>
+<p>Use this code to display "Welcome to Coding" on an OLED connected to a Raspberry Pi Pico 2. The code also reads values from a DHT11 temperature and humidity sensor and an MQ gas sensor.</p>
+
+<h3>Wiring Instructions</h3>
+<ul>
+  <li>Connect <strong>3.3V</strong> of the Pico to the <strong>+ (VCC)</strong> rail on the breadboard.</li>
+  <li>Connect <strong>GND</strong> of the Pico to the <strong>- (GND)</strong> rail on the breadboard.</li>
+  <li>OLED Display:
+    <ul>
+      <li><strong>SDA</strong> to <strong>GP4</strong> on the Pico.</li>
+      <li><strong>SCL</strong> to <strong>GP5</strong> on the Pico.</li>
+      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
+      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
+    </ul>
+  </li>
+  <li>DHT11 Sensor:
+    <ul>
+      <li><strong>Data</strong> to <strong>GP28</strong> on the Pico.</li>
+      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
+      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
+    </ul>
+  </li>
+  <li>MQ Sensor:
+    <ul>
+      <li><strong>A0</strong> to <strong>GP26</strong> on the Pico.</li>
+      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
+      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Code for Raspberry Pi Pico 2</h2>
+<p>Copy the code below into the Arduino IDE and upload it to your Raspberry Pi Pico 2:</p>
+
+<pre>
+#include &lt;U8g2lib.h&gt;
+#include &lt;DHT.h&gt;
+
+// Define sensor pins
+#define MQ_PIN 26      // Analog pin for MQ sensor
+#define DHT_PIN 28     // Digital pin for DHT11 sensor
+
+// Initialize U8g2 for the OLED display
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE); // Adjust based on your OLED type
+
+// DHT sensor settings
+DHT dht(DHT_PIN, DHT11); // Initialize DHT11, change to DHT22 if necessary
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize the OLED
+  u8g2.begin();
+  
+  // Initialize the DHT sensor
+  dht.begin();
+}
+
+void loop() {
+  // Read temperature and humidity
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  // Read analog value from MQ sensor
+  int mqValue = analogRead(MQ_PIN);
+
+  // Clear the display
+  u8g2.clearBuffer();
+
+  // Display welcome message
+  u8g2.setFont(u8g2_font_ncenB08_tr);
+  u8g2.setCursor(0, 10);
+  u8g2.print("Welcome to Coding");
+
+  // Display sensor values
+  u8g2.setCursor(0, 30);
+  u8g2.print("Temp: ");
+  u8g2.print(temperature);
+  u8g2.print(" C");
+  
+  u8g2.setCursor(0, 45);
+  u8g2.print("Humidity: ");
+  u8g2.print(humidity);
+  u8g2.print(" %");
+  
+  u8g2.setCursor(0, 60);
+  u8g2.print("MQ Value: ");
+  u8g2.print(mqValue);
+  
+  // Send buffer to the display
+  u8g2.sendBuffer();
+  
+  delay(2000); // Update every 2 seconds
+}
+</pre>
+
+<h3>Project Image</h3>
+<img src="pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
+
+<div class="credit">
+  <p>Created with the help of ChatGPT.</p>
+</div>
+
+</body>
+</html>
