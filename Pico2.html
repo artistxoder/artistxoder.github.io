@@ -35,6 +35,19 @@
     max-width: 100%;
     height: auto;
   }
+  .back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #1a1a1a;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    cursor: pointer;
+    font-size: 1em;
+  }
+  .back-button:hover {
+    background-color: #00ff00;
+    color: #0d0d0d;
+  }
 </style>
 </head>
 <body>
@@ -139,6 +152,8 @@ void loop() {
 
 <h3>Project Image</h3>
 <img src="Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
+
+<button class="back-button" onclick="location.href='index.html';">Back to Home</button>
 
 <div class="credit">
   <p>Created with the help of ChatGPT.</p>
