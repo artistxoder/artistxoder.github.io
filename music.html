@@ -15,22 +15,23 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
-            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00;
+            text-shadow: 0 0 15px #00ff00;
         }
 
         p {
             font-size: 1.2rem;
-            line-height: 1.5;
-            max-width: 80%;
-            margin: 0 auto;
+            line-height: 1.6;
+            margin: 10px 0;
+            max-width: 600px;
         }
 
         a {
@@ -38,12 +39,24 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 20px;
-            display: block;
             font-size: 1.2rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         a:hover {
+            color: #00cc00;
+            text-shadow: 0 0 10px #00cc00;
             text-decoration: underline;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+            margin: 15px 0;
+            outline: none;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            background: #0f0f0f;
         }
 
         /* Google Translate Dropdown */
@@ -54,32 +67,40 @@
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
         }
+
+        body {
+            top: 0px !important;
+        }
     </style>
 </head>
 <body>
 
     <h1>Welcome</h1>
-    <p>This is my New Music I been working on from AI.</p>
-    <p>All songs generated from Udio.</p>
+    <p>This is my new music project created using AI.</p>
+    <p>All tracks are generated with Udio.</p>
 
     <p>Cart Held High</p>
     <audio id="song1" controls>
         <source src="Cart Held High(1).mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
 
     <p>Cruising Chronicles</p>
     <audio id="song2" controls>
         <source src="Cruising Chronicles.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
 
     <p>Skies Remix V2</p>
     <audio id="song3" controls>
         <source src="Cruising Skies remix v2.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
 
     <p>The Momentum's Overture</p>
     <audio id="song4" controls>
-        <source src="The Momentumâ__s Overture.mp3" type="audio/mp3">
+        <source src="The Momentum’s Overture.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
     </audio>
 
     <a href="index.html">Back to Home</a>
@@ -91,8 +112,8 @@
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'en', // Set default language
-                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ja,ko',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }

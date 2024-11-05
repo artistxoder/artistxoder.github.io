@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Guide</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico"> <!-- Corrected type to 'image/x-icon' -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             margin: 0;
@@ -23,14 +23,14 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
         }
 
         p {
             font-size: 1.2rem;
-            line-height: 1.5;
-            max-width: 80%;
-            margin: 0 auto;
+            line-height: 1.6;
+            max-width: 70%;
+            margin: 10px auto;
         }
 
         a {
@@ -38,15 +38,15 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 20px;
-            display: block;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            transition: color 0.3s, text-shadow 0.3s;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: #00ff7f;
+            text-shadow: 0 0 10px #00ff7f, 0 0 20px #00ff7f;
         }
 
-        /* Styling for the Google Translate container at the bottom */
         .google-translate-container {
             position: fixed;
             bottom: 0;
@@ -55,7 +55,8 @@
             background-color: #0f0f0f;
             text-align: center;
             padding: 10px 0;
-            z-index: 1000; /* Ensures it stays above other content */
+            border-top: 1px solid #00ff00;
+            z-index: 1000;
         }
     </style>
     
@@ -63,8 +64,8 @@
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'en', // Set default language
-                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ja,ko',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
@@ -74,10 +75,10 @@
 <body>
     <!-- Content of the page -->
     <h1>How to Play Android Flappy</h1>
-    <p>Welcome to Android Flappy! The objective of the game is to navigate a bird through a series of pipes. The bird flaps upwards when you click anywhere on the screen. The goal is to avoid colliding with the pipes and score points by passing through them.</p>
+    <p>Welcome to Android Flappy! Navigate a bird through a series of pipes. The bird flaps upwards when you click on the screen. Avoid colliding with the pipes and score points by passing through the gaps.</p>
     <p><strong>Controls:</strong></p>
     <p>- Click anywhere on the screen to make the bird flap and rise.</p>
-    <p>- Try to keep the bird flying and navigate through the gaps in the pipes.</p>
+    <p>- Keep the bird flying and navigate through the gaps in the pipes.</p>
     <p>Good luck and have fun!</p>
     <a href="flappyandroidrun.html">Back to Game</a>
 

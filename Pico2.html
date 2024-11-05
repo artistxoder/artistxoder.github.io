@@ -48,6 +48,22 @@
     background-color: #00ff00;
     color: #0d0d0d;
   }
+
+  .copy-button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background-color: #00ff00;
+    color: #0d0d0d;
+    border: 1px solid #00ff00;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+
+  .copy-button:hover {
+    background-color: #1a1a1a;
+    color: #00ff00;
+  }
   
   /* Google Translate Dropdown */
   #google_translate_element {
@@ -68,38 +84,10 @@
 <h2>Instructions</h2>
 <p>Use this code to display "Welcome to Coding" on an OLED connected to a Raspberry Pi Pico 2. The code also reads values from a DHT11 temperature and humidity sensor and an MQ gas sensor.</p>
 
-<h3>Wiring Instructions</h3>
-<ul>
-  <li>Connect <strong>3.3V</strong> of the Pico to the <strong>+ (VCC)</strong> rail on the breadboard.</li>
-  <li>Connect <strong>GND</strong> of the Pico to the <strong>- (GND)</strong> rail on the breadboard.</li>
-  <li>OLED Display:
-    <ul>
-      <li><strong>SDA</strong> to <strong>GP4</strong> on the Pico.</li>
-      <li><strong>SCL</strong> to <strong>GP5</strong> on the Pico.</li>
-      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
-      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
-    </ul>
-  </li>
-  <li>DHT11 Sensor:
-    <ul>
-      <li><strong>Data</strong> to <strong>GP28</strong> on the Pico.</li>
-      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
-      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
-    </ul>
-  </li>
-  <li>MQ Sensor:
-    <ul>
-      <li><strong>A0</strong> to <strong>GP26</strong> on the Pico.</li>
-      <li><strong>VCC</strong> to <strong>+ (VCC)</strong> on the breadboard.</li>
-      <li><strong>GND</strong> to <strong>- (GND)</strong> on the breadboard.</li>
-    </ul>
-  </li>
-</ul>
-
-<h2>Code for Raspberry Pi Pico 2</h2>
+<h3>Code for Raspberry Pi Pico 2</h3>
 <p>Copy the code below into the Arduino IDE and upload it to your Raspberry Pi Pico 2:</p>
 
-<pre>
+<pre id="code-block">
 #include &lt;U8g2lib.h&gt;
 #include &lt;DHT.h&gt;
 
@@ -161,6 +149,8 @@ void loop() {
 }
 </pre>
 
+<button class="copy-button" onclick="copyCode()">Copy Code</button>
+
 <h3>Project Image</h3>
 <img src="Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
 
@@ -177,10 +167,19 @@ void loop() {
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
-      pageLanguage: 'en', // Set default language
-      includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+      pageLanguage: 'en',
+      includedLanguages: 'en,es,fr,de,ja,ko',
       layout: google.translate.TranslateElement.InlineLayout.SIMPLE
     }, 'google_translate_element');
+  }
+
+  function copyCode() {
+    const codeBlock = document.getElementById('code-block').textContent;
+    navigator.clipboard.writeText(codeBlock).then(() => {
+      alert('Code copied to clipboard!');
+    }).catch(err => {
+      console.error('Failed to copy code:', err);
+    });
   }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

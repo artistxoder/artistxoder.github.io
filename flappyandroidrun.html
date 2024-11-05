@@ -20,13 +20,13 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
         }
 
         #gameCanvas {
-            border: 2px solid #00ff00;
+            border: 3px solid #00ff00;
             background: repeating-linear-gradient(
                 0deg,
                 #0f0f0f,
@@ -34,47 +34,42 @@
                 #0d0d0d 10px,
                 #0d0d0d 20px
             );
-            display: none; /* Hide canvas initially */
+            width: 80%;
+            max-width: 600px;
+            aspect-ratio: 3 / 4;
+            display: none;
         }
 
         .start-button {
             background-color: #00ff00;
             color: #0f0f0f;
             border: none;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 15px 30px;
+            font-size: 1.5rem;
             cursor: pointer;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+            transition: background-color 0.3s, transform 0.2s;
             margin-top: 20px;
         }
 
         .start-button:hover {
             background-color: #00cc00;
+            transform: scale(1.05);
         }
 
-        .guide-link {
+        .guide-link, .back-home {
             color: #00ff00;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.2rem;
             margin-top: 20px;
             display: block;
+            transition: color 0.3s, text-shadow 0.3s;
         }
 
-        .guide-link:hover {
-            text-decoration: underline;
-        }
-
-        .back-home {
-            color: #00ff00;
-            text-decoration: none;
-            font-size: 1rem;
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
-
-        .back-home:hover {
+        .guide-link:hover, .back-home:hover {
+            color: #00cc00;
+            text-shadow: 0 0 10px #00cc00;
             text-decoration: underline;
         }
 
@@ -85,6 +80,10 @@
 
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
+        }
+
+        body {
+            top: 0px !important;
         }
     </style>
 </head>
@@ -102,14 +101,15 @@
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
-                pageLanguage: 'en', // Set default language
-                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ja,ko',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+    <!-- Game script -->
     <script src="flappyBird.js"></script>
 </body>
 </html>

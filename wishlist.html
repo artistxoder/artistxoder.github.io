@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artistxoder Wish List</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
@@ -17,62 +18,51 @@
         }
 
         header {
-            background-color: #000;
-            color: #0f0;
-            padding: 10px 0;
+            padding: 20px;
         }
 
-        h1,
+        h1 {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #0ff;
+        }
+
         p {
-            margin: 0;
+            margin: 10px 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #aaa;
         }
 
         .container {
             max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         #wishlist {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
-            margin: 0;
-        }
-
-        .item {
-            background-color: #000;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
         }
 
         .item a {
-            color: #0f0;
+            display: inline-block;
+            background-color: #0f0;
+            color: #000;
+            padding: 10px 20px;
             text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
         }
 
         .item a:hover {
-            text-decoration: underline;
+            background-color: #0c0;
         }
 
-        #back-to-home {
-            background-color: #0f0;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            display: inline-block;
+        .social-icons {
             margin-top: 20px;
-        }
-
-        #back-to-home:hover {
-            background-color: #0d0;
         }
 
         .social-icons a {
@@ -80,30 +70,76 @@
             border: 0;
             width: 48px;
             height: 48px;
-            margin: 5px;
+            margin: 10px;
             display: inline-block;
             position: relative;
-            background-color: white;
+            transition: transform 0.3s ease-in-out;
         }
 
-        /* Circle CSS for social icons */
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
         .circle {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%; /* Ensures the icon is circular */
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             overflow: hidden;
-            border: 2px solid white; /* White border for visibility */
-            background-color: #000; /* Optional: Background to improve visibility */
+            border: 2px solid #0f0;
+            background-color: #000;
         }
 
         .social-icons img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            filter: invert(1); /* Inverts the colors, making white icons on a black background */
+            filter: invert(1);
+        }
+
+        @media (min-width: 576px) {
+            .social-icons a {
+                width: 56px;
+                height: 56px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .social-icons a {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        #google_translate_element {
+            margin-top: 20px;
+        }
+
+        #back-to-home {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #0f0;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #back-to-home:hover {
+            background-color: #0c0;
+        }
+
+        .attribute a {
+            color: #0ff;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .attribute a:hover {
+            text-decoration: underline;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -113,10 +149,11 @@
         <h1>Wish List</h1>
         <p>My wish list is a blend of tech and adventure gear, reflecting my passions for coding and exploration. From high-performance laptops and cutting-edge microcontrollers to rugged camping gadgets and wilderness survival tools, it's a mix that fuels both my digital creativity and my outdoor adventures. And of course, there's always room for that one cool, must-have tech gadget that sparks the imagination and promises endless possibilities.</p>
     </header>
+
     <div class="container">
         <ul id="wishlist">
             <li class="item">
-                <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank">Wish List</a>
+                <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank">View My Wish List</a>
             </li>
         </ul>
 
@@ -130,29 +167,20 @@
             <a href="https://x.com/ArtistXoder" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="twitter.png" alt="X">
             </a>
-            <a href="https://www.microsoft.com/en-us/p/xbox" target="_blank" rel="noopener noreferrer" class="circle">
-                <img src="xbox.png" alt="Xbox">
-            </a>
-            <a href="https://www.playstation.com/en-us/" target="_blank" rel="noopener noreferrer" class="circle">
-                <img src="playstation.png" alt="PlayStation">
-            </a>
-            <a href="https://www.nintendo.com/switch/" target="_blank" rel="noopener noreferrer" class="circle">
-                <img src="nintendo-entertainment-system.png" alt="Nintendo">
-            </a>
             <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="steam.png" alt="Steam">
             </a>
         </div>
-        <h1>attribute</h1>
-        <a href="https://www.flaticon.com/free-icons/facebook" title="facebook icons">Facebook icons created by Enamo Studios - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/github" title="github icons">Github icons created by Laisa Islam Ani - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/tweet" title="tweet icons">Tweet icons created by Freepik - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/xbox" title="xbox icons">Xbox icons created by Freepik - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/gaming" title="gaming icons">Gaming icons created by Freepik - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/nintendo" title="nintendo icons">Nintendo icons created by Hopstarter - Flaticon</a>
-        <a href="https://www.flaticon.com/free-icons/steam" title="steam icons">Steam icons created by Hight Quality Icons - Flaticon</a>
 
-        <div id="google_translate_element" style="margin-top: 20px;"></div>
+        <h1>Attribute</h1>
+        <div class="attribute">
+            <a href="https://www.flaticon.com/free-icons/facebook" title="facebook icons">Facebook icons by Enamo Studios</a><br>
+            <a href="https://www.flaticon.com/free-icons/github" title="github icons">Github icons by Laisa Islam Ani</a><br>
+            <a href="https://www.flaticon.com/free-icons/tweet" title="tweet icons">Tweet icons by Freepik</a><br>
+            <a href="https://www.flaticon.com/free-icons/steam" title="steam icons">Steam icons by Hight Quality Icons</a>
+        </div>
+
+        <div id="google_translate_element"></div>
 
         <button id="back-to-home" onclick="window.location.href='index.html';">Back to Home</button>
     </div>
