@@ -83,6 +83,7 @@
             margin: 5px;
             display: inline-block;
             position: relative;
+            background-color: white;
         }
 
         /* Circle CSS for social icons */
@@ -99,6 +100,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            filter: invert(1); /* Inverts the colors, making white icons on a black background */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -118,34 +120,26 @@
             </li>
         </ul>
 
-        <!-- Social and gaming platform icons -->
         <div class="social-icons">
-            <!-- GitHub icon -->
-            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="github.png" alt="GitHub">
             </a>
-            <!-- Facebook icon -->
-            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="communication.png" alt="Facebook">
             </a>
-            <!-- X (Twitter) icon -->
-            <a href="https://x.com/ArtistXoder" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://x.com/ArtistXoder" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="twitter.png" alt="X">
             </a>
-            <!-- Xbox icon -->
-            <a href="https://www.microsoft.com/en-us/p/xbox" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://www.microsoft.com/en-us/p/xbox" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="xbox.png" alt="Xbox">
             </a>
-            <!-- PlayStation icon -->
-            <a href="https://www.playstation.com/en-us/" target="_blank" rel="noopener noreferrer" class="circl.csse">
+            <a href="https://www.playstation.com/en-us/" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="playstation.png" alt="PlayStation">
             </a>
-            <!-- Nintendo Switch icon -->
-            <a href="https://www.nintendo.com/switch/" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://www.nintendo.com/switch/" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="nintendo-entertainment-system.png" alt="Nintendo">
             </a>
-            <!-- Steam icon -->
-            <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" class="circle.css">
+            <a href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer" class="circle">
                 <img src="steam.png" alt="Steam">
             </a>
         </div>
@@ -158,13 +152,11 @@
         <a href="https://www.flaticon.com/free-icons/nintendo" title="nintendo icons">Nintendo icons created by Hopstarter - Flaticon</a>
         <a href="https://www.flaticon.com/free-icons/steam" title="steam icons">Steam icons created by Hight Quality Icons - Flaticon</a>
 
-        <!-- Google Translate Dropdown -->
         <div id="google_translate_element" style="margin-top: 20px;"></div>
 
         <button id="back-to-home" onclick="window.location.href='index.html';">Back to Home</button>
     </div>
 
-    <!-- Google Translate script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
