@@ -7,47 +7,57 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
-        margin: 0;
-        font-family: 'Courier New', Courier, monospace;
-        color: #00ff00;
-         background-color: #0f0f0f;
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: center;
-         height: 100vh;
-         text-align: center;
-         overflow: hidden;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff00;
+            background-color: #0f0f0f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
         }
-        
-         h1 {
-         font-size: 2.5rem;
-        margin-bottom: 20px;
-         text-shadow: 0 0 10px #00ff00;
-         }
-        
-         p {
-        font-size: 1.2rem;
-         line-height: 1.5;
-        max-width: 80%;
-        margin: 0 auto;
-         }
-        
-         a {
-        color: #00ff00;
-         text-decoration: none;
-         font-weight: bold;
-         margin-top: 20px;
-        display: block;
-         font-size: 1.2rem;
-         }
-        
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+            font-size: 1.2rem;
+        }
+
         a:hover {
-         text-decoration: underline;
+            text-decoration: underline;
         }
-         </style>
+
+        /* Google Translate Dropdown */
+        #google_translate_element {
+            margin-top: 20px;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Welcome</h1>
     <p>This is my New Music I been working on from AI.</p>
     <p>All songs generated from Udio.</p>
@@ -73,5 +83,21 @@
     </audio>
 
     <a href="index.html">Back to Home</a>
+
+    <!-- Google Translate Dropdown -->
+    <div id="google_translate_element"></div>
+
+    <!-- Google Translate script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Set default language
+                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>

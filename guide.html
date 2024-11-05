@@ -45,9 +45,34 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Styling for the Google Translate container at the bottom */
+        .google-translate-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0f0f0f;
+            text-align: center;
+            padding: 10px 0;
+            z-index: 1000; /* Ensures it stays above other content */
+        }
     </style>
+    
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Set default language
+                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
+    <!-- Content of the page -->
     <h1>How to Play Android Flappy</h1>
     <p>Welcome to Android Flappy! The objective of the game is to navigate a bird through a series of pipes. The bird flaps upwards when you click anywhere on the screen. The goal is to avoid colliding with the pipes and score points by passing through them.</p>
     <p><strong>Controls:</strong></p>
@@ -55,5 +80,10 @@
     <p>- Try to keep the bird flying and navigate through the gaps in the pipes.</p>
     <p>Good luck and have fun!</p>
     <a href="flappyandroidrun.html">Back to Game</a>
+
+    <!-- Google Translate Dropdown -->
+    <div class="google-translate-container">
+        <div id="google_translate_element"></div>
+    </div>
 </body>
 </html>

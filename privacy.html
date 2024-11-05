@@ -13,24 +13,29 @@
             background-color: #000;
             color: #0f0;
         }
+
         header {
             background-color: #000;
             color: #0f0;
             padding: 10px 0;
             text-align: center;
         }
+
         h1 {
             margin: 0;
         }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
             padding: 0 20px;
         }
+
         #wishlist {
             list-style-type: none;
             padding: 0;
         }
+
         .item {
             background-color: #000;
             padding: 10px;
@@ -38,13 +43,16 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .item a {
             color: #0f0; /* Green color for links */
             text-decoration: none;
         }
+
         .item a:hover {
             text-decoration: underline;
         }
+
         .back-home {
             display: block;
             color: #0f0;
@@ -53,11 +61,36 @@
             margin-top: 20px;
             text-align: center;
         }
+
         .back-home:hover {
             text-decoration: underline;
         }
+
+        /* Styling for Google Translate dropdown */
+        #google_translate_element {
+            margin-top: 20px;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+        }
+
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
     </style>
+
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Google Translate script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Set default language (this can be changed as needed)
+                includedLanguages: 'en,es,fr,de,ja,ko', // Add languages you want to support
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
     <header>
@@ -89,6 +122,9 @@
         <p>Contact the Cyber Guardians</p>
 
         <p>Should you have any questions or need assistance navigating the digital labyrinth, feel free to contact our cyber guardians at <a href="mailto:artistxoder@duck.com">artistxoder@duck.com</a>. We're here to guide you through the cybernetic wilderness, one pixel at a time.</p>
+
+        <!-- Google Translate Dropdown -->
+        <div id="google_translate_element"></div>
 
         <!-- Back to Home Link -->
         <a href="index.html" class="back-home">Back to Home</a>

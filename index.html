@@ -80,6 +80,14 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Center the Google Translate dropdown using Flexbox */
+        .google-translate-container {
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center;     /* Vertically center */
+            margin-top: 20px;        /* Add some margin at the top */
+        }
     </style>
     <script>
         // Stop the animation after 5 seconds
@@ -87,6 +95,17 @@
             document.querySelector('.glitch').style.animation = 'none';
         }, 5000);
     </script>
+    <!-- Google Translate script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Set default language
+                includedLanguages: 'en,es,fr,de,ja,ko', // Add other languages as needed
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
     <div class="container">
@@ -100,10 +119,18 @@
                 <li>Thanks to ChatGPT and Gemini for helping code and generate the icon on the website.</li>
             </ul>
         </footer>
-        <a href="Pico2.html">Pic2 Air Quality an measure Temperature monitoring</a>
+        <a href="Pico2.html">Pic2 Air Quality and measure Temperature monitoring</a>
         <a href="flappyandroidrun.html">Play Flappy Android</a>
         <a href="music.html">My Music</a>
         <a href="wishlist.html">About Me & Wish List</a>
         <a href="privacy.html">Privacy</a>
+    </div>
+
+    <!-- Google Translate Dropdown -->
+    <div class="google-translate-container">
+        <div id="google_translate_element"></div>
+    </div>
+
 </body>
 </html>
+
