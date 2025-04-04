@@ -1,115 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Android Flappy</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <style>
+        /* Define reusable color variables */
+        :root {
+            --primary-color: #00ff00;
+            --background-color: #0f0f0f;
+            --background-alt-color: #0d0d0d;
+            --text-color: var(--primary-color);
+            --button-bg-color: var(--primary-color);
+            --button-text-color: var(--background-color);
+            --button-hover-bg-color: #00cc00;
+            --border-color: var(--primary-color);
+            --shadow-color: var(--primary-color);
+            --modal-bg-color: rgba(15, 15, 15, 0.95);
+        }
+
         body {
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
-            color: #00ff00;
-            background-color: #0f0f0f;
+            color: var(--text-color);
+            background-color: var(--background-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh; /* Use min-height to avoid issues on small screens */
             overflow: hidden;
+            position: relative;
+            padding: 20px; /* Add some padding */
+            box-sizing: border-box; /* Include padding in height calculation */
         }
 
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            text-shadow: 0 0 10px var(--shadow-color), 0 0 20px var(--shadow-color);
+            text-align: center;
+        }
+
+        #gameContainer {
+             /* Container to manage canvas visibility and layout */
+            width: 80%;
+            max-width: 600px; /* Max display width */
+            aspect-ratio: 3 / 4; /* Display aspect ratio */
+            margin-bottom: 20px;
+            display: none; /* Initially hidden */
         }
 
         #gameCanvas {
-            border: 3px solid #00ff00;
+            border: 3px solid var(--border-color);
             background: repeating-linear-gradient(
                 0deg,
-                #0f0f0f,
-                #0f0f0f 10px,
-                #0d0d0d 10px,
-                #0d0d0d 20px
+                var(--background-color),
+                var(--background-color) 10px,
+                var(--background-alt-color) 10px,
+                var(--background-alt-color) 20px
             );
-            width: 80%;
-            max-width: 600px;
-            aspect-ratio: 3 / 4;
-            display: none;
+            display: block; /* Make canvas a block element */
+            width: 100%; /* Canvas fills its container */
+            height: 100%; /* Canvas fills its container */
+
+            /* --- Resolution Scaling --- */
+            /* Prevents blurring when scaling low-res canvas */
+            image-rendering: pixelated; /* Standard */
+            image-rendering: -moz-crisp-edges; /* Firefox */
+            image-rendering: crisp-edges; /* Chromium */
         }
 
-        .start-button {
-            background-color: #00ff00;
-            color: #0f0f0f;
+        #mainMenu { /* Removed #gameOverScreen as it's handled in canvas now */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .button { /* Generalized button class */
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
             border: none;
             padding: 15px 30px;
             font-size: 1.5rem;
+            font-family: inherit; /* Inherit font from body */
             cursor: pointer;
             border-radius: 8px;
-            box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+            box-shadow: 0 0 15px var(--shadow-color), 0 0 30px var(--shadow-color);
             transition: background-color 0.3s, transform 0.2s;
             margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
         }
 
-        .start-button:hover {
-            background-color: #00cc00;
+        .button:hover {
+            background-color: var(--button-hover-bg-color);
             transform: scale(1.05);
         }
 
-        .guide-link, .back-home {
-            color: #00ff00;
-            text-decoration: none;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            display: block;
-            transition: color 0.3s, text-shadow 0.3s;
+        /* Modal styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
         }
 
-        .guide-link:hover, .back-home:hover {
-            color: #00cc00;
-            text-shadow: 0 0 10px #00cc00;
-            text-decoration: underline;
+        .modal[aria-hidden="false"] { /* Use aria-hidden for state */
+            opacity: 1;
+            pointer-events: auto;
         }
+
+        .modal-content {
+            background-color: var(--background-color);
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px; /* Increased padding */
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--shadow-color), 0 0 20px var(--shadow-color);
+        }
+         .modal-content p {
+             margin-bottom: 25px;
+             line-height: 1.6; /* Improve readability */
+         }
+         /* Style for <kbd> elements */
+         kbd {
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-family: inherit;
+            font-size: 0.9em;
+            box-shadow: 1px 1px 1px #222;
+         }
 
         /* Google Translate Dropdown */
         #google_translate_element {
-            margin-top: 20px;
+            margin-top: 30px; /* More space */
+            /* Styling google translate is hard, these might help a bit */
+             filter: invert(1) hue-rotate(180deg);
         }
-
+         /* Attempt to style the dropdown text color */
+        #google_translate_element span, #google_translate_element a {
+             color: var(--text-color) !important;
+        }
+        .goog-te-menu-value span {
+            color: var(--background-color) !important; /* Dropdown selection text */
+            background-color: var(--primary-color) !important; /* Background for selection */
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        /* Hide the Google Translate banner */
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
         }
-
+        /* Prevent GTranslate from adding space at the top */
         body {
             top: 0px !important;
         }
+
     </style>
 </head>
 <body>
+
     <h1>Android Flappy</h1>
-    <canvas id="gameCanvas"></canvas>
-    <button class="start-button" id="startButton">Start Game</button>
-    <a href="guide.html" class="guide-link">How to Play</a>
-    <a href="index.html" class="back-home">Back to Home</a>
 
-    <!-- Google Translate Dropdown -->
-    <div id="google_translate_element"></div>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="300" height="400"></canvas>
+    </div>
 
-    <!-- Google Translate script -->
+    <div id="mainMenu">
+        <button class="button" id="startButton">Start Game</button>
+        <button class="button" BCP47="en" id="guideButton">How to Play</button>
+        <a href="index.html" class="button back-home">Back to Home</a> <div id="google_translate_element"></div>
+    </div>
+
+
+    <div class="modal" id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="rulesTitle">How to Play</h2>
+            <p>
+                Use the <kbd>Spacebar</kbd> or <kbd>Tap</kbd> the screen to make Android Flappy jump.
+                Navigate through the gaps in the obstacles. Don't hit them or the ground!
+                Score points for each obstacle successfully passed.
+            </p>
+            <button class="button" id="closeModal">Got it!</button>
+        </div>
+    </div>
+
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,ja,ko',
+                includedLanguages: 'en,es,fr,de,ja,ko', // Add more languages if needed
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
-    <!-- Game script -->
-    <script src="flappyBird.js"></script>
+    <script src="flappyBird.js" defer></script>
+
+    <script defer>
+        // DOM Elements
+        const gameContainer = document.getElementById('gameContainer');
+        const mainMenu = document.getElementById('mainMenu');
+        const startButton = document.getElementById('startButton');
+        const rulesModal = document.getElementById('rulesModal');
+        const guideButton = document.getElementById('guideButton');
+        const closeModalButton = document.getElementById('closeModal');
+
+        // --- Game Start ---
+        startButton.addEventListener('click', () => {
+            console.log("Start button clicked, calling window.startGame()..."); // Debug log
+            mainMenu.style.display = 'none'; // Hide menu
+            gameContainer.style.display = 'block'; // Show game canvas container
+
+            // --- IMPORTANT: Call startGame from flappyBird.js ---
+            if (typeof window.startGame === 'function') {
+               window.startGame(); // <<< This line is now active
+            } else {
+               console.error('startGame function not found in flappyBird.js. Make sure flappyBird.js loaded correctly.');
+               // Optional: Show an error message to the user
+               alert("Error: Game files couldn't load properly.");
+               mainMenu.style.display = 'flex'; // Show menu again if game fails to load
+               gameContainer.style.display = 'none';
+            }
+            // --- End of startGame call ---
+        });
+
+        // --- Modal Logic ---
+        guideButton.addEventListener('click', () => {
+            rulesModal.setAttribute('aria-hidden', 'false');
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            rulesModal.setAttribute('aria-hidden', 'true');
+        });
+
+        // Close modal if clicking outside the content area
+        rulesModal.addEventListener('click', (e) => {
+            // Check if the click is directly on the modal background
+            if (e.target === rulesModal) {
+                rulesModal.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // Close modal with the Escape key
+        document.addEventListener('keydown', (e) => {
+            // Only process if the modal is currently shown
+            if (e.key === 'Escape' && rulesModal.getAttribute('aria-hidden') === 'false') {
+                 rulesModal.setAttribute('aria-hidden', 'true');
+            }
+            // Note: Game input (like spacebar for flap) is handled inside flappyBird.js
+            // and its event listeners prevent default page scrolling for spacebar.
+        });
+
+        // --- Function to show main menu (Called by flappyBird.js) ---
+        function showMainMenu() {
+             console.log("showMainMenu called from game script."); // Debug log
+             gameContainer.style.display = 'none'; // Hide the game area
+             mainMenu.style.display = 'flex'; // Show the main menu buttons etc.
+        }
+
+        // --- IMPORTANT: Make showMainMenu globally accessible ---
+        // This allows flappyBird.js to call this function.
+        window.showMainMenu = showMainMenu; // <<< This line is now added
+
+    </script>
+
 </body>
 </html>
