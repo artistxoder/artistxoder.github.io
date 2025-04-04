@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 <title>Raspberry Pi Pico 2 OLED Project Code</title>
 <style>
   body {
@@ -24,19 +25,33 @@
     border: 1px solid #333333;
     overflow-x: auto;
   }
-  .credit {
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: #33cc33;
-  }
   .pico-image {
     margin-top: 20px;
     border: 2px solid #00ff00;
     max-width: 100%;
     height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .back-button {
+
+  .button-credit-container {
+    text-align: center;
     margin-top: 20px;
+  }
+
+  .button-container {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .credit {
+    font-size: 0.9em;
+    color: #33cc33;
+    display: block;
+  }
+
+  .back-button {
     padding: 10px 20px;
     background-color: #1a1a1a;
     color: #00ff00;
@@ -44,6 +59,7 @@
     cursor: pointer;
     font-size: 1em;
   }
+
   .back-button:hover {
     background-color: #00ff00;
     color: #0d0d0d;
@@ -64,16 +80,27 @@
     background-color: #1a1a1a;
     color: #00ff00;
   }
-  
-  /* Google Translate Dropdown */
+
   #google_translate_element {
     margin-top: 20px;
     text-align: center;
-    font-family: Arial, sans-serif;
+  }
+
+  #google_translate_element span, #google_translate_element a {
+    color: var(--text-color, #00ff00) !important;
+  }
+  .goog-te-menu-value span {
+    color: var(--background-color, #0d0d0d) !important;
+    background-color: var(--primary-color, #00ff00) !important;
+    padding: 2px 5px;
+    border-radius: 3px;
   }
 
   .goog-te-banner-frame.skiptranslate {
     display: none !important;
+  }
+  body {
+    top: 0px !important;
   }
 </style>
 </head>
@@ -92,8 +119,8 @@
 #include &lt;DHT.h&gt;
 
 // Define sensor pins
-#define MQ_PIN 26      // Analog pin for MQ sensor
-#define DHT_PIN 28     // Digital pin for DHT11 sensor
+#define MQ_PIN 26    // Analog pin for MQ sensor
+#define DHT_PIN 28    // Digital pin for DHT11 sensor
 
 // Initialize U8g2 for the OLED display
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE); // Adjust based on your OLED type
@@ -103,10 +130,10 @@ DHT dht(DHT_PIN, DHT11); // Initialize DHT11, change to DHT22 if necessary
 
 void setup() {
   Serial.begin(115200);
-  
+
   // Initialize the OLED
   u8g2.begin();
-  
+
   // Initialize the DHT sensor
   dht.begin();
 }
@@ -132,19 +159,19 @@ void loop() {
   u8g2.print("Temp: ");
   u8g2.print(temperature);
   u8g2.print(" C");
-  
+
   u8g2.setCursor(0, 45);
   u8g2.print("Humidity: ");
   u8g2.print(humidity);
   u8g2.print(" %");
-  
+
   u8g2.setCursor(0, 60);
   u8g2.print("MQ Value: ");
   u8g2.print(mqValue);
-  
+
   // Send buffer to the display
   u8g2.sendBuffer();
-  
+
   delay(2000); // Update every 2 seconds
 }
 </pre>
@@ -154,16 +181,19 @@ void loop() {
 <h3>Project Image</h3>
 <img src="Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
 
-<button class="back-button" onclick="location.href='index.html';">Back to Home</button>
-
-<div class="credit">
-  <p>Created with the help of ChatGPT.</p>
+<div class="button-credit-container">
+  <div class="credit">
+    <center>
+      <p>Created with the help of ChatGPT.</p>
+    </center>
+  </div>
+  <div class="button-container">
+    <button class="back-button" onclick="location.href='index.html';">Back to Home</button>
+  </div>
 </div>
 
-<!-- Google Translate Dropdown -->
 <div id="google_translate_element"></div>
 
-<!-- Google Translate script -->
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -174,15 +204,25 @@ void loop() {
   }
 
   function copyCode() {
-    const codeBlock = document.getElementById('code-block').textContent;
-    navigator.clipboard.writeText(codeBlock).then(() => {
-      alert('Code copied to clipboard!');
+    const codeBlock = document.getElementById('code-block');
+    const textToCopy = codeBlock.innerText || codeBlock.textContent;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const copyButton = document.querySelector('.copy-button');
+      copyButton.textContent = 'Copied!';
+      setTimeout(() => {
+        copyButton.textContent = 'Copy Code';
+      }, 2000);
     }).catch(err => {
       console.error('Failed to copy code:', err);
+      if (navigator.userAgent.match(/ipad|iphone/i)) {
+        alert('Copying to clipboard is not supported on iOS.');
+      } else {
+        alert('Failed to copy code. Please copy manually.');
+      }
     });
   }
 </script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
 </body>
 </html>
