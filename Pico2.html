@@ -23,13 +23,19 @@
     color: #00ff00;
     padding: 10px;
     border: 1px solid #333333;
+    border-radius: 8px; /* Added rounded corners */
     overflow-x: auto;
+    white-space: pre-wrap; /* Helps with wrapping long code lines */
+    word-wrap: break-word;
   }
+  /* --- Image Style Update --- */
   .pico-image {
     margin-top: 20px;
     border: 2px solid #00ff00;
-    max-width: 100%;
-    height: auto;
+    border-radius: 8px; /* Added rounded corners */
+    max-width: 600px; /* Sets a maximum width for the image */
+    width: 100%;      /* Ensures the image is responsive and shrinks on smaller screens */
+    height: auto;     /* Maintains the aspect ratio */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -56,6 +62,7 @@
     background-color: #1a1a1a;
     color: #00ff00;
     border: 1px solid #00ff00;
+    border-radius: 5px; /* Added rounded corners */
     cursor: pointer;
     font-size: 1em;
   }
@@ -72,6 +79,7 @@
     background-color: #00ff00;
     color: #0d0d0d;
     border: 1px solid #00ff00;
+    border-radius: 5px; /* Added rounded corners */
     cursor: pointer;
     font-size: 0.9em;
   }
@@ -119,8 +127,8 @@
 #include &lt;DHT.h&gt;
 
 // Define sensor pins
-#define MQ_PIN 26    // Analog pin for MQ sensor
-#define DHT_PIN 28    // Digital pin for DHT11 sensor
+#define MQ_PIN 26      // Analog pin for MQ sensor
+#define DHT_PIN 28     // Digital pin for DHT11 sensor
 
 // Initialize U8g2 for the OLED display
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE); // Adjust based on your OLED type
@@ -179,13 +187,12 @@ void loop() {
 <button class="copy-button" onclick="copyCode()">Copy Code</button>
 
 <h3>Project Image</h3>
+<!-- Using a placeholder for demonstration. Replace with your "Pico2.jpg" -->
 <img src="Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
 
 <div class="button-credit-container">
   <div class="credit">
-    <center>
       <p>Created with the help of ChatGPT.</p>
-    </center>
   </div>
   <div class="button-container">
     <button class="back-button" onclick="location.href='index.html';">Back to Home</button>
@@ -203,26 +210,47 @@ void loop() {
     }, 'google_translate_element');
   }
 
+  // --- Copy Code Function Update ---
   function copyCode() {
     const codeBlock = document.getElementById('code-block');
     const textToCopy = codeBlock.innerText || codeBlock.textContent;
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      const copyButton = document.querySelector('.copy-button');
-      copyButton.textContent = 'Copied!';
-      setTimeout(() => {
-        copyButton.textContent = 'Copy Code';
-      }, 2000);
-    }).catch(err => {
-      console.error('Failed to copy code:', err);
-      if (navigator.userAgent.match(/ipad|iphone/i)) {
-        alert('Copying to clipboard is not supported on iOS.');
-      } else {
+    
+    // Create a temporary textarea element to hold the text
+    const textArea = document.createElement('textarea');
+    textArea.value = textToCopy;
+    
+    // Make the textarea invisible
+    textArea.style.position = 'fixed';
+    textArea.style.top = '-9999px';
+    textArea.style.left = '-9999px';
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        // Use the deprecated execCommand for broader compatibility
+        const successful = document.execCommand('copy');
+        const copyButton = document.querySelector('.copy-button');
+        if(successful) {
+            copyButton.textContent = 'Copied!';
+        } else {
+            copyButton.textContent = 'Failed!';
+        }
+        setTimeout(() => {
+          copyButton.textContent = 'Copy Code';
+        }, 2000);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+        // Fallback for browsers that don't support execCommand
         alert('Failed to copy code. Please copy manually.');
-      }
-    });
+    }
+
+    document.body.removeChild(textArea);
   }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
 </body>
 </html>
+
