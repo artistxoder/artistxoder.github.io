@@ -93,7 +93,8 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            filter: invert(1);
+            /* Apply invert filter only to non-SVG images if needed for consistent look */
+            /* filter: invert(1); */
         }
 
         @media (min-width: 576px) {
@@ -130,10 +131,17 @@
             background-color: #0c0;
         }
 
-        .attribute a {
+        .attribute {
+            padding: 10px 20px; /* Added padding for better spacing */
+            border-top: 1px solid #0c0; /* Added a subtle separator */
+            margin-top: 30px; /* More space above attribution */
+        }
+
+        .attribute a, .attribute p { /* Added p to target new paragraph for trademark note */
             color: #0ff;
             text-decoration: none;
             font-size: 12px;
+            line-height: 1.4; /* Improve readability of small text */
         }
 
         .attribute a:hover {
@@ -153,29 +161,29 @@
     <div class="container">
         <ul id="wishlist">
             <li class="item">
-                <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank">Amazon Wish List</a>
-                <a href="https://www.walmart.com/lists/shared/WL/edc3ce4e-2216-456d-bc68-5f6f083d6145" target="_blank">Walmart Wish List</a>
+                <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank" rel="noopener noreferrer">Amazon Wish List</a>
+                <a href="https://www.walmart.com/lists/shared/WL/edc3ce4e-2216-456d-bc68-5f6f083d6145" target="_blank" rel="noopener noreferrer">Walmart Wish List</a>
             </li>
         </ul>
 
-    <div class="social-icons">
-    <!-- GitHub -->
-    <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer" class="circle">
-        <img src="github.png" alt="GitHub">
-    </a>
+        <div class="social-icons">
+            <!-- GitHub -->
+            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer" class="circle">
+                <img src="github.png" alt="GitHub">
+            </a>
 
-    <!-- Facebook -->
-    <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer" class="circle">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
-             alt="Facebook">
-    </a>
-</div>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer" class="circle">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                    alt="Facebook">
             </a>
         </div>
 
-        <h1>Attribute</h1>
+        <h1>Attributions</h1>
         <div class="attribute">
-            <a href="https://www.flaticon.com/free-icons/github" title="github icons">Github icons by Laisa Islam Ani</a><br>
+            <a href="https://www.flaticon.com/free-icons/github" title="github icons" target="_blank" rel="noopener noreferrer">Github icons by Laisa Islam Ani</a><br>
+            <a href="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" target="_blank" rel="noopener noreferrer">"Facebook f logo (2019)" by Madboy, via Wikimedia Commons</a><br>
+            <p><i>Note: The Facebook logo is a registered trademark of Meta Platforms, Inc.</i></p>
         </div>
 
         <div id="google_translate_element"></div>
@@ -196,4 +204,3 @@
 </body>
 
 </html>
-
