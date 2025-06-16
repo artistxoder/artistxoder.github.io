@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Music</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Placeholder for favicon.ico. Replace with your actual favicon URL. -->
+    <link rel="icon" type="image/x-icon" href="https://placehold.co/16x16/000/0f0?text=AI">
+
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Define CSS Variables for consistent theming */
+        :root {
+            --color-primary: #00ff00; /* Neon Green */
+            --color-background: #0f0f0f; /* Dark Background */
+            --color-text-light: #f0f0f0; /* Lighter text if needed */
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        /* Basic styles using CSS variables and Tailwind defaults */
         body {
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-            color: #00ff00;
-            background-color: #0f0f0f;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+            font-family: var(--font-mono);
+            color: var(--color-primary);
+            background-color: var(--color-background);
+            /* Tailwind flexbox and spacing utilities */
+            @apply flex flex-col items-center justify-start min-h-screen text-center py-8 px-4 sm:px-6 lg:px-8;
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px #00ff00;
+            /* Tailwind font sizing, margin, and custom text-shadow */
+            @apply text-4xl sm:text-5xl lg:text-6xl mb-6;
+            text-shadow: 0 0 15px var(--color-primary);
         }
 
         p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 10px 0;
-            max-width: 600px;
+            /* Tailwind font sizing, line height, margin, and max width */
+            @apply text-base sm:text-lg leading-relaxed mb-4 max-w-2xl;
         }
 
         a {
-            color: #00ff00;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            font-size: 1.2rem;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            /* Tailwind text color, text decoration, font weight, margin top, font size, and transition */
+            @apply text-[var(--color-primary)] no-underline font-bold mt-8 text-lg transition-colors duration-300;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Subtle initial glow */
         }
 
         a:hover {
-            color: #00cc00;
-            text-shadow: 0 0 10px #00cc00;
+            /* Tailwind hover effects and custom text-shadow for stronger glow */
+            @apply text-lime-400; /* A slightly different green on hover for contrast */
+            text-shadow: 0 0 12px var(--color-primary);
             text-decoration: underline;
         }
 
         audio {
-            width: 100%;
-            max-width: 600px;
-            margin: 15px 0;
-            outline: none;
-            border: 2px solid #00ff00;
-            border-radius: 8px;
-            background: #0f0f0f;
+            /* Tailwind width, max-width, margin, outline, border, and border-radius */
+            @apply w-full max-w-2xl my-6 outline-none border-2 border-[var(--color-primary)] rounded-xl bg-[var(--color-background)];
         }
 
-        /* Google Translate Dropdown */
-        #google_translate_element {
-            margin-top: 20px;
+        /* Styling for the Google Translate Dropdown to match theme */
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: var(--color-background) !important;
+            border: 1px solid var(--color-primary) !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
         }
 
+        #google_translate_element select {
+            color: var(--color-primary) !important;
+            background-color: var(--color-background) !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* Hide Google Translate banner */
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
         }
@@ -73,40 +82,58 @@
         }
     </style>
 </head>
+
 <body>
+    <main class="flex flex-col items-center justify-center w-full">
+        <h1>Welcome</h1>
+        <p>This is my new music project created using AI.</p>
+        <p>All tracks are generated with Udio.</p>
 
-    <h1>Welcome</h1>
-    <p>This is my new music project created using AI.</p>
-    <p>All tracks are generated with Udio.</p>
+        <!-- Song 1 -->
+        <div class="my-4">
+            <p class="font-bold text-xl mb-2">Cart Held High</p>
+            <audio id="song1" controls>
+                <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your MP3 file -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
 
-    <p>Cart Held High</p>
-    <audio id="song1" controls>
-        <source src="Cart Held High(1).mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+        <!-- Song 2 -->
+        <div class="my-4">
+            <p class="font-bold text-xl mb-2">Cruising Chronicles</p>
+            <audio id="song2" controls>
+                <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your MP3 file -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
 
-    <p>Cruising Chronicles</p>
-    <audio id="song2" controls>
-        <source src="Cruising Chronicles.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+        <!-- Song 3 -->
+        <div class="my-4">
+            <p class="font-bold text-xl mb-2">Skies Remix V2</p>
+            <audio id="song3" controls>
+                <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your MP3 file -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
 
-    <p>Skies Remix V2</p>
-    <audio id="song3" controls>
-        <source src="Cruising Skies remix v2.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+        <!-- Song 4 -->
+        <div class="my-4">
+            <p class="font-bold text-xl mb-2">The Momentum's Overture</p>
+            <audio id="song4" controls>
+                <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your MP3 file -->
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
 
-    <p>The Momentum's Overture</p>
-    <audio id="song4" controls>
-        <source src="The Momentum’s Overture.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
+        <a href="index.html" class="inline-block px-6 py-3 border-2 border-[var(--color-primary)] rounded-lg hover:border-lime-400">Back to Home</a>
 
-    <a href="index.html">Back to Home</a>
-
-    <!-- Google Translate Dropdown -->
-    <div id="google_translate_element"></div>
+        <!-- Google Translate Dropdown -->
+        <div id="google_translate_element" class="mt-8 mb-4"></div>
+    </main>
 
     <!-- Google Translate script -->
     <script type="text/javascript">
@@ -121,4 +148,5 @@
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
+
 </html>
