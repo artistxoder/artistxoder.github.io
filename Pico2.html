@@ -1,128 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-<title>Raspberry Pi Pico 2 OLED Project Code</title>
-<style>
-  body {
-    font-family: "Courier New", monospace;
-    background-color: #0d0d0d;
-    color: #00ff00;
-    margin: 20px;
-  }
-  h1, h2, h3, p {
-    color: #00ff00;
-  }
-  ul {
-    color: #00ff00;
-  }
-  pre {
-    background-color: #1a1a1a;
-    color: #00ff00;
-    padding: 10px;
-    border: 1px solid #333333;
-    border-radius: 8px; /* Added rounded corners */
-    overflow-x: auto;
-    white-space: pre-wrap; /* Helps with wrapping long code lines */
-    word-wrap: break-word;
-  }
-  /* --- Image Style Update --- */
-  .pico-image {
-    margin-top: 20px;
-    border: 2px solid #00ff00;
-    border-radius: 8px; /* Added rounded corners */
-    max-width: 600px; /* Sets a maximum width for the image */
-    width: 100%;      /* Ensures the image is responsive and shrinks on smaller screens */
-    height: auto;     /* Maintains the aspect ratio */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Placeholder for favicon.ico. Replace with your actual favicon URL. -->
+    <link rel="icon" type="image/x-icon" href="https://placehold.co/16x16/0d0d0d/00ff00?text=PI">
+    <title>Raspberry Pi Pico 2 OLED Project Code</title>
 
-  .button-credit-container {
-    text-align: center;
-    margin-top: 20px;
-  }
+    <!-- Tailwind CSS CDN for utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define CSS Variables for consistent theming */
+        :root {
+            --color-primary-green: #00ff00;
+            --color-dark-background: #0d0d0d;
+            --color-code-background: #1a1a1a;
+            --color-border-subtle: #333333;
+            --color-credit-green: #33cc33;
+            --font-mono: "Courier New", monospace;
+        }
 
-  .button-container {
-    display: block;
-    margin-top: 10px;
-  }
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--color-dark-background);
+            color: var(--color-primary-green);
+            /* Tailwind flex and spacing for central alignment on page */
+            @apply flex flex-col items-center justify-start min-h-screen p-5 sm:p-8 lg:p-10;
+        }
 
-  .credit {
-    font-size: 0.9em;
-    color: #33cc33;
-    display: block;
-  }
+        h1, h2, h3, p, ul, li {
+            color: var(--color-primary-green);
+        }
 
-  .back-button {
-    padding: 10px 20px;
-    background-color: #1a1a1a;
-    color: #00ff00;
-    border: 1px solid #00ff00;
-    border-radius: 5px; /* Added rounded corners */
-    cursor: pointer;
-    font-size: 1em;
-  }
+        pre {
+            background-color: var(--color-code-background);
+            color: var(--color-primary-green);
+            /* Tailwind padding, border, and rounded corners */
+            @apply p-4 border border-[var(--color-border-subtle)] rounded-lg overflow-x-auto whitespace-pre-wrap break-words;
+            /* Ensure the pre block takes appropriate width */
+            max-width: calc(100vw - 40px); /* Account for body margin */
+            width: 100%;
+        }
 
-  .back-button:hover {
-    background-color: #00ff00;
-    color: #0d0d0d;
-  }
+        /* Image Style */
+        .pico-image {
+            /* Tailwind margin-top, border, rounded corners, max-width, width, and display for centering */
+            @apply mt-5 border-2 border-[var(--color-primary-green)] rounded-lg max-w-xl w-full h-auto block mx-auto;
+        }
 
-  .copy-button {
-    display: inline-block;
-    margin: 10px 0;
-    padding: 5px 10px;
-    background-color: #00ff00;
-    color: #0d0d0d;
-    border: 1px solid #00ff00;
-    border-radius: 5px; /* Added rounded corners */
-    cursor: pointer;
-    font-size: 0.9em;
-  }
+        /* Button and Credit Container */
+        .button-credit-container {
+            @apply text-center mt-5;
+        }
 
-  .copy-button:hover {
-    background-color: #1a1a1a;
-    color: #00ff00;
-  }
+        .credit {
+            font-size: 0.9em;
+            color: var(--color-credit-green);
+            @apply block mb-2; /* Add some margin below the credit */
+        }
 
-  #google_translate_element {
-    margin-top: 20px;
-    text-align: center;
-  }
+        /* General Button Styling */
+        .btn {
+            @apply px-5 py-2.5 rounded-md cursor-pointer text-base font-bold transition-all duration-300 ease-in-out;
+            border: 1px solid var(--color-primary-green);
+            color: var(--color-primary-green);
+            background-color: var(--color-code-background);
+        }
 
-  #google_translate_element span, #google_translate_element a {
-    color: var(--text-color, #00ff00) !important;
-  }
-  .goog-te-menu-value span {
-    color: var(--background-color, #0d0d0d) !important;
-    background-color: var(--primary-color, #00ff00) !important;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
+        .btn:hover {
+            background-color: var(--color-primary-green);
+            color: var(--color-dark-background);
+        }
 
-  .goog-te-banner-frame.skiptranslate {
-    display: none !important;
-  }
-  body {
-    top: 0px !important;
-  }
-</style>
+        /* Specific Button Styles */
+        .back-button {
+            @apply mt-4; /* Add margin-top for separation */
+        }
+
+        .copy-button {
+            @apply inline-block my-4; /* Spacing for the copy button */
+        }
+
+        /* Message box for copy feedback */
+        .message-box {
+            @apply fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white py-2 px-4 rounded-lg shadow-lg z-50 transition-opacity duration-300 opacity-0;
+        }
+        .message-box.show {
+            @apply opacity-100;
+        }
+
+
+        /* Google Translate specific styling to match theme */
+        #google_translate_element {
+            @apply mt-8 text-center;
+        }
+
+        /* Specific styles for Google Translate dropdown to match your theme */
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: var(--color-dark-background) !important;
+            border: 1px solid var(--color-primary-green) !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+            box-shadow: none !important;
+        }
+
+        #google_translate_element select {
+            color: var(--color-primary-green) !important;
+            background-color: var(--color-dark-background) !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* Hide Google Translate banner and adjust body top offset */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+    </style>
 </head>
+
 <body>
+    <main class="w-full max-w-4xl">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-6">Raspberry Pi Pico 2 Project Code and Wiring Instructions</h1>
 
-<h1>Raspberry Pi Pico 2 Project Code and Wiring Instructions</h1>
+        <section class="mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4">Instructions</h2>
+            <p class="text-base sm:text-lg leading-relaxed">Use this code to display "Welcome to Coding" on an OLED connected to a Raspberry Pi Pico 2. The code also reads values from a DHT11 temperature and humidity sensor and an MQ gas sensor.</p>
+        </section>
 
-<h2>Instructions</h2>
-<p>Use this code to display "Welcome to Coding" on an OLED connected to a Raspberry Pi Pico 2. The code also reads values from a DHT11 temperature and humidity sensor and an MQ gas sensor.</p>
+        <section class="mb-8">
+            <h3 class="text-xl sm:text-2xl font-bold mb-4">Code for Raspberry Pi Pico 2</h3>
+            <p class="text-base sm:text-lg leading-relaxed mb-4">Copy the code below into the Arduino IDE and upload it to your Raspberry Pi Pico 2:</p>
 
-<h3>Code for Raspberry Pi Pico 2</h3>
-<p>Copy the code below into the Arduino IDE and upload it to your Raspberry Pi Pico 2:</p>
-
-<pre id="code-block">
+            <pre id="code-block">
 #include &lt;U8g2lib.h&gt;
 #include &lt;DHT.h&gt;
 
@@ -131,126 +144,189 @@
 #define DHT_PIN 28     // Digital pin for DHT11 sensor
 
 // Initialize U8g2 for the OLED display
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE); // Adjust based on your OLED type
+// Adjust U8G2_SSD1306_128X64_NONAME_F_HW_I2C based on your specific OLED type and connection (I2C address, reset pin)
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 // DHT sensor settings
-DHT dht(DHT_PIN, DHT11); // Initialize DHT11, change to DHT22 if necessary
+// Initialize DHT11 sensor. If using DHT22, change DHT11 to DHT22.
+DHT dht(DHT_PIN, DHT11);
 
 void setup() {
-  Serial.begin(115200);
+    Serial.begin(115200); // Start serial communication for debugging
 
-  // Initialize the OLED
-  u8g2.begin();
+    // Initialize the OLED display
+    u8g2.begin();
+    u8g2.clearBuffer(); // Clear the display buffer
+    u8g2.setFont(u8g2_font_ncenB08_tr); // Set font for text
+    u8g2.setCursor(0, 10); // Set cursor position
+    u8g2.print("Initializing..."); // Display initialization message
+    u8g2.sendBuffer(); // Send buffer to display
 
-  // Initialize the DHT sensor
-  dht.begin();
+    // Initialize the DHT sensor
+    dht.begin();
+    Serial.println("DHT sensor initialized."); // Debug message
 }
 
 void loop() {
-  // Read temperature and humidity
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature();
+    // Read temperature and humidity from DHT sensor
+    float humidity = dht.readHumidity();
+    float temperature = dht.readTemperature();
 
-  // Read analog value from MQ sensor
-  int mqValue = analogRead(MQ_PIN);
+    // Read analog value from MQ gas sensor
+    int mqValue = analogRead(MQ_PIN);
 
-  // Clear the display
-  u8g2.clearBuffer();
-
-  // Display welcome message
-  u8g2.setFont(u8g2_font_ncenB08_tr);
-  u8g2.setCursor(0, 10);
-  u8g2.print("Welcome to Coding");
-
-  // Display sensor values
-  u8g2.setCursor(0, 30);
-  u8g2.print("Temp: ");
-  u8g2.print(temperature);
-  u8g2.print(" C");
-
-  u8g2.setCursor(0, 45);
-  u8g2.print("Humidity: ");
-  u8g2.print(humidity);
-  u8g2.print(" %");
-
-  u8g2.setCursor(0, 60);
-  u8g2.print("MQ Value: ");
-  u8g2.print(mqValue);
-
-  // Send buffer to the display
-  u8g2.sendBuffer();
-
-  delay(2000); // Update every 2 seconds
-}
-</pre>
-
-<button class="copy-button" onclick="copyCode()">Copy Code</button>
-
-<h3>Project Image</h3>
-<!-- Using a placeholder for demonstration. Replace with your "Pico2.jpg" -->
-<img src="Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
-
-<div class="button-credit-container">
-  <div class="credit">
-      <p>Created with the help of ChatGPT.</p>
-  </div>
-  <div class="button-container">
-    <button class="back-button" onclick="location.href='index.html';">Back to Home</button>
-  </div>
-</div>
-
-<div id="google_translate_element"></div>
-
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'en,es,fr,de,ja,ko',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  }
-
-  // --- Copy Code Function Update ---
-  function copyCode() {
-    const codeBlock = document.getElementById('code-block');
-    const textToCopy = codeBlock.innerText || codeBlock.textContent;
-    
-    // Create a temporary textarea element to hold the text
-    const textArea = document.createElement('textarea');
-    textArea.value = textToCopy;
-    
-    // Make the textarea invisible
-    textArea.style.position = 'fixed';
-    textArea.style.top = '-9999px';
-    textArea.style.left = '-9999px';
-
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    try {
-        // Use the deprecated execCommand for broader compatibility
-        const successful = document.execCommand('copy');
-        const copyButton = document.querySelector('.copy-button');
-        if(successful) {
-            copyButton.textContent = 'Copied!';
-        } else {
-            copyButton.textContent = 'Failed!';
-        }
-        setTimeout(() => {
-          copyButton.textContent = 'Copy Code';
-        }, 2000);
-    } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err);
-        // Fallback for browsers that don't support execCommand
-        alert('Failed to copy code. Please copy manually.');
+    // Check if any reads failed and exit early (e.g. sensor not connected)
+    if (isnan(humidity) || isnan(temperature)) {
+        Serial.println("Failed to read from DHT sensor!");
+        // Optionally display an error message on OLED
+        u8g2.clearBuffer();
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.setCursor(0, 30);
+        u8g2.print("DHT Read Error!");
+        u8g2.sendBuffer();
+        delay(2000);
+        return; // Skip the rest of the loop
     }
 
-    document.body.removeChild(textArea);
-  }
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+    // Clear the display buffer for new content
+    u8g2.clearBuffer();
 
+    // Display welcome message (adjust font and position as needed)
+    u8g2.setFont(u8g2_font_ncenB08_tr);
+    u8g2.setCursor(0, 10);
+    u8g2.print("Welcome to Coding");
+
+    // Display sensor values (temperature, humidity, MQ value)
+    u8g2.setCursor(0, 30);
+    u8g2.print("Temp: ");
+    u8g2.print(temperature);
+    u8g2.print(" C");
+
+    u8g2.setCursor(0, 45);
+    u8g2.print("Humidity: ");
+    u8g2.print(humidity);
+    u8g2.print(" %");
+
+    u8g2.setCursor(0, 60);
+    u8g2.print("MQ Value: ");
+    u8g2.print(mqValue);
+
+    // Send the content of the buffer to the OLED display
+    u8g2.sendBuffer();
+
+    delay(2000); // Wait for 2 seconds before the next update
+}
+            </pre>
+            <button class="copy-button btn" id="copyCodeBtn">Copy Code</button>
+            <div id="copyMessageBox" class="message-box"></div>
+        </section>
+
+        <section class="mb-8">
+            <h3 class="text-xl sm:text-2xl font-bold mb-4">Project Image</h3>
+            <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your "Pico2.jpg" image -->
+            <img src="https://placehold.co/600x400/0d0d0d/00ff00?text=PICO+2+Project+Image" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
+        </section>
+
+        <div class="button-credit-container">
+            <div class="credit">
+                <p>Created with the help of ChatGPT.</p>
+            </div>
+            <div class="button-container">
+                <button class="back-button btn" id="backToHomeBtn">Back to Home</button>
+            </div>
+        </div>
+
+        <div id="google_translate_element"></div>
+    </main>
+
+    <script type="text/javascript">
+        // Google Translate initialization function
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ja,ko',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // DOMContentLoaded ensures the script runs after the entire HTML is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const codeBlock = document.getElementById('code-block');
+            const copyCodeBtn = document.getElementById('copyCodeBtn');
+            const messageBox = document.getElementById('copyMessageBox');
+            const backToHomeBtn = document.getElementById('backToHomeBtn');
+
+            // Copy Code Functionality
+            if (copyCodeBtn && codeBlock && messageBox) {
+                copyCodeBtn.addEventListener('click', () => {
+                    const textToCopy = codeBlock.innerText || codeBlock.textContent;
+
+                    // Use the modern Clipboard API if available, otherwise fallback
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy)
+                            .then(() => showMessage('Copied!', true))
+                            .catch(err => {
+                                console.error('Failed to copy text using Clipboard API: ', err);
+                                showMessage('Copy Failed!', false);
+                            });
+                    } else {
+                        // Fallback for older browsers (using document.execCommand)
+                        const textArea = document.createElement('textarea');
+                        textArea.value = textToCopy;
+                        // Make the textarea invisible and off-screen
+                        textArea.style.position = 'fixed';
+                        textArea.style.top = '-9999px';
+                        textArea.style.left = '-9999px';
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+
+                        try {
+                            const successful = document.execCommand('copy');
+                            if (successful) {
+                                showMessage('Copied!', true);
+                            } else {
+                                showMessage('Copy Failed!', false);
+                            }
+                        } catch (err) {
+                            console.error('Fallback: Oops, unable to copy', err);
+                            showMessage('Copy Failed!', false);
+                        } finally {
+                            document.body.removeChild(textArea);
+                        }
+                    }
+                });
+            }
+
+            // Function to show and hide the copy message
+            function showMessage(msg, isSuccess) {
+                messageBox.textContent = msg;
+                messageBox.className = 'message-box show'; // Reset classes and add show
+                if (isSuccess) {
+                    messageBox.classList.add('bg-green-600');
+                } else {
+                    messageBox.classList.add('bg-red-600');
+                }
+
+                // Hide the message after 2 seconds
+                setTimeout(() => {
+                    messageBox.className = 'message-box'; // Hide it
+                    messageBox.classList.remove('bg-green-600', 'bg-red-600'); // Clear color classes
+                }, 2000);
+            }
+
+            // Back to Home button functionality
+            if (backToHomeBtn) {
+                backToHomeBtn.addEventListener('click', () => {
+                    // Adjust this path if 'index.html' is not in the same directory
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+    <!-- Google Translate script -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 </body>
+
 </html>
 
