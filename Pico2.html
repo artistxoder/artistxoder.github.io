@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Placeholder for favicon.ico. Replace with your actual favicon URL. -->
-    <link rel="icon" type="image/x-icon" href="https://placehold.co/16x16/0d0d0d/00ff00?text=PI">
+    <!-- Placeholder for favicon.ico. Remember to replace this with your actual favicon URL when deploying. -->
+    <link rel="icon" type="image/x-xicon" href="https://placehold.co/16x16/0d0d0d/00ff00?text=PI">
     <title>Raspberry Pi Pico 2 OLED Project Code</title>
 
     <!-- Tailwind CSS CDN for utility-first styling -->
@@ -26,7 +26,8 @@
             background-color: var(--color-dark-background);
             color: var(--color-primary-green);
             /* Tailwind flex and spacing for central alignment on page */
-            @apply flex flex-col items-center justify-start min-h-screen p-5 sm:p-8 lg:p-10;
+            /* Changed justify-start to justify-center to vertically center content on taller screens */
+            @apply flex flex-col items-center justify-center min-h-screen p-5 sm:p-8 lg:p-10;
         }
 
         h1, h2, h3, p, ul, li {
@@ -123,7 +124,7 @@
 </head>
 
 <body>
-    <main class="w-full max-w-4xl">
+    <main class="w-full max-w-4xl text-center">
         <h1 class="text-3xl sm:text-4xl font-bold mb-6">Raspberry Pi Pico 2 Project Code and Wiring Instructions</h1>
 
         <section class="mb-8">
@@ -223,8 +224,8 @@ void loop() {
 
         <section class="mb-8">
             <h3 class="text-xl sm:text-2xl font-bold mb-4">Project Image</h3>
-            <!-- IMPORTANT: Replace this placeholder URL with the actual hosted URL of your "Pico2.jpg" image -->
-            <img src="https://placehold.co/600x400/0d0d0d/00ff00?text=PICO+2+Project+Image" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
+            <!-- This URL points to your image hosted on GitHub Pages: artistxoder.github.io/Pico2.jpg -->
+            <img src="https://artistxoder.github.io/Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
         </section>
 
         <div class="button-credit-container">
