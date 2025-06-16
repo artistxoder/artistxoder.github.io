@@ -5,212 +5,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artistxoder Wish List</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Placeholder for favicon.ico as it was not provided -->
+    <link rel="icon" type="image/x-icon" href="https://placehold.co/16x16/000/0f0?text=AX">
+
+    <!-- Google Fonts: Press Start 2P -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlroMTO0lB2QvwN01l8zE14S/gV6eK3lW9gYd2N9Xb2z8wR5Q/t1m+V7oGk0MvN5LwF6Jt6V1aN0E3a+0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Define CSS Variables for consistent theming */
+        :root {
+            --color-bg: #000;
+            --color-text-primary: #0f0;
+            --color-text-secondary: #aaa;
+            --color-highlight: #0ff;
+            --color-button-hover: #0c0;
+            --font-pixel: 'Press Start 2P', cursive;
+        }
+
         body {
-            font-family: 'Press Start 2P', cursive;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #0f0;
+            font-family: var(--font-pixel);
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
             text-align: center;
         }
 
-        header {
-            padding: 20px;
+        /* Custom styles not easily covered by Tailwind, or to override defaults */
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: var(--color-bg) !important;
+            border: 1px solid var(--color-text-primary) !important;
+            border-radius: 5px !important;
         }
 
-        h1 {
-            margin: 20px 0;
-            font-size: 24px;
-            color: #0ff;
-        }
-
-        p {
-            margin: 10px 20px;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #aaa;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        #wishlist {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .item a {
-            display: inline-block;
-            background-color: #0f0;
-            color: #000;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s ease-in-out;
-            margin: 5px; /* Added margin for spacing between buttons */
-        }
-
-        .item a:hover {
-            background-color: #0c0;
-        }
-
-        .social-icons {
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            text-decoration: none;
-            border: 0;
-            width: 48px;
-            height: 48px;
-            margin: 10px;
-            display: inline-block;
-            position: relative;
-            transition: transform 0.3s ease-in-out;
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.2);
-        }
-
-        .circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #0f0;
-            background-color: #000;
-            display: flex; /* Use flexbox for centering icon */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-        }
-
-        .social-icons .fab { /* Style Font Awesome icons */
-            font-size: 24px; /* Adjust icon size */
-            color: #0f0; /* Set icon color to green */
-            transition: color 0.3s ease-in-out;
-        }
-
-        .social-icons a:hover .fab {
-            color: #0c0; /* Darker green on hover */
-        }
-
-        @media (min-width: 576px) {
-            .social-icons a {
-                width: 56px;
-                height: 56px;
-            }
-            .social-icons .fab {
-                font-size: 28px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .social-icons a {
-                width: 64px;
-                height: 64px;
-            }
-            .social-icons .fab {
-                font-size: 32px;
-            }
-        }
-
-        #google_translate_element {
-            margin-top: 20px;
-        }
-
-        #back-to-home {
-            margin: 20px;
-            padding: 10px 20px;
-            background-color: #0f0;
-            color: #000;
-            border: none;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        #back-to-home:hover {
-            background-color: #0c0;
-        }
-
-        .attribute {
-            padding: 10px 20px; /* Added padding for better spacing */
-            border-top: 1px solid #0c0; /* Added a subtle separator */
-            margin-top: 30px; /* More space above attribution */
-        }
-
-        .attribute a, .attribute p { /* Added p to target new paragraph for trademark note */
-            color: #0ff;
-            text-decoration: none;
-            font-size: 12px;
-            line-height: 1.4; /* Improve readability of small text */
-        }
-
-        .attribute a:hover {
-            text-decoration: underline;
+        #google_translate_element select {
+            color: var(--color-text-primary) !important;
         }
     </style>
 </head>
 
-<body>
-    <header>
-        <h1>About Me</h1>
-        <p>I've always enjoyed tinkering with code and electronics, turning ideas into reality. Being an Eagle Scout has taught me valuable skills like problem-solving, leadership, and perseverance, which I often apply to my tech projects. It's amazing how scouting and technology intersect, both fostering creativity and innovation.</p>
-        <h1>Wish List</h1>
-        <p>My wish list is a blend of tech and adventure gear, reflecting my passions for coding and exploration. From high-performance laptops and cutting-edge microcontrollers to rugged camping gadgets and wilderness survival tools, it's a mix that fuels both my digital creativity and my outdoor adventures. And of course, there's always room for that one cool, must-have tech gadget that sparks the imagination and promises endless possibilities.</p>
+<body class="min-h-screen flex flex-col items-center justify-start py-8 px-4 sm:px-6 lg:px-8">
+    <header class="w-full max-w-3xl mb-8">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-color-highlight text-[var(--color-highlight)]">About Me</h1>
+        <p class="text-sm sm:text-base text-color-secondary text-[var(--color-text-secondary)] leading-relaxed mb-8">
+            I've always enjoyed tinkering with code and electronics, turning ideas into reality. Being an Eagle Scout has taught me valuable skills like problem-solving, leadership, and perseverance, which I often apply to my tech projects. It's amazing how scouting and technology intersect, both fostering creativity and innovation.
+        </p>
     </header>
 
-    <div class="container">
-        <ul id="wishlist">
-            <li class="item">
-                <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank" rel="noopener noreferrer">Amazon Wish List</a>
-                <a href="https://www.walmart.com/lists/shared/WL/edc3ce4e-2216-456d-bc68-5f6f083d6145" target="_blank" rel="noopener noreferrer">Walmart Wish List</a>
-            </li>
-        </ul>
+    <main class="w-full max-w-3xl">
+        <section class="mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-color-highlight text-[var(--color-highlight)]">Wish List</h1>
+            <p class="text-sm sm:text-base text-color-secondary text-[var(--color-text-secondary)] leading-relaxed mb-8">
+                My wish list is a blend of tech and adventure gear, reflecting my passions for coding and exploration. From high-performance laptops and cutting-edge microcontrollers to rugged camping gadgets and wilderness survival tools, it's a mix that fuels both my digital creativity and my outdoor adventures. And of course, there's always room for that one cool, must-have tech gadget that sparks the imagination and promises endless possibilities.
+            </p>
 
-        <div class="social-icons">
+            <ul id="wishlist" class="list-none p-0 m-0 flex flex-wrap justify-center gap-4">
+                <li class="item">
+                    <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank" rel="noopener noreferrer"
+                       class="inline-block bg-color-text-primary text-color-bg px-6 py-3 font-bold rounded-lg transition-colors duration-300 hover:bg-color-button-hover text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+                        Amazon Wish List
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="https://www.walmart.com/lists/shared/WL/edc3ce4e-2216-456d-bc68-5f6f083d6145" target="_blank" rel="noopener noreferrer"
+                       class="inline-block bg-color-text-primary text-color-bg px-6 py-3 font-bold rounded-lg transition-colors duration-300 hover:bg-color-button-hover text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+                        Walmart Wish List
+                    </a>
+                </li>
+                <li class="item">
+                    <a href="https://www.ebay.com/itm/365647902745" target="_blank" rel="noopener noreferrer"
+                       class="inline-block bg-color-text-primary text-color-bg px-6 py-3 font-bold rounded-lg transition-colors duration-300 hover:bg-color-button-hover text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+                        Ebay Wish List
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="social-icons mb-12 flex justify-center gap-6">
             <!-- GitHub Icon -->
-            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer">
-                <div class="circle">
-                    <i class="fab fa-github"></i>
+            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer"
+               class="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 block transition-transform duration-300 hover:scale-110 flex items-center justify-center">
+                <div class="circle w-full h-full rounded-full border-2 border-color-text-primary bg-color-bg flex items-center justify-center">
+                    <i class="fab fa-github text-2xl sm:text-3xl lg:text-4xl text-color-text-primary transition-colors duration-300 hover:text-color-button-hover"></i>
                 </div>
             </a>
 
             <!-- Facebook Icon -->
-            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer">
-                <div class="circle">
-                    <i class="fab fa-facebook-f"></i>
+            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer"
+               class="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 block transition-transform duration-300 hover:scale-110 flex items-center justify-center">
+                <div class="circle w-full h-full rounded-full border-2 border-color-text-primary bg-color-bg flex items-center justify-center">
+                    <i class="fab fa-facebook-f text-2xl sm:text-3xl lg:text-4xl text-color-text-primary transition-colors duration-300 hover:text-color-button-hover"></i>
                 </div>
             </a>
-        </div>
+        </section>
 
-        <h1>Attributions</h1>
-        <div class="attribute">
-            <a href="https://www.flaticon.com/free-icons/github" title="github icons" target="_blank" rel="noopener noreferrer">Github icons by Laisa Islam Ani</a><br>
-            <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer">Icons provided by Font Awesome</a><br>
-            <a href="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" target="_blank" rel="noopener noreferrer">"Facebook f logo (2019)" by Madboy, via Wikimedia Commons</a><br>
-            <p><i>Note: The Facebook logo is a registered trademark of Meta Platforms, Inc.</i></p>
-        </div>
+        <section class="attributions mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-color-highlight text-[var(--color-highlight)]">Attributions</h1>
+            <div class="attribute pt-4 border-t border-color-button-hover">
+                <a href="https://fontawesome.com/" title="Font Awesome Icons" target="_blank" rel="noopener noreferrer"
+                   class="block text-color-highlight text-xs leading-tight mb-1 hover:underline text-[var(--color-highlight)]">Icons provided by Font Awesome</a>
+                <a href="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" target="_blank" rel="noopener noreferrer"
+                   class="block text-color-highlight text-xs leading-tight mb-1 hover:underline text-[var(--color-highlight)]">"Facebook f logo (2019)" by Madboy, via Wikimedia Commons</a>
+                <p class="text-color-highlight text-xs italic leading-tight mt-2 text-[var(--color-highlight)]">
+                    <i>Note: The Facebook logo is a registered trademark of Meta Platforms, Inc.</i>
+                </p>
+            </div>
+        </section>
 
-        <div id="google_translate_element"></div>
+        <!-- Google Translate Element -->
+        <div id="google_translate_element" class="mt-8 mb-8"></div>
 
-        <button id="back-to-home" onclick="window.location.href='index.html';">Back to Home</button>
-    </div>
+        <button id="back-to-home"
+            class="px-8 py-4 bg-color-text-primary text-color-bg font-bold rounded-lg cursor-pointer transition-colors duration-300 hover:bg-color-button-hover text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+            Back to Home
+        </button>
+    </main>
 
     <script type="text/javascript">
+        // Initialize Google Translate
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
@@ -218,7 +131,19 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
+
+        // Add event listener for the "Back to Home" button
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToHomeButton = document.getElementById('back-to-home');
+            if (backToHomeButton) {
+                backToHomeButton.addEventListener('click', () => {
+                    // Adjust this path if 'index.html' is not in the same directory
+                    window.location.href = 'index.html';
+                });
+            }
+        });
     </script>
+    <!-- Google Translate Script -->
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
