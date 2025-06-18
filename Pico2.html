@@ -1,333 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Placeholder for favicon.ico. Remember to replace this with your actual favicon URL when deploying. -->
-    <link rel="icon" type="image/x-xicon" href="https://placehold.co/16x16/0d0d0d/00ff00?text=PI">
-    <title>Raspberry Pi Pico 2 OLED Project Code</title>
+    <title>Raspberry Pi Pico OLED Project Code</title>
 
-    <!-- Tailwind CSS CDN for utility-first styling -->
+    <!-- Favicon Placeholder -->
+    <link rel="icon" type="image/x-icon" href="https://placehold.co/32x32/0d0d0d/00ff00?text=PI">
+
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS for components that can't be styled with Tailwind directly (e.g., Google Translate Widget) -->
     <style>
-        /* Define CSS Variables for consistent theming */
-        :root {
-            --color-primary-green: #00ff00;
-            --color-dark-background: #0d0d0d;
-            --color-code-background: #1a1a1a;
-            --color-border-subtle: #333333;
-            --color-credit-green: #33cc33;
-            --font-mono: "Courier New", monospace;
-        }
-
+        /* Custom font family for the page */
         body {
-            font-family: var(--font-mono);
-            background-color: var(--color-dark-background);
-            color: var(--color-primary-green);
-            /* Tailwind flex and spacing for central alignment on page */
-            /* Changed justify-start to justify-center to vertically center content on taller screens */
-            @apply flex flex-col items-center justify-center min-h-screen p-5 sm:p-8 lg:p-10;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Monospace font for code blocks */
+        pre, code {
+            font-family: 'Roboto Mono', monospace;
         }
 
-        h1, h2, h3, p, ul, li {
-            color: var(--color-primary-green);
-        }
-
-        pre {
-            background-color: var(--color-code-background);
-            color: var(--color-primary-green);
-            /* Tailwind padding, border, and rounded corners */
-            @apply p-4 border border-[var(--color-border-subtle)] rounded-lg overflow-x-auto whitespace-pre-wrap break-words;
-            /* Ensure the pre block takes appropriate width */
-            max-width: calc(100vw - 40px); /* Account for body margin */
-            width: 100%;
-        }
-
-        /* Image Style */
-        .pico-image {
-            /* Tailwind margin-top, border, rounded corners, max-width, width, and display for centering */
-            @apply mt-5 border-2 border-[var(--color-primary-green)] rounded-lg max-w-xl w-full h-auto block mx-auto;
-        }
-
-        /* Button and Credit Container */
-        .button-credit-container {
-            @apply text-center mt-5;
-        }
-
-        .credit {
-            font-size: 0.9em;
-            color: var(--color-credit-green);
-            @apply block mb-2; /* Add some margin below the credit */
-        }
-
-        /* General Button Styling */
-        .btn {
-            @apply px-5 py-2.5 rounded-md cursor-pointer text-base font-bold transition-all duration-300 ease-in-out;
-            border: 1px solid var(--color-primary-green);
-            color: var(--color-primary-green);
-            background-color: var(--color-code-background);
-        }
-
-        .btn:hover {
-            background-color: var(--color-primary-green);
-            color: var(--color-dark-background);
-        }
-
-        /* Specific Button Styles */
-        .back-button {
-            @apply mt-4; /* Add margin-top for separation */
-        }
-
-        .copy-button {
-            @apply inline-block my-4; /* Spacing for the copy button */
-        }
-
-        /* Message box for copy feedback */
-        .message-box {
-            @apply fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white py-2 px-4 rounded-lg shadow-lg z-50 transition-opacity duration-300 opacity-0;
-        }
-        .message-box.show {
-            @apply opacity-100;
-        }
-
-
-        /* Google Translate specific styling to match theme */
-        #google_translate_element {
-            @apply mt-8 text-center;
-        }
-
-        /* Specific styles for Google Translate dropdown to match your theme */
-        #google_translate_element .goog-te-gadget-simple {
-            background-color: var(--color-dark-background) !important;
-            border: 1px solid var(--color-primary-green) !important;
-            border-radius: 8px !important;
-            padding: 8px !important;
-            box-shadow: none !important;
-        }
-
-        #google_translate_element select {
-            color: var(--color-primary-green) !important;
-            background-color: var(--color-dark-background) !important;
-            border: none !important;
-            outline: none !important;
-        }
-
-        /* Hide Google Translate banner and adjust body top offset */
+        /* --- Google Translate Widget Override --- */
+        /* Hides the default Google Translate banner */
         .goog-te-banner-frame.skiptranslate {
             display: none !important;
         }
+        /* Resets body position after banner is hidden */
         body {
             top: 0px !important;
+        }
+        /* Styles the main translate dropdown container */
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: transparent !important;
+            border: 1px solid #00ff00 !important;
+            border-radius: 0.5rem !important; /* 8px */
+            padding: 0.5rem !important; /* 8px */
+            box-shadow: none !important;
+            display: inline-block;
+        }
+        /* Styles the text inside the dropdown */
+        #google_translate_element .goog-te-gadget-simple span {
+             color: #00ff00 !important;
+        }
+        /* Removes the arrow icon to simplify the look */
+        #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+            display: none;
+        }
+        /* Hides Google's logo */
+        #google_translate_element .goog-logo-link {
+            display: none !important;
         }
     </style>
 </head>
 
-<body>
-    <main class="w-full max-w-4xl text-center">
-        <h1 class="text-3xl sm:text-4xl font-bold mb-6">Raspberry Pi Pico 2 Project Code and Wiring Instructions</h1>
+<body class="bg-[#0D0D0D] text-[#00FF00] flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
 
-        <section class="mb-8">
+    <main class="w-full max-w-4xl mx-auto text-center space-y-12">
+        
+        <!-- Header Section -->
+        <header>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">Raspberry Pi Pico Project</h1>
+            <p class="text-base sm:text-lg text-gray-400">Code, wiring, and instructions for your OLED sensor hub.</p>
+        </header>
+
+        <!-- Instructions Section -->
+        <section>
             <h2 class="text-2xl sm:text-3xl font-bold mb-4">Instructions</h2>
-            <p class="text-base sm:text-lg leading-relaxed">Use this code to display "Welcome to Coding" on an OLED connected to a Raspberry Pi Pico 2. The code also reads values from a DHT11 temperature and humidity sensor and an MQ gas sensor.</p>
+            <p class="max-w-3xl mx-auto text-base sm:text-lg leading-relaxed text-gray-300">
+                This Arduino-compatible code reads data from a DHT11 temperature/humidity sensor and an MQ gas sensor, displaying the results on an SSD1306 OLED screen connected to a Raspberry Pi Pico.
+            </p>
         </section>
 
-        <section class="mb-8">
-            <h3 class="text-xl sm:text-2xl font-bold mb-4">Code for Raspberry Pi Pico 2</h3>
-            <p class="text-base sm:text-lg leading-relaxed mb-4">Copy the code below into the Arduino IDE and upload it to your Raspberry Pi Pico 2:</p>
-
-            <pre id="code-block">
+        <!-- Code Block Section -->
+        <section class="w-full">
+            <h3 class="text-xl sm:text-2xl font-bold mb-4">Project Code</h3>
+            <div class="relative">
+                <pre id="code-block" class="bg-[#1A1A1A] text-left p-4 sm:p-6 border border-[#333333] rounded-lg overflow-x-auto whitespace-pre-wrap break-words w-full text-sm"><code>
 #include &lt;U8g2lib.h&gt;
 #include &lt;DHT.h&gt;
 
 // Define sensor pins
-#define MQ_PIN 26      // Analog pin for MQ sensor
+#define MQ_PIN 26      // Analog pin for MQ gas sensor
 #define DHT_PIN 28     // Digital pin for DHT11 sensor
 
-// Initialize U8g2 for the OLED display
-// Adjust U8G2_SSD1306_128X64_NONAME_F_HW_I2C based on your specific OLED type and connection (I2C address, reset pin)
+// Initialize U8g2 for the SSD1306 OLED display (I2C)
+// This is a common constructor; adjust if your screen is different.
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
-// DHT sensor settings
-// Initialize DHT11 sensor. If using DHT22, change DHT11 to DHT22.
+// Initialize DHT sensor. Change to DHT22 if you are using that model.
 DHT dht(DHT_PIN, DHT11);
 
 void setup() {
-    Serial.begin(115200); // Start serial communication for debugging
+    Serial.begin(115200); // Start serial for debugging
 
     // Initialize the OLED display
     u8g2.begin();
-    u8g2.clearBuffer(); // Clear the display buffer
-    u8g2.setFont(u8g2_font_ncenB08_tr); // Set font for text
-    u8g2.setCursor(0, 10); // Set cursor position
-    u8g2.print("Initializing..."); // Display initialization message
-    u8g2.sendBuffer(); // Send buffer to display
+    u8g2.clearBuffer();
+    u8g2.setFont(u8g2_font_ncenB08_tr);
+    u8g2.drawStr(0, 15, "Initializing...");
+    u8g2.sendBuffer();
 
     // Initialize the DHT sensor
     dht.begin();
-    Serial.println("DHT sensor initialized."); // Debug message
+    Serial.println("DHT sensor initialized.");
+    delay(1000); // Wait for sensors to stabilize
 }
 
 void loop() {
-    // Read temperature and humidity from DHT sensor
+    // Read sensor values
     float humidity = dht.readHumidity();
     float temperature = dht.readTemperature();
-
-    // Read analog value from MQ gas sensor
     int mqValue = analogRead(MQ_PIN);
 
-    // Check if any reads failed and exit early (e.g. sensor not connected)
+    // Check if DHT read failed (common if sensor is not connected)
     if (isnan(humidity) || isnan(temperature)) {
         Serial.println("Failed to read from DHT sensor!");
-        // Optionally display an error message on OLED
         u8g2.clearBuffer();
         u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.setCursor(0, 30);
-        u8g2.print("DHT Read Error!");
+        u8g2.drawStr(0, 32, "DHT Read Error!");
         u8g2.sendBuffer();
-        delay(2000);
-        return; // Skip the rest of the loop
+        delay(2000); // Wait before retrying
+        return;
     }
 
-    // Clear the display buffer for new content
+    // Clear buffer for new data
     u8g2.clearBuffer();
 
-    // Display welcome message (adjust font and position as needed)
-    u8g2.setFont(u8g2_font_ncenB08_tr);
-    u8g2.setCursor(0, 10);
-    u8g2.print("Welcome to Coding");
+    // Set font for display
+    u8g2.setFont(u8g2_font_profont12_tr);
 
-    // Display sensor values (temperature, humidity, MQ value)
-    u8g2.setCursor(0, 30);
-    u8g2.print("Temp: ");
-    u8g2.print(temperature);
-    u8g2.print(" C");
+    // Display Welcome Message
+    u8g2.drawStr(0, 12, "Welcome to Coding");
 
-    u8g2.setCursor(0, 45);
-    u8g2.print("Humidity: ");
-    u8g2.print(humidity);
-    u8g2.print(" %");
+    // Display Sensor Data
+    char tempString[16];
+    snprintf(tempString, sizeof(tempString), "Temp: %.1f C", temperature);
+    u8g2.drawStr(0, 30, tempString);
 
-    u8g2.setCursor(0, 60);
-    u8g2.print("MQ Value: ");
-    u8g2.print(mqValue);
+    char humString[16];
+    snprintf(humString, sizeof(humString), "Humidity: %.1f %%", humidity);
+    u8g2.drawStr(0, 44, humString);
 
-    // Send the content of the buffer to the OLED display
+    char gasString[16];
+    snprintf(gasString, sizeof(gasString), "Gas Level: %d", mqValue);
+    u8g2.drawStr(0, 58, gasString);
+
+    // Send data to the OLED
     u8g2.sendBuffer();
 
-    delay(2000); // Wait for 2 seconds before the next update
+    delay(2000); // Update every 2 seconds
 }
-            </pre>
-            <button class="copy-button btn" id="copyCodeBtn">Copy Code</button>
-            <div id="copyMessageBox" class="message-box"></div>
+                </code></pre>
+                <button id="copyCodeBtn" title="Copy to clipboard" class="absolute top-2 right-2 bg-[#0d0d0d] p-2 rounded-md border border-[#333] text-[#00ff00] hover:bg-[#00ff00] hover:text-[#0d0d0d] transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zM-1 3.5A1.5 1.5 0 0 1 .5 2H2a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 2 6H.5A1.5 1.5 0 0 1-1 4.5v-1zM5.5 3.5A1.5 1.5 0 0 1 7 2h1.5a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 6H7A1.5 1.5 0 0 1 5.5 4.5v-1z"/>
+                    </svg>
+                </button>
+            </div>
         </section>
 
-        <section class="mb-8">
-            <h3 class="text-xl sm:text-2xl font-bold mb-4">Project Image</h3>
-            <!-- This URL points to your image hosted on GitHub Pages: artistxoder.github.io/Pico2.jpg -->
-            <img src="https://artistxoder.github.io/Pico2.jpg" alt="Raspberry Pi Pico 2 Wiring" class="pico-image">
+        <!-- Project Image Section -->
+        <section>
+            <h3 class="text-xl sm:text-2xl font-bold mb-4">Wiring Diagram</h3>
+            <img 
+                src="https://artistxoder.github.io/Pico2.jpg" 
+                alt="A photo showing the Raspberry Pi Pico wired to a breadboard with an OLED display and sensors." 
+                class="pico-image border-2 border-[#00ff00] rounded-lg max-w-2xl w-full h-auto block mx-auto shadow-lg shadow-[#00ff00]/20"
+                onerror="this.onerror=null; this.src='https://placehold.co/800x600/1a1a1a/333333?text=Image+Not+Found';"
+            >
         </section>
 
-        <div class="button-credit-container">
-            <div class="credit">
-                <p>Created with the help of ChatGPT.</p>
+        <!-- Footer Actions Section -->
+        <footer class="space-y-6">
+            <div class="credit-and-actions">
+                <p class="text-xs text-gray-500 mb-4">Created by artistxoder with AI assistance.</p>
+                <button id="backToHomeBtn" class="bg-transparent border border-[#00FF00] text-[#00FF00] hover:bg-[#00FF00] hover:text-[#0D0D0D] transition-colors duration-300 font-bold py-2 px-6 rounded-lg">
+                    Back to Home
+                </button>
             </div>
-            <div class="button-container">
-                <button class="back-button btn" id="backToHomeBtn">Back to Home</button>
-            </div>
-        </div>
+            
+            <!-- Google Translate Element -->
+            <div id="google_translate_element"></div>
+        </footer>
 
-        <div id="google_translate_element"></div>
     </main>
 
-    <script type="text/javascript">
-        // Google Translate initialization function
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,ja,ko',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
+    <!-- Floating Message Box for Copy Feedback -->
+    <div id="copyMessageBox" class="fixed top-5 left-1/2 -translate-x-1/2 text-white py-2 px-5 rounded-lg shadow-lg z-50 transition-all duration-300 opacity-0 pointer-events-none">
+        <span id="copyMessageText"></span>
+    </div>
 
-        // DOMContentLoaded ensures the script runs after the entire HTML is loaded
+    <!-- Main Page Script -->
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const codeBlock = document.getElementById('code-block');
             const copyCodeBtn = document.getElementById('copyCodeBtn');
             const messageBox = document.getElementById('copyMessageBox');
+            const messageText = document.getElementById('copyMessageText');
             const backToHomeBtn = document.getElementById('backToHomeBtn');
 
-            // Copy Code Functionality
-            if (copyCodeBtn && codeBlock && messageBox) {
+            // --- Copy Code Functionality ---
+            if (copyCodeBtn && codeBlock) {
                 copyCodeBtn.addEventListener('click', () => {
-                    const textToCopy = codeBlock.innerText || codeBlock.textContent;
+                    // Using execCommand as it's more reliable in sandboxed environments like this
+                    const textToCopy = codeBlock.textContent || '';
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    
+                    // Make the textarea non-interactive and invisible
+                    textArea.style.position = 'fixed';
+                    textArea.style.top = '-9999px';
+                    textArea.style.left = '-9999px';
 
-                    // Use the modern Clipboard API if available, otherwise fallback
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(textToCopy)
-                            .then(() => showMessage('Copied!', true))
-                            .catch(err => {
-                                console.error('Failed to copy text using Clipboard API: ', err);
-                                showMessage('Copy Failed!', false);
-                            });
-                    } else {
-                        // Fallback for older browsers (using document.execCommand)
-                        const textArea = document.createElement('textarea');
-                        textArea.value = textToCopy;
-                        // Make the textarea invisible and off-screen
-                        textArea.style.position = 'fixed';
-                        textArea.style.top = '-9999px';
-                        textArea.style.left = '-9999px';
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
 
-                        try {
-                            const successful = document.execCommand('copy');
-                            if (successful) {
-                                showMessage('Copied!', true);
-                            } else {
-                                showMessage('Copy Failed!', false);
-                            }
-                        } catch (err) {
-                            console.error('Fallback: Oops, unable to copy', err);
-                            showMessage('Copy Failed!', false);
-                        } finally {
-                            document.body.removeChild(textArea);
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            showMessage('Copied to clipboard!', 'success');
+                        } else {
+                            showMessage('Copy failed. Please copy manually.', 'error');
                         }
+                    } catch (err) {
+                        console.error('Fallback copy failed: ', err);
+                        showMessage('Copy failed. Please copy manually.', 'error');
+                    } finally {
+                        document.body.removeChild(textArea);
                     }
                 });
             }
-
-            // Function to show and hide the copy message
-            function showMessage(msg, isSuccess) {
-                messageBox.textContent = msg;
-                messageBox.className = 'message-box show'; // Reset classes and add show
-                if (isSuccess) {
-                    messageBox.classList.add('bg-green-600');
+            
+            // --- Feedback Message Function ---
+            function showMessage(msg, type = 'success') {
+                messageText.textContent = msg;
+                
+                // Set color based on type
+                if (type === 'success') {
+                    messageBox.style.backgroundColor = '#22c55e'; // green-500
                 } else {
-                    messageBox.classList.add('bg-red-600');
+                    messageBox.style.backgroundColor = '#ef4444'; // red-500
                 }
 
-                // Hide the message after 2 seconds
+                // Show the message box
+                messageBox.classList.remove('opacity-0');
+                
+                // Hide it after 2 seconds
                 setTimeout(() => {
-                    messageBox.className = 'message-box'; // Hide it
-                    messageBox.classList.remove('bg-green-600', 'bg-red-600'); // Clear color classes
+                    messageBox.classList.add('opacity-0');
                 }, 2000);
             }
 
-            // Back to Home button functionality
+            // --- Back to Home Button ---
             if (backToHomeBtn) {
                 backToHomeBtn.addEventListener('click', () => {
-                    // Adjust this path if 'index.html' is not in the same directory
+                    // This path assumes 'index.html' is in the same directory.
+                    // Adjust if your home page has a different URL.
                     window.location.href = 'index.html';
                 });
             }
         });
     </script>
-    <!-- Google Translate script -->
+    
+    <!-- Google Translate Script -->
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+
 </body>
-
 </html>
-
