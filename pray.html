@@ -4,17 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Prayer Tracker</title>
-    <!-- Tailwind CSS CDN for easy styling -->
+
+    <!-- Favicon Placeholder (matching the theme) -->
+    <link rel="icon" type="image/x-icon" href="https://placehold.co/32x32/0d0d0d/00ff00?text=PRAY">
+
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS for elements that can't be styled with Tailwind directly -->
     <style>
-        /* Custom font for a clean look */
+        /* Custom font family for the page */
         body {
             font-family: 'Inter', sans-serif;
         }
         /* Basic styling for the loading spinner */
         .spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #6366f1; /* Tailwind indigo-500 */
+            border-left-color: #00FF00; /* Green from the theme */
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -25,43 +36,73 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-100 to-purple-200 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full text-center transform transition-all duration-300 hover:scale-105">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-2 tracking-tight">
+
+<body class="bg-[#0D0D0D] text-[#00FF00] flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
+
+    <div class="w-full max-w-4xl mx-auto text-center space-y-12 bg-[#1A1A1A] p-8 rounded-xl shadow-lg shadow-[#00FF00]/20 relative">
+        <!-- Back to Home Button -->
+        <button id="backToHomeBtn" class="absolute top-4 left-4 bg-transparent border border-[#00FF00] text-[#00FF00] hover:bg-[#00FF00] hover:text-[#0D0D0D] transition-colors duration-300 font-bold py-2 px-6 rounded-lg flex items-center">
+            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Home
+        </button>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 mt-8">
             Community Prayer Tracker
         </h1>
 
-        <p class="text-gray-600 mb-8 text-lg">
-            Click the button below to record your prayer. All prayers are visible to everyone.
+        <p class="text-base sm:text-lg leading-relaxed text-gray-300">
+            Click a button below to record your prayer. All prayers are visible to everyone.
         </p>
 
-        <!-- Pray Button -->
-        <button id="prayButton" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95 flex items-center justify-center mx-auto">
-            <svg class="inline-block w-6 h-6 mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            I Prayed!
-            <div id="loadingSpinner" class="spinner ml-2 hidden"></div>
-        </button>
+        <!-- Prayer Buttons Container -->
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+            <!-- Named Pray Button -->
+            <button id="prayButton" class="bg-transparent border border-[#00FF00] text-[#00FF00] font-bold py-4 px-8 rounded-lg shadow-md hover:bg-[#00FF00] hover:text-[#0D0D0D] transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#00FF00]/50 active:scale-95 flex items-center justify-center">
+                <svg class="inline-block w-6 h-6 mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                I Prayed!
+                <div id="loadingSpinnerNamed" class="spinner ml-2 hidden"></div>
+            </button>
 
-        <!-- Message Box for user feedback -->
-        <div id="messageBox" class="mt-4 p-3 rounded-lg text-sm hidden" role="alert"></div>
-
-        <!-- Display area for last prayer time (optional, as list shows all) -->
-        <div id="lastPrayTimeDisplay" class="mt-8 text-xl font-semibold text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-200 hidden">
-            <!-- Last prayer time will be displayed here -->
+            <!-- Anonymous Pray Button -->
+            <button id="prayAnonymousButton" class="bg-transparent border border-gray-500 text-gray-400 font-bold py-4 px-8 rounded-lg shadow-md hover:bg-gray-500 hover:text-white transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300/50 active:scale-95 flex items-center justify-center">
+                <svg class="inline-block w-6 h-6 mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                Pray Anonymously
+                <div id="loadingSpinnerAnonymous" class="spinner ml-2 hidden"></div>
+            </button>
         </div>
 
-        <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4">
+        <!-- Message Box for user feedback (global) -->
+        <div id="messageBox" class="fixed top-5 left-1/2 -translate-x-1/2 py-2 px-5 rounded-lg shadow-lg z-50 transition-all duration-300 opacity-0 pointer-events-none">
+            <span id="messageText"></span>
+        </div>
+
+        <!-- Anonymous Prayer Status Display -->
+        <div class="bg-[#0D0D0D] p-4 rounded-lg border border-[#333333] text-gray-300 mb-8">
+            <h3 class="text-xl font-bold mb-2 text-[#00FF00]">Anonymous Prayer Status</h3>
+            <p id="anonymousStatusMessage" class="text-lg text-gray-400 mb-2 transition-opacity duration-500 opacity-0">
+                <!-- "Someone just prayed anonymously!" message will appear here -->
+            </p>
+            <p class="text-md text-gray-400">
+                Anonymous Prayers Today: <span id="anonymousPrayersTodayCount" class="font-bold text-[#00FF00]">0</span>
+            </p>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">
             Community Prayer History
         </h2>
         <!-- List of all saved prayer times -->
-        <ul id="prayerHistoryList" class="text-left bg-gray-50 p-4 rounded-lg border border-gray-200 max-h-60 overflow-y-auto">
+        <ul id="prayerHistoryList" class="text-left bg-[#0D0D0D] p-4 rounded-lg border border-[#333333] max-h-60 overflow-y-auto text-gray-300">
             <li class="text-gray-500">No community prayer times recorded yet.</li>
         </ul>
 
         <!-- Clear All Button -->
-        <button id="clearAllButton" class="mt-6 bg-red-500 text-white font-bold py-2 px-6 rounded-full shadow-md hover:bg-red-600 transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-300 active:scale-95">
+        <button id="clearAllButton" class="mt-6 bg-transparent border border-red-500 text-red-400 font-bold py-2 px-6 rounded-lg shadow-md hover:bg-red-500 hover:text-white transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-300/50 active:scale-95">
             Clear All Community Prayers
         </button>
 
@@ -80,7 +121,7 @@
         let app;
         let db;
         let auth;
-        let userId; // Still needed for authentication, but not for data path
+        let userId;
         let isAuthReady = false;
 
         // Get app ID and Firebase config from the environment
@@ -90,37 +131,72 @@
 
         // DOM elements
         const prayButton = document.getElementById('prayButton');
-        const lastPrayTimeDisplay = document.getElementById('lastPrayTimeDisplay');
+        const prayAnonymousButton = document.getElementById('prayAnonymousButton'); // New anonymous button
         const prayerHistoryList = document.getElementById('prayerHistoryList');
         const clearAllButton = document.getElementById('clearAllButton');
         const messageBox = document.getElementById('messageBox');
-        const loadingSpinner = document.getElementById('loadingSpinner');
+        const messageText = document.getElementById('messageText');
+        const loadingSpinnerNamed = document.getElementById('loadingSpinnerNamed'); // Spinner for named pray button
+        const loadingSpinnerAnonymous = document.getElementById('loadingSpinnerAnonymous'); // Spinner for anonymous pray button
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+        const anonymousStatusMessage = document.getElementById('anonymousStatusMessage'); // New status message element
+        const anonymousPrayersTodayCount = document.getElementById('anonymousPrayersTodayCount'); // New counter element
 
-        // Function to show messages to the user
+        // Function to show messages to the user (global feedback)
         function showMessage(message, type = 'info') {
-            messageBox.textContent = message;
-            messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-blue-100', 'text-blue-800');
+            messageText.textContent = message;
+
+            // Remove previous colors
+            messageBox.classList.remove('bg-[#00FF00]', 'text-[#0D0D0D]', 'bg-[#FF0000]', 'text-[#0D0D0D]', 'bg-[#00FFFF]', 'text-[#0D0D0D]');
+            messageBox.classList.add('pointer-events-auto'); // Make it clickable/visible
+
             if (type === 'success') {
-                messageBox.classList.add('bg-green-100', 'text-green-800');
+                messageBox.classList.add('bg-[#00FF00]', 'text-[#0D0D0D]');
             } else if (type === 'error') {
-                messageBox.classList.add('bg-red-100', 'text-red-800');
+                messageBox.classList.add('bg-[#FF0000]', 'text-[#0D0D0D]');
             } else { // info
-                messageBox.classList.add('bg-blue-100', 'text-blue-800');
+                messageBox.classList.add('bg-[#00FFFF]', 'text-[#0D0D0D]');
             }
+
+            // Show the message box
+            messageBox.classList.remove('opacity-0');
+
+            // Hide it after 3 seconds
             setTimeout(() => {
-                messageBox.classList.add('hidden');
-            }, 5000); // Hide after 5 seconds
+                messageBox.classList.add('opacity-0');
+                messageBox.classList.remove('pointer-events-auto');
+            }, 3000);
         }
 
-        // Function to show/hide loading spinner
-        function setLoading(isLoading) {
+        // Function to show/hide loading spinner for a specific button
+        function setLoading(buttonType, isLoading) {
+            let spinner;
+            let button;
+            if (buttonType === 'named') {
+                spinner = loadingSpinnerNamed;
+                button = prayButton;
+            } else if (buttonType === 'anonymous') {
+                spinner = loadingSpinnerAnonymous;
+                button = prayAnonymousButton;
+            } else if (buttonType === 'clear') {
+                button = clearAllButton;
+            }
+
             if (isLoading) {
-                loadingSpinner.classList.remove('hidden');
-                prayButton.disabled = true;
-                clearAllButton.disabled = true;
+                if (spinner) spinner.classList.remove('hidden');
+                button.disabled = true;
+                // Keep other buttons enabled unless they are also performing an action
+                if (buttonType !== 'clear') {
+                    prayButton.disabled = true;
+                    prayAnonymousButton.disabled = true;
+                    clearAllButton.disabled = true;
+                }
             } else {
-                loadingSpinner.classList.add('hidden');
+                if (spinner) spinner.classList.add('hidden');
+                button.disabled = false;
+                // Re-enable all buttons after an action
                 prayButton.disabled = false;
+                prayAnonymousButton.disabled = false;
                 clearAllButton.disabled = false;
             }
         }
@@ -150,11 +226,12 @@
                 // Listen for auth state changes
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
-                        userId = user.uid; // User ID is still set for authentication purposes
+                        userId = user.uid;
                         isAuthReady = true;
                         console.log("Firebase initialized and authenticated. User ID:", userId);
                         // Load existing prayer times once authenticated
                         loadPrayerTimes();
+                        loadAnonymousPrayerStatus(); // Load anonymous status as well
                     } else {
                         // Sign in anonymously if no user is logged in
                         try {
@@ -177,79 +254,138 @@
             }
         }
 
-        // Function to save a prayer time to Firestore
+        // Function to save a named prayer time to Firestore
         async function savePrayerTime() {
             if (!isAuthReady) {
                 showMessage("Authentication not ready. Please wait.", 'info');
                 return;
             }
-            setLoading(true);
+            setLoading('named', true);
             try {
                 const now = new Date();
                 const formattedTime = formatDateTime(now);
 
-                // Firestore collection path for PUBLIC data
-                // Data is now saved to a shared collection visible to all users
                 const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
 
                 await addDoc(prayerCollectionRef, {
-                    timestamp: now.getTime(), // Store as Unix timestamp for sorting
-                    formattedTime: formattedTime // Store formatted string for display
+                    timestamp: now.getTime(),
+                    formattedTime: formattedTime
                 });
 
-                lastPrayTimeDisplay.textContent = `Last prayed on: ${formattedTime}`;
-                lastPrayTimeDisplay.classList.remove('hidden');
                 showMessage("Prayer time saved successfully!", 'success');
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error("Error adding named prayer document: ", e);
                 showMessage("Failed to save prayer time. Please try again.", 'error');
             } finally {
-                setLoading(false);
+                setLoading('named', false);
             }
         }
 
-        // Function to load and display prayer times from Firestore in real-time
+        // Function to save an anonymous prayer event to Firestore
+        async function saveAnonymousPrayer() {
+            if (!isAuthReady) {
+                showMessage("Authentication not ready. Please wait.", 'info');
+                return;
+            }
+            setLoading('anonymous', true);
+            try {
+                const now = new Date();
+                // We only need the timestamp for anonymous prayers for the counter
+                const anonymousPrayerCollectionRef = collection(db, `artifacts/${appId}/public/data/anonymousPrayerEvents`);
+
+                await addDoc(anonymousPrayerCollectionRef, {
+                    timestamp: now.getTime()
+                });
+
+                showMessage("Anonymous prayer recorded!", 'success');
+            } catch (e) {
+                console.error("Error adding anonymous prayer document: ", e);
+                showMessage("Failed to record anonymous prayer. Please try again.", 'error');
+            } finally {
+                setLoading('anonymous', false);
+            }
+        }
+
+        // Function to load and display named prayer times from Firestore in real-time
         function loadPrayerTimes() {
             if (!isAuthReady) {
-                console.log("Not ready to load prayer times. Waiting for authentication.");
+                console.log("Not ready to load named prayer times. Waiting for authentication.");
                 return;
             }
 
-            // Firestore collection path for PUBLIC data
             const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
-            // Use onSnapshot to get real-time updates
             onSnapshot(prayerCollectionRef, (snapshot) => {
                 const prayerTimes = [];
                 snapshot.forEach((doc) => {
                     prayerTimes.push({ id: doc.id, ...doc.data() });
                 });
 
-                // Sort the prayer times by timestamp in descending order (most recent first)
-                prayerTimes.sort((a, b) => b.timestamp - a.timestamp);
+                prayerTimes.sort((a, b) => b.timestamp - a.timestamp); // Most recent first
 
                 prayerHistoryList.innerHTML = ''; // Clear existing list
 
                 if (prayerTimes.length === 0) {
                     prayerHistoryList.innerHTML = '<li class="text-gray-500">No community prayer times recorded yet.</li>';
-                    lastPrayTimeDisplay.classList.add('hidden');
                 } else {
                     prayerTimes.forEach(prayer => {
                         const listItem = document.createElement('li');
-                        listItem.className = 'py-2 border-b border-gray-100 last:border-b-0 text-gray-700';
+                        listItem.className = 'py-2 border-b border-[#333333] last:border-b-0 text-gray-300';
                         listItem.textContent = prayer.formattedTime;
                         prayerHistoryList.appendChild(listItem);
                     });
-                    // Update the "last prayed" display with the most recent one
-                    lastPrayTimeDisplay.textContent = `Last community prayer: ${prayerTimes[0].formattedTime}`;
-                    lastPrayTimeDisplay.classList.remove('hidden');
                 }
             }, (error) => {
-                console.error("Error fetching prayer times: ", error);
+                console.error("Error fetching named prayer times: ", error);
                 showMessage("Error loading community prayer history. Please refresh.", 'error');
             });
         }
 
-        // Function to clear all public prayer times
+        // Function to load and display anonymous prayer status in real-time
+        function loadAnonymousPrayerStatus() {
+            if (!isAuthReady) {
+                console.log("Not ready to load anonymous prayer status. Waiting for authentication.");
+                return;
+            }
+
+            const anonymousPrayerCollectionRef = collection(db, `artifacts/${appId}/public/data/anonymousPrayerEvents`);
+            onSnapshot(anonymousPrayerCollectionRef, (snapshot) => {
+                const anonymousPrayers = [];
+                const now = new Date();
+                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime(); // Start of current day in milliseconds
+
+                snapshot.forEach((doc) => {
+                    const prayerTimestamp = doc.data().timestamp;
+                    anonymousPrayers.push(prayerTimestamp);
+
+                    // If it's a new prayer added *just now*, show the transient message
+                    // This check is a bit simplistic; a more robust solution might involve server timestamps or a separate trigger
+                    if (Math.abs(now.getTime() - prayerTimestamp) < 2000 && !doc.metadata.hasPendingWrites) {
+                         // Only show message for newly added docs from other clients, not local writes instantly
+                         // doc.metadata.hasPendingWrites is true for local writes before they commit to server
+                        showAnonymousStatusMessage();
+                    }
+                });
+
+                // Filter for today's prayers
+                const todayAnonymousPrayers = anonymousPrayers.filter(timestamp => timestamp >= startOfDay);
+                anonymousPrayersTodayCount.textContent = todayAnonymousPrayers.length;
+
+            }, (error) => {
+                console.error("Error fetching anonymous prayer events: ", error);
+                showMessage("Error loading anonymous prayer status. Please refresh.", 'error');
+            });
+        }
+
+        // Function to display the transient anonymous status message
+        function showAnonymousStatusMessage() {
+            anonymousStatusMessage.textContent = "Someone just prayed anonymously!";
+            anonymousStatusMessage.classList.remove('opacity-0');
+            setTimeout(() => {
+                anonymousStatusMessage.classList.add('opacity-0');
+            }, 3000); // Message fades out after 3 seconds
+        }
+
+        // Function to clear all public named prayer times
         async function clearAllPrayerTimes() {
             if (!isAuthReady) {
                 showMessage("Authentication not ready. Please wait.", 'info');
@@ -259,22 +395,21 @@
             const confirmClear = document.createElement('div');
             confirmClear.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
             confirmClear.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+                <div class="bg-[#1A1A1A] text-[#00FF00] p-6 rounded-lg shadow-xl text-center">
                     <p class="text-lg font-semibold mb-4">Are you sure you want to delete ALL community prayer times?</p>
-                    <p class="text-sm text-gray-600 mb-6">This action cannot be undone and will clear the history for everyone.</p>
+                    <p class="text-sm text-gray-400 mb-6">This action cannot be undone and will clear the history for everyone.</p>
                     <div class="flex justify-center space-x-4">
-                        <button id="confirmYes" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Yes, Clear All</button>
-                        <button id="confirmNo" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400">No, Cancel</button>
+                        <button id="confirmYes" class="bg-transparent border border-red-500 text-red-400 px-4 py-2 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-300">Yes, Clear All</button>
+                        <button id="confirmNo" class="bg-transparent border border-[#00FF00] text-[#00FF00] px-4 py-2 rounded-md hover:bg-[#00FF00] hover:text-[#0D0D0D] transition-colors duration-300">No, Cancel</button>
                     </div>
                 </div>
             `;
             document.body.appendChild(confirmClear);
 
             document.getElementById('confirmYes').onclick = async () => {
-                setLoading(true);
+                setLoading('clear', true); // Use 'clear' type for the spinner
                 confirmClear.remove(); // Remove the confirmation dialog
                 try {
-                    // Firestore collection path for PUBLIC data
                     const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
                     const querySnapshot = await getDocs(prayerCollectionRef);
                     const deletePromises = [];
@@ -287,7 +422,7 @@
                     console.error("Error clearing documents: ", e);
                     showMessage("Failed to clear community prayer times. Please try again.", 'error');
                 } finally {
-                    setLoading(false);
+                    setLoading('clear', false);
                 }
             };
 
@@ -300,8 +435,17 @@
         document.addEventListener('DOMContentLoaded', () => {
             initializeFirebase(); // Initialize Firebase first
             prayButton.addEventListener('click', savePrayerTime);
+            prayAnonymousButton.addEventListener('click', saveAnonymousPrayer); // New event listener for anonymous button
             clearAllButton.addEventListener('click', clearAllPrayerTimes);
+
+            // Back to Home Button Event Listener
+            if (backToHomeBtn) {
+                backToHomeBtn.addEventListener('click', () => {
+                    window.location.href = 'index.html';
+                });
+            }
         });
     </script>
 </body>
 </html>
+
