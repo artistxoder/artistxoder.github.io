@@ -112,43 +112,35 @@
     </div>
 
     <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Import createClient directly from Supabase CDN for module scripts
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.0/dist/module.mjs';
 
-        // Global variables for Firebase instances and user ID
-        let app;
-        let db;
-        let auth;
-        let userId;
-        let isAuthReady = false;
-
-        // Get app ID and Firebase config from the environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // Initialize Supabase Client
+        // Replace 'YOUR_SUPABASE_URL' with your project URL (e.g., https://xkirrqyxhpffgeopvcr.supabase.co)
+        // Replace 'YOUR_SUPABASE_ANON_KEY' with your actual anon public key
+        const SUPABASE_URL = 'https://xkirrqyxhpffgeopvcr.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhraXJycXl4aHBmZmVnZW9wdmNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5NDQ1ODYsImV4cCI6MjA2OTUyMDU4Nn0.V_QVcLkS67uFti1B1LQQjfLxaRbtw7uiI6y0AdMJS_4';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // DOM elements
         const prayButton = document.getElementById('prayButton');
-        const prayAnonymousButton = document.getElementById('prayAnonymousButton'); // New anonymous button
+        const prayAnonymousButton = document.getElementById('prayAnonymousButton');
         const prayerHistoryList = document.getElementById('prayerHistoryList');
         const clearAllButton = document.getElementById('clearAllButton');
         const messageBox = document.getElementById('messageBox');
         const messageText = document.getElementById('messageText');
-        const loadingSpinnerNamed = document.getElementById('loadingSpinnerNamed'); // Spinner for named pray button
-        const loadingSpinnerAnonymous = document.getElementById('loadingSpinnerAnonymous'); // Spinner for anonymous pray button
+        const loadingSpinnerNamed = document.getElementById('loadingSpinnerNamed');
+        const loadingSpinnerAnonymous = document.getElementById('loadingSpinnerAnonymous');
         const backToHomeBtn = document.getElementById('backToHomeBtn');
-        const anonymousStatusMessage = document.getElementById('anonymousStatusMessage'); // New status message element
-        const anonymousPrayersTodayCount = document.getElementById('anonymousPrayersTodayCount'); // New counter element
+        const anonymousStatusMessage = document.getElementById('anonymousStatusMessage');
+        const anonymousPrayersTodayCount = document.getElementById('anonymousPrayersTodayCount');
 
         // Function to show messages to the user (global feedback)
         function showMessage(message, type = 'info') {
             messageText.textContent = message;
 
-            // Remove previous colors
             messageBox.classList.remove('bg-[#00FF00]', 'text-[#0D0D0D]', 'bg-[#FF0000]', 'text-[#0D0D0D]', 'bg-[#00FFFF]', 'text-[#0D0D0D]');
-            messageBox.classList.add('pointer-events-auto'); // Make it clickable/visible
+            messageBox.classList.add('pointer-events-auto');
 
             if (type === 'success') {
                 messageBox.classList.add('bg-[#00FF00]', 'text-[#0D0D0D]');
@@ -158,10 +150,8 @@
                 messageBox.classList.add('bg-[#00FFFF]', 'text-[#0D0D0D]');
             }
 
-            // Show the message box
             messageBox.classList.remove('opacity-0');
 
-            // Hide it after 3 seconds
             setTimeout(() => {
                 messageBox.classList.add('opacity-0');
                 messageBox.classList.remove('pointer-events-auto');
@@ -185,16 +175,12 @@
             if (isLoading) {
                 if (spinner) spinner.classList.remove('hidden');
                 button.disabled = true;
-                // Keep other buttons enabled unless they are also performing an action
-                if (buttonType !== 'clear') {
-                    prayButton.disabled = true;
-                    prayAnonymousButton.disabled = true;
-                    clearAllButton.disabled = true;
-                }
+                prayButton.disabled = true; // Disable both pray buttons and clear while any action is in progress
+                prayAnonymousButton.disabled = true;
+                clearAllButton.disabled = true;
             } else {
                 if (spinner) spinner.classList.add('hidden');
                 button.disabled = false;
-                // Re-enable all buttons after an action
                 prayButton.disabled = false;
                 prayAnonymousButton.disabled = false;
                 clearAllButton.disabled = false;
@@ -216,110 +202,81 @@
             return date.toLocaleString('en-US', options);
         }
 
-        // Initialize Firebase and set up authentication
-        async function initializeFirebase() {
-            try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                // Listen for auth state changes
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        isAuthReady = true;
-                        console.log("Firebase initialized and authenticated. User ID:", userId);
-                        // Load existing prayer times once authenticated
-                        loadPrayerTimes();
-                        loadAnonymousPrayerStatus(); // Load anonymous status as well
-                    } else {
-                        // Sign in anonymously if no user is logged in
-                        try {
-                            if (initialAuthToken) {
-                                await signInWithCustomToken(auth, initialAuthToken);
-                                console.log("Signed in with custom token.");
-                            } else {
-                                await signInAnonymously(auth);
-                                console.log("Signed in anonymously.");
-                            }
-                        } catch (error) {
-                            console.error("Error signing in:", error);
-                            showMessage("Error signing in. Please try again later.", 'error');
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-                showMessage("Failed to initialize Firebase. Check console for details.", 'error');
-            }
-        }
-
-        // Function to save a named prayer time to Firestore
+        // Function to save a named prayer time to Supabase
         async function savePrayerTime() {
-            if (!isAuthReady) {
-                showMessage("Authentication not ready. Please wait.", 'info');
-                return;
-            }
             setLoading('named', true);
             try {
                 const now = new Date();
                 const formattedTime = formatDateTime(now);
 
-                const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
+                const { data, error } = await supabase
+                    .from('prayer_times') // Your table name
+                    .insert([
+                        { timestamp: now.getTime(), formatted_time: formattedTime }
+                    ]);
 
-                await addDoc(prayerCollectionRef, {
-                    timestamp: now.getTime(),
-                    formattedTime: formattedTime
-                });
+                if (error) throw error;
 
                 showMessage("Prayer time saved successfully!", 'success');
             } catch (e) {
-                console.error("Error adding named prayer document: ", e);
-                showMessage("Failed to save prayer time. Please try again.", 'error');
+                console.error("Error adding named prayer document: ", e.message);
+                showMessage(`Failed to save prayer time: ${e.message}`, 'error');
             } finally {
                 setLoading('named', false);
             }
         }
 
-        // Function to save an anonymous prayer event to Firestore
+        // Function to save an anonymous prayer event to Supabase
         async function saveAnonymousPrayer() {
-            if (!isAuthReady) {
-                showMessage("Authentication not ready. Please wait.", 'info');
-                return;
-            }
             setLoading('anonymous', true);
             try {
                 const now = new Date();
-                // We only need the timestamp for anonymous prayers for the counter
-                const anonymousPrayerCollectionRef = collection(db, `artifacts/${appId}/public/data/anonymousPrayerEvents`);
 
-                await addDoc(anonymousPrayerCollectionRef, {
-                    timestamp: now.getTime()
-                });
+                const { data, error } = await supabase
+                    .from('anonymous_prayer_events') // Your table name
+                    .insert([
+                        { timestamp: now.getTime() }
+                    ]);
+
+                if (error) throw error;
 
                 showMessage("Anonymous prayer recorded!", 'success');
             } catch (e) {
-                console.error("Error adding anonymous prayer document: ", e);
-                showMessage("Failed to record anonymous prayer. Please try again.", 'error');
+                console.error("Error adding anonymous prayer document: ", e.message);
+                showMessage(`Failed to record anonymous prayer: ${e.message}`, 'error');
             } finally {
                 setLoading('anonymous', false);
             }
         }
 
-        // Function to load and display named prayer times from Firestore in real-time
+        // Function to load and display named prayer times from Supabase in real-time
         function loadPrayerTimes() {
-            if (!isAuthReady) {
-                console.log("Not ready to load named prayer times. Waiting for authentication.");
-                return;
-            }
+            // Realtime subscription for new inserts
+            supabase
+                .from('prayer_times')
+                .on('INSERT', payload => {
+                    // When a new prayer is inserted, re-fetch all to ensure sorted list
+                    fetchAndDisplayPrayerTimes();
+                })
+                .on('DELETE', payload => {
+                    // When a prayer is deleted, re-fetch all
+                    fetchAndDisplayPrayerTimes();
+                })
+                .subscribe();
 
-            const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
-            onSnapshot(prayerCollectionRef, (snapshot) => {
-                const prayerTimes = [];
-                snapshot.forEach((doc) => {
-                    prayerTimes.push({ id: doc.id, ...doc.data() });
-                });
+            // Initial fetch
+            fetchAndDisplayPrayerTimes();
+        }
 
+        async function fetchAndDisplayPrayerTimes() {
+            try {
+                const { data, error } = await supabase
+                    .from('prayer_times')
+                    .select('*'); // Select all columns
+
+                if (error) throw error;
+
+                const prayerTimes = data || [];
                 prayerTimes.sort((a, b) => b.timestamp - a.timestamp); // Most recent first
 
                 prayerHistoryList.innerHTML = ''; // Clear existing list
@@ -330,50 +287,55 @@
                     prayerTimes.forEach(prayer => {
                         const listItem = document.createElement('li');
                         listItem.className = 'py-2 border-b border-[#333333] last:border-b-0 text-gray-300';
-                        listItem.textContent = prayer.formattedTime;
+                        listItem.textContent = prayer.formatted_time; // Use formatted_time from Supabase
                         prayerHistoryList.appendChild(listItem);
                     });
                 }
-            }, (error) => {
-                console.error("Error fetching named prayer times: ", error);
+            } catch (e) {
+                console.error("Error fetching named prayer times: ", e.message);
                 showMessage("Error loading community prayer history. Please refresh.", 'error');
-            });
+            }
         }
 
         // Function to load and display anonymous prayer status in real-time
         function loadAnonymousPrayerStatus() {
-            if (!isAuthReady) {
-                console.log("Not ready to load anonymous prayer status. Waiting for authentication.");
-                return;
-            }
+            // Realtime subscription for new anonymous inserts
+            supabase
+                .from('anonymous_prayer_events')
+                .on('INSERT', payload => {
+                    // When a new anonymous prayer is inserted, update the count and show message
+                    updateAnonymousPrayerCount();
+                    showAnonymousStatusMessage();
+                })
+                .on('DELETE', payload => {
+                    // When an anonymous prayer is deleted, update the count
+                    updateAnonymousPrayerCount();
+                })
+                .subscribe();
 
-            const anonymousPrayerCollectionRef = collection(db, `artifacts/${appId}/public/data/anonymousPrayerEvents`);
-            onSnapshot(anonymousPrayerCollectionRef, (snapshot) => {
-                const anonymousPrayers = [];
+            // Initial fetch
+            updateAnonymousPrayerCount();
+        }
+
+        async function updateAnonymousPrayerCount() {
+            try {
+                const { data, error } = await supabase
+                    .from('anonymous_prayer_events')
+                    .select('timestamp'); // Only need the timestamp for counting
+
+                if (error) throw error;
+
+                const anonymousPrayers = data.map(item => item.timestamp) || [];
                 const now = new Date();
-                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime(); // Start of current day in milliseconds
+                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
-                snapshot.forEach((doc) => {
-                    const prayerTimestamp = doc.data().timestamp;
-                    anonymousPrayers.push(prayerTimestamp);
-
-                    // If it's a new prayer added *just now*, show the transient message
-                    // This check is a bit simplistic; a more robust solution might involve server timestamps or a separate trigger
-                    if (Math.abs(now.getTime() - prayerTimestamp) < 2000 && !doc.metadata.hasPendingWrites) {
-                         // Only show message for newly added docs from other clients, not local writes instantly
-                         // doc.metadata.hasPendingWrites is true for local writes before they commit to server
-                        showAnonymousStatusMessage();
-                    }
-                });
-
-                // Filter for today's prayers
                 const todayAnonymousPrayers = anonymousPrayers.filter(timestamp => timestamp >= startOfDay);
                 anonymousPrayersTodayCount.textContent = todayAnonymousPrayers.length;
 
-            }, (error) => {
-                console.error("Error fetching anonymous prayer events: ", error);
+            } catch (e) {
+                console.error("Error fetching anonymous prayer events: ", e.message);
                 showMessage("Error loading anonymous prayer status. Please refresh.", 'error');
-            });
+            }
         }
 
         // Function to display the transient anonymous status message
@@ -387,10 +349,6 @@
 
         // Function to clear all public named prayer times
         async function clearAllPrayerTimes() {
-            if (!isAuthReady) {
-                showMessage("Authentication not ready. Please wait.", 'info');
-                return;
-            }
             // Custom confirmation dialog
             const confirmClear = document.createElement('div');
             confirmClear.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -407,20 +365,28 @@
             document.body.appendChild(confirmClear);
 
             document.getElementById('confirmYes').onclick = async () => {
-                setLoading('clear', true); // Use 'clear' type for the spinner
+                setLoading('clear', true);
                 confirmClear.remove(); // Remove the confirmation dialog
                 try {
-                    const prayerCollectionRef = collection(db, `artifacts/${appId}/public/data/prayerTimes`);
-                    const querySnapshot = await getDocs(prayerCollectionRef);
-                    const deletePromises = [];
-                    querySnapshot.forEach((doc) => {
-                        deletePromises.push(deleteDoc(doc.ref));
-                    });
-                    await Promise.all(deletePromises);
+                    // Delete all rows from both tables
+                    const { error: prayerError } = await supabase
+                        .from('prayer_times')
+                        .delete()
+                        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows (assuming UUIDs are never all zeros)
+
+                    const { error: anonymousError } = await supabase
+                        .from('anonymous_prayer_events')
+                        .delete()
+                        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows
+
+                    if (prayerError || anonymousError) {
+                        throw new Error(prayerError?.message || anonymousError?.message);
+                    }
+
                     showMessage("All community prayer times cleared successfully!", 'success');
                 } catch (e) {
-                    console.error("Error clearing documents: ", e);
-                    showMessage("Failed to clear community prayer times. Please try again.", 'error');
+                    console.error("Error clearing documents: ", e.message);
+                    showMessage(`Failed to clear community prayer times: ${e.message}`, 'error');
                 } finally {
                     setLoading('clear', false);
                 }
@@ -433,9 +399,11 @@
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
-            initializeFirebase(); // Initialize Firebase first
+            loadPrayerTimes(); // Load initial data and set up real-time listeners
+            loadAnonymousPrayerStatus();
+
             prayButton.addEventListener('click', savePrayerTime);
-            prayAnonymousButton.addEventListener('click', saveAnonymousPrayer); // New event listener for anonymous button
+            prayAnonymousButton.addEventListener('click', saveAnonymousPrayer);
             clearAllButton.addEventListener('click', clearAllPrayerTimes);
 
             // Back to Home Button Event Listener
@@ -448,4 +416,3 @@
     </script>
 </body>
 </html>
-
