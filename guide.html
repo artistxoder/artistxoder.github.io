@@ -1,90 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Guide</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-            color: #00ff00;
-            background-color: #0f0f0f;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repair & 3D Printing Services</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ff00;
+      background-color: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
-        }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+    }
 
-        p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            max-width: 70%;
-            margin: 10px auto;
-        }
+    h2 {
+      font-size: 2rem;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 5px #00ff00;
+      border-bottom: 1px solid #00ff00;
+      padding-bottom: 5px;
+    }
 
-        a {
-            color: #00ff00;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            font-size: 1.3rem;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+    }
 
-        a:hover {
-            color: #00ff7f;
-            text-shadow: 0 0 10px #00ff7f, 0 0 20px #00ff7f;
-        }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px auto;
+      max-width: 600px;
+      text-align: left;
+    }
 
-        .google-translate-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #0f0f0f;
-            text-align: center;
-            padding: 10px 0;
-            border-top: 1px solid #00ff00;
-            z-index: 1000;
-        }
-    </style>
-    
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,ja,ko',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    li {
+      padding: 5px 0;
+    }
+
+    a {
+      color: #00ff00;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 1.3rem;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    a:hover {
+      color: #00ff7f;
+      text-shadow: 0 0 10px #00ff7f, 0 0 20px #00ff7f;
+    }
+
+    .google-translate-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #0f0f0f;
+      text-align: center;
+      padding: 10px 0;
+      border-top: 1px solid #00ff00;
+      z-index: 1000;
+    }
+
+    .section-container {
+      margin-bottom: 30px;
+    }
+
+    .policy {
+      background-color: #111;
+      border: 1px solid #00ff00;
+      padding: 10px;
+      border-radius: 5px;
+      max-width: 600px;
+      margin: 10px auto;
+      text-align: left;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background: #0f0f0f;
+      color: #00ff00;
+      text-decoration: none;
+      border: 1px solid #00ff00;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .back-button:hover {
+      color: #0f0f0f;
+      background-color: #00ff00;
+      text-shadow: 0 0 10px #00ff7f;
+    }
+  </style>
+
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,ja,ko',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-    <!-- Content of the page -->
-    <h1>How to Play Android Flappy</h1>
-    <p>Welcome to Android Flappy! Navigate a bird through a series of pipes. The bird flaps upwards when you click on the screen. Avoid colliding with the pipes and score points by passing through the gaps.</p>
-    <p><strong>Controls:</strong></p>
-    <p>- Click anywhere on the screen to make the bird flap and rise.</p>
-    <p>- Keep the bird flying and navigate through the gaps in the pipes.</p>
-    <p>Good luck and have fun!</p>
-    <a href="flappyandroidrun.html">Back to Game</a>
 
-    <!-- Google Translate Dropdown -->
-    <div class="google-translate-container">
-        <div id="google_translate_element"></div>
+  <h1>Repair & 3D Printing Services</h1>
+  <a class="back-button" href="index.html">⬅ Back</a>
+
+  <div class="section-container" id="about">
+    <h2>About</h2>
+    <p>
+      I’m launching a local repair business focused on basic services such as 
+      watch repairs, watch battery replacements, and phone battery replacements. 
+      I also provide 3D printing services for custom projects and products. 
+      Additional services include simple website creation and port cleaning for phones/devices.
+    </p>
+  </div>
+
+  <div class="section-container" id="services">
+    <h2>Services</h2>
+    <ul>
+      <li>🔋 Watch battery replacements & band changes</li>
+      <li>🔋 Phone battery replacements (parts ordered separately if needed)</li>
+      <li>🛠️ Cleaning of charging ports (phones, laptops, small devices)</li>
+      <li>🖨️ 3D printing (size limitations apply)</li>
+      <li>💻 Basic website design & coding services</li>
+    </ul>
+  </div>
+
+  <div class="section-container" id="policies">
+    <h2>Policies</h2>
+    <div class="policy">
+      <p>✅ Free quotes are available, but all services must be paid.</p>
+      <p>💵 Payment is <strong>cash only</strong> at this time, due upon service completion.</p>
+      <p>📦 Extra charges may apply if I need to order parts.</p>
     </div>
+  </div>
+
+  <div class="section-container" id="contact">
+    <h2>Contact</h2>
+    <p>This is a home-based business – services are by <strong>appointment only</strong>. Please text or email first to arrange a time.</p>
+    <p><strong>Serving customers in:</strong> Indianola, Iowa</p>
+    <p><strong>Phone:</strong> (515) 519-2837</p>
+    <p><strong>Email:</strong> artistxoder@duck.com</p>
+  </div>
+
+  <!-- Google Translate Dropdown -->
+  <div class="google-translate-container">
+    <div id="google_translate_element"></div>
+  </div>
+
 </body>
 </html>
+
