@@ -3,65 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Repair & 3D Printing Services</title>
+  <title>Repair & 3D Printing Services</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f7f7f7;
-      color: #333;
-    }
-    header {
-      background: #222;
-      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ff00;
+      background-color: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
       text-align: center;
-      padding: 2rem;
+      padding: 20px;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
     }
-    section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
+
     h2 {
-      color: #444;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 0.5rem;
+      font-size: 2rem;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 5px #00ff00;
+      border-bottom: 1px solid #00ff00;
+      padding-bottom: 5px;
     }
-    .services ul {
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+    }
+
+    ul {
       list-style: none;
       padding: 0;
+      margin: 10px auto;
+      max-width: 600px;
+      text-align: left;
     }
-    .services li {
-      padding: 0.5rem 0;
+
+    li {
+      padding: 5px 0;
     }
-    .policy {
-      background: #fff8e1;
-      border: 1px solid #f0d37a;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-radius: 5px;
+
+    a {
+      color: #00ff00;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 1.3rem;
+      transition: color 0.3s, text-shadow 0.3s;
     }
-    footer {
-      background: #222;
-      color: white;
+
+    a:hover {
+      color: #00ff7f;
+      text-shadow: 0 0 10px #00ff7f, 0 0 20px #00ff7f;
+    }
+
+    .google-translate-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #0f0f0f;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+      padding: 10px 0;
+      border-top: 1px solid #00ff00;
+      z-index: 1000;
+    }
+
+    .section-container {
+      margin-bottom: 30px;
+    }
+
+    .policy {
+      background-color: #111;
+      border: 1px solid #00ff00;
+      padding: 10px;
+      border-radius: 5px;
+      max-width: 600px;
+      margin: 10px auto;
+      text-align: left;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background: #0f0f0f;
+      color: #00ff00;
+      text-decoration: none;
+      border: 1px solid #00ff00;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .back-button:hover {
+      color: #0f0f0f;
+      background-color: #00ff00;
+      text-shadow: 0 0 10px #00ff7f;
     }
   </style>
+
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,ja,ko',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-  <header>
-    <h1>Repair & 3D Printing Services</h1>
-    <p>Local, affordable, and reliable – by appointment only</p>
-  </header>
 
-  <section id="about">
+  <h1>Repair & 3D Printing Services</h1>
+  <a class="back-button" href="index.html">⬅ Back</a>
+
+  <div class="section-container" id="about">
     <h2>About</h2>
     <p>
       I’m launching a local repair business focused on basic services such as 
@@ -69,9 +138,9 @@
       I also provide 3D printing services for custom projects and products. 
       Additional services include simple website creation and port cleaning for phones/devices.
     </p>
-  </section>
+  </div>
 
-  <section id="services" class="services">
+  <div class="section-container" id="services">
     <h2>Services</h2>
     <ul>
       <li>🔋 Watch battery replacements & band changes</li>
@@ -80,30 +149,30 @@
       <li>🖨️ 3D printing (size limitations apply)</li>
       <li>💻 Basic website design & coding services</li>
     </ul>
-  </section>
+  </div>
 
-  <section id="policies">
+  <div class="section-container" id="policies">
     <h2>Policies</h2>
     <div class="policy">
       <p>✅ Free quotes are available, but all services must be paid.</p>
       <p>💵 Payment is <strong>cash only</strong> at this time, due upon service completion.</p>
       <p>📦 Extra charges may apply if I need to order parts.</p>
     </div>
-  </section>
+  </div>
 
-  <section id="contact">
+  <div class="section-container" id="contact">
     <h2>Contact</h2>
-    <p>
-      This is a home-based business – services are by <strong>appointment only</strong>.
-      Please text or email first to arrange a time.
-    </p>
-    <p><strong>Serving customers in:</strong> Indianola, Iowa]</p>
-    <p><strong>Phone:</strong>(515)519-2837</p>
-    <p><strong>Email:</strong>artistxoder@duck.com</p>
-  </section>
+    <p>This is a home-based business – services are by <strong>appointment only</strong>. Please text or email first to arrange a time.</p>
+    <p><strong>Serving customers in:</strong> Indianola, Iowa</p>
+    <p><strong>Phone:</strong> (515) 519-2837</p>
+    <p><strong>Email:</strong> artistxoder@duck.com</p>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Repair & 3D Printing Services | All Rights Reserved</p>
-  </footer>
+  <!-- Google Translate Dropdown -->
+  <div class="google-translate-container">
+    <div id="google_translate_element"></div>
+  </div>
+
 </body>
 </html>
+
