@@ -1,149 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Artistxoder Wish List</title>
-  
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artistxoder Wish List</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
 
-  <!-- Google Fonts: Press Start 2P -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    :root {
-      --color-bg: #000;
-      --color-text-primary: #0f0;
-      --color-text-secondary: #aaa;
-      --color-highlight: #0ff;
-      --color-button-hover: #0c0;
-      --font-pixel: 'Press Start 2P', cursive;
-    }
+    <style>
+        :root {
+            --color-bg: #000;
+            --color-text-primary: #0f0;
+            --color-text-secondary: #aaa;
+            --color-highlight: #0ff;
+            --color-button-hover: #0c0;
+            --font-pixel: 'Press Start 2P', cursive;
+        }
 
-    body {
-      font-family: var(--font-pixel);
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
-      text-align: center;
-    }
+        body {
+            font-family: var(--font-pixel);
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            text-align: center;
+        }
 
-    #google_translate_element .goog-te-gadget-simple {
-      background-color: var(--color-bg) !important;
-      border: 1px solid var(--color-text-primary) !important;
-      border-radius: 5px !important;
-    }
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: var(--color-bg) !important;
+            border: 1px solid var(--color-text-primary) !important;
+            border-radius: 5px !important;
+        }
 
-    #google_translate_element select {
-      color: var(--color-text-primary) !important;
-    }
-  </style>
+        #google_translate_element select {
+            color: var(--color-text-primary) !important;
+        }
+    </style>
 </head>
 
 <body class="min-h-screen flex flex-col items-center justify-start py-8 px-4 sm:px-6 lg:px-8">
-  <header class="w-full max-w-3xl mb-8">
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">About Me</h1>
-    <p class="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed mb-8">
-      I've always enjoyed tinkering with code and electronics, turning ideas into reality. Being an Eagle Scout has taught me valuable skills like problem-solving, leadership, and perseverance, which I often apply to my tech projects.
-    </p>
-  </header>
-
-  <main class="w-full max-w-3xl">
-    <section class="mb-12">
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">Wish List</h1>
-      <p class="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed mb-8">
-        My wish list is a blend of tech and adventure gear, reflecting my passions for coding and exploration.
-      </p>
-
-      <ul id="wishlist" class="list-none p-0 m-0 flex flex-wrap justify-center gap-4">
-        <li class="item">
-          <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank" rel="noopener noreferrer"
-            class="inline-block px-6 py-3 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
-            Amazon Wish List
-          </a>
-        </li>
-        <li class="item">
-          <a href="https://www.walmart.com/lists/shared/WL/edc3ce4e-2216-456d-bc68-5f6f083d6145" target="_blank" rel="noopener noreferrer"
-            class="inline-block px-6 py-3 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
-            Walmart Wish List
-          </a>
-        </li>
-        <li class="item">
-          <a href="" target="_blank" rel="noopener noreferrer"
-          <a href="https://www.ebay.com/itm/236075599652?_trksid=p4375194.c101949.m162918" target="_blank" rel="noopener noreferrer"
-            class="inline-block px-6 py-3 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
-            Ebay Wish List
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <section class="social-icons mb-12 flex justify-center gap-6">
-      <!-- GitHub -->
-      <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer"
-        class="w-14 h-14 flex items-center justify-center transition-transform duration-300 hover:scale-110">
-        <div class="w-full h-full rounded-full border-2 border-[var(--color-text-primary)] bg-[var(--color-bg)] flex items-center justify-center">
-          <i class="fab fa-github text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)] transition-colors duration-300"></i>
-        </div>
-      </a>
-
-      <!-- Facebook -->
-      <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer"
-        class="w-14 h-14 flex items-center justify-center transition-transform duration-300 hover:scale-110">
-        <div class="w-full h-full rounded-full border-2 border-[var(--color-text-primary)] bg-[var(--color-bg)] flex items-center justify-center">
-          <i class="fab fa-facebook-f text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)] transition-colors duration-300"></i>
-        </div>
-      </a>
-    </section>
-
-    <section class="attributions mb-12">
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">Attributions</h1>
-      <div class="attribute pt-4 border-t border-[var(--color-button-hover)]">
-        <a href="https://fontawesome.com/" target="_blank" class="block text-xs text-[var(--color-highlight)] hover:underline">
-          Icons provided by Font Awesome
-        </a>
-        <a href="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" target="_blank" class="block text-xs text-[var(--color-highlight)] hover:underline">
-          "Facebook f logo (2019)" by Madboy, via Wikimedia Commons
-        </a>
-        <p class="text-xs italic text-[var(--color-highlight)] mt-2">
-          <i>Note: The Facebook logo is a registered trademark of Meta Platforms, Inc.</i>
+    <header class="w-full max-w-3xl mb-8">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">About Me</h1>
+        <p class="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed mb-8">
+            I've always enjoyed tinkering with code and electronics, turning ideas into reality. Being an Eagle Scout has taught me valuable skills like problem-solving, leadership, and perseverance, which I often apply to my tech projects.
         </p>
-      </div>
-    </section>
+    </header>
 
-    <div id="google_translate_element" class="mt-8 mb-8"></div>
+    <main class="w-full max-w-3xl">
+        <section class="mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">Wish List</h1>
+            <p class="text-sm sm:text-base text-[var(--color-text-secondary)] leading-relaxed mb-8">
+                My wish list is a blend of tech and adventure gear, reflecting my passions for coding and exploration.
+            </p>
 
-    <button id="back-to-home"
-      class="px-8 py-4 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
-      Back to Home
-    </button>
-  </main>
+            <ul id="wishlist" class="list-none p-0 m-0 flex flex-wrap justify-center gap-4">
+                <li class="item">
+                    <a href="https://www.amazon.com/hz/wishlist/ls/SEUT729AEAIA?ref_=wl_share" target="_blank" rel="noopener noreferrer"
+                        class="inline-block px-6 py-3 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+                        Amazon Wish List
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-  <script type="text/javascript">
-    // Google Translate
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,es,fr,de,ja,ko',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
-    }
+        <section class="social-icons mb-12 flex justify-center gap-6">
+            <a href="https://github.com/artistxoder" target="_blank" rel="noopener noreferrer"
+                class="w-14 h-14 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                <div class="w-full h-full rounded-full border-2 border-[var(--color-text-primary)] bg-[var(--color-bg)] flex items-center justify-center">
+                    <i class="fab fa-github text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)] transition-colors duration-300"></i>
+                </div>
+            </a>
 
-    // Back to Home
-    document.addEventListener('DOMContentLoaded', () => {
-      const backToHomeButton = document.getElementById('back-to-home');
-      backToHomeButton?.addEventListener('click', () => {
-        window.location.href = 'index.html';
-      });
-    });
-  </script>
+            <a href="https://www.facebook.com/artistxoder/" target="_blank" rel="noopener noreferrer"
+                class="w-14 h-14 flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                <div class="w-full h-full rounded-full border-2 border-[var(--color-text-primary)] bg-[var(--color-bg)] flex items-center justify-center">
+                    <i class="fab fa-facebook-f text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)] transition-colors duration-300"></i>
+                </div>
+            </a>
+        </section>
 
-  <!-- Google Translate script -->
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <section class="attributions mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-[var(--color-highlight)]">Attributions</h1>
+            <div class="attribute pt-4 border-t border-[var(--color-button-hover)]">
+                <a href="https://fontawesome.com/" target="_blank" class="block text-xs text-[var(--color-highlight)] hover:underline">
+                    Icons provided by Font Awesome
+                </a>
+                <a href="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" target="_blank" class="block text-xs text-[var(--color-highlight)] hover:underline">
+                    "Facebook f logo (2019)" by Madboy, via Wikimedia Commons
+                </a>
+                <p class="text-xs italic text-[var(--color-highlight)] mt-2">
+                    <i>Note: The Facebook logo is a registered trademark of Meta Platforms, Inc.</i>
+                </p>
+            </div>
+        </section>
+
+        <div id="google_translate_element" class="mt-8 mb-8"></div>
+
+        <button id="back-to-home"
+            class="px-8 py-4 font-bold rounded-lg transition-colors duration-300 text-[var(--color-text-primary)] hover:text-[var(--color-button-hover)]">
+            Back to Home
+        </button>
+    </main>
+
+    <script type="text/javascript">
+        // Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ja,ko',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Back to Home
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToHomeButton = document.getElementById('back-to-home');
+            backToHomeButton?.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
 
