@@ -6,113 +6,188 @@
   <title>Repair & 3D Printing Services</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
-  <h1 class="closure-notice">
-    We have decided to close down due to lack of customers.
-  </h1>
-    body {
+    * {
       margin: 0;
-      font-family: 'Courier New', Courier, monospace;
-      color: #00ff00;
-      background-color: #0f0f0f;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
+      padding: 0;
+      box-sizing: border-box;
     }
 
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ff00;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Closure Notice */
+    .closure-notice {
+      background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+      color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); }
+      50% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.8); }
+    }
+
+    /* Header */
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-align: center;
+      margin-bottom: 30px;
       text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+      50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+    }
+
+    /* Back Button */
+    .back-button {
+      display: inline-block;
+      margin: 0 auto 30px;
+      padding: 12px 24px;
+      background: transparent;
+      color: #00ff00;
+      text-decoration: none;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      display: block;
+      width: fit-content;
+      text-align: center;
+    }
+
+    .back-button:hover {
+      background-color: #00ff00;
+      color: #0f0f0f;
+      box-shadow: 0 0 20px #00ff00;
+      transform: translateX(-5px);
+    }
+
+    /* Section Styling */
+    .section-container {
+      background: rgba(15, 15, 15, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .section-container:hover {
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+      transform: translateY(-2px);
     }
 
     h2 {
-      font-size: 2rem;
-      margin-top: 30px;
-      margin-bottom: 10px;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 15px;
       text-shadow: 0 0 5px #00ff00;
-      border-bottom: 1px solid #00ff00;
-      padding-bottom: 5px;
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 10px;
     }
 
     p {
       font-size: 1.1rem;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: 10px auto;
+      line-height: 1.8;
+      margin-bottom: 10px;
     }
 
+    /* Services List */
     ul {
       list-style: none;
-      padding: 0;
-      margin: 10px auto;
-      max-width: 600px;
-      text-align: left;
+      padding-left: 0;
     }
 
     li {
-      padding: 5px 0;
+      padding: 12px;
+      margin: 8px 0;
+      background: rgba(0, 255, 0, 0.05);
+      border-left: 3px solid #00ff00;
+      border-radius: 5px;
+      transition: all 0.3s ease;
     }
 
-    a {
-      color: #00ff00;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 20px;
-      font-size: 1.3rem;
-      transition: color 0.3s, text-shadow 0.3s;
+    li:hover {
+      background: rgba(0, 255, 0, 0.1);
+      padding-left: 20px;
     }
 
-    a:hover {
+    /* Policy Box */
+    .policy {
+      background: rgba(0, 20, 0, 0.5);
+      border: 1px solid #00ff00;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .policy p {
+      margin: 8px 0;
+    }
+
+    strong {
       color: #00ff7f;
-      text-shadow: 0 0 10px #00ff7f, 0 0 20px #00ff7f;
+      text-shadow: 0 0 5px #00ff7f;
     }
 
+    /* Contact Section */
+    #contact p {
+      margin: 15px 0;
+    }
+
+    /* Google Translate Container */
     .google-translate-container {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: #0f0f0f;
+      background: linear-gradient(180deg, transparent 0%, #0a0a0a 20%);
       text-align: center;
-      padding: 10px 0;
+      padding: 15px 0;
       border-top: 1px solid #00ff00;
       z-index: 1000;
+      backdrop-filter: blur(10px);
     }
 
-    .section-container {
-      margin-bottom: 30px;
-    }
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+        padding-bottom: 100px;
+      }
 
-    .policy {
-      background-color: #111;
-      border: 1px solid #00ff00;
-      padding: 10px;
-      border-radius: 5px;
-      max-width: 600px;
-      margin: 10px auto;
-      text-align: left;
-    }
+      .section-container {
+        padding: 20px;
+      }
 
-    .back-button {
-      display: inline-block;
-      margin: 20px 0;
-      padding: 10px 20px;
-      background: #0f0f0f;
-      color: #00ff00;
-      text-decoration: none;
-      border: 1px solid #00ff00;
-      border-radius: 5px;
-      transition: all 0.3s;
-    }
+      .closure-notice {
+        font-size: 1.2rem;
+        padding: 15px;
+      }
 
-    .back-button:hover {
-      color: #0f0f0f;
-      background-color: #00ff00;
-      text-shadow: 0 0 10px #00ff7f;
+      li {
+        font-size: 0.95rem;
+      }
     }
   </style>
 
@@ -121,56 +196,63 @@
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
         pageLanguage: 'en',
-        includedLanguages: 'en,es,fr,de,ja,ko',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        includedLanguages: 'en,es,fr,de,ja,ko,zh-CN,pt,ru,ar',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
       }, 'google_translate_element');
     }
   </script>
   <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-  <h1 class="closure-notice">
-    We have decided to close down due to time reason's. 
-  </h1>
-  <h1>Repair & 3D Printing Services</h1>
-  <a class="back-button" href="index.html">⬅ Back</a>
-
-  <div class="section-container" id="about">
-    <h2>About</h2>
-    <p>
-      I’m launching a local repair business focused on basic services such as 
-      watch repairs, watch battery replacements, and phone battery replacements. 
-      I also provide 3D printing services for custom projects and products. 
-      Additional services include simple website creation and port cleaning for phones/devices.
-    </p>
-  </div>
-
-  <div class="section-container" id="services">
-    <h2>Services</h2>
-    <ul>
-      <li>🔋 Watch battery replacements & band changes</li>
-      <li>🔋 Phone battery replacements (parts ordered separately if needed)</li>
-      <li>🛠️ Cleaning of charging ports (phones, laptops, small devices)</li>
-      <li>🖨️ 3D printing (size limitations apply)</li>
-      <li>💻 Basic website design & coding services</li>
-    </ul>
-  </div>
-
-  <div class="section-container" id="policies">
-    <h2>Policies</h2>
-    <div class="policy">
-      <p>✅ Free quotes are available, but all services must be paid.</p>
-      <p>💵 Payment is <strong>cash only</strong> at this time, due upon service completion.</p>
-      <p>📦 Extra charges may apply if I need to order parts.</p>
+  <div class="container">
+    <div class="closure-notice">
+      ⚠️ Notice: We have decided to close down due to time constraints. Thank you for your interest.
     </div>
-  </div>
 
-  <div class="section-container" id="contact">
-    <h2>Contact</h2>
-    <p>This is a home-based business – services are by <strong>appointment only</strong>. Please text or email first to arrange a time.</p>
-    <p><strong>Serving customers in:</strong> Indianola, Iowa</p>
-    <p><strong>Phone:</strong> (515) 519-2837</p>
-    <p><strong>Email:</strong> artistxoder@duck.com</p>
+    <h1>🔧 Repair & 3D Printing Services</h1>
+    
+    <a class="back-button" href="index.html">⬅ Back to Home</a>
+
+    <div class="section-container" id="about">
+      <h2>📋 About</h2>
+      <p>
+        We offered local repair services focused on essential maintenance such as 
+        watch repairs, battery replacements, and phone repairs. Our services also included 
+        3D printing for custom projects, basic website creation, and device port cleaning.
+      </p>
+    </div>
+
+    <div class="section-container" id="services">
+      <h2>🛠️ Services Offered</h2>
+      <ul>
+        <li>🔋 Watch battery replacements & band changes</li>
+        <li>📱 Phone battery replacements (parts ordered separately if needed)</li>
+        <li>🧹 Cleaning of charging ports (phones, laptops, small devices)</li>
+        <li>🖨️ 3D printing services (size limitations applied)</li>
+        <li>💻 Basic website design & coding services</li>
+      </ul>
+    </div>
+
+    <div class="section-container" id="policies">
+      <h2>📜 Policies</h2>
+      <div class="policy">
+        <p>✅ Free quotes were available for all services</p>
+        <p>💵 Payment was <strong>cash only</strong>, due upon service completion</p>
+        <p>📦 Extra charges applied when parts needed to be ordered</p>
+        <p>🏠 Home-based business - services by <strong>appointment only</strong></p>
+      </div>
+    </div>
+
+    <div class="section-container" id="contact">
+      <h2>📞 Contact Information</h2>
+      <p><strong>Location:</strong> Indianola, Iowa</p>
+      <p><strong>Phone:</strong> (515) 519-2837</p>
+      <p><strong>Email:</strong> artistxoder@duck.com</p>
+      <p style="margin-top: 20px; font-style: italic; color: #00ff7f;">
+        Thank you to all our customers for your support!
+      </p>
+    </div>
   </div>
 
   <!-- Google Translate Dropdown -->
