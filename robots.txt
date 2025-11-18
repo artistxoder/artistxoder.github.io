@@ -1,0 +1,8 @@
+robots.txt for GitHub Pages site
+Allow all crawlers including Google
+
+User-agent: *
+Allow: /
+
+# Sitemap location (optional - update with your actual sitemap URL)
+Sitemap: https://artistxoder.github.io/sitemap.xml
