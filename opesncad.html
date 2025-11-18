@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Print Files - STL Gallery</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      color: #00ff00;
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-align: center;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+      50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #00ff7f;
+    }
+
+    /* Back Button */
+    .back-button {
+      display: inline-block;
+      margin: 0 auto 30px;
+      padding: 12px 24px;
+      background: transparent;
+      color: #00ff00;
+      text-decoration: none;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      display: block;
+      width: fit-content;
+    }
+
+    .back-button:hover {
+      background-color: #00ff00;
+      color: #0f0f0f;
+      box-shadow: 0 0 20px #00ff00;
+      transform: translateX(-5px);
+    }
+
+    /* Info Section */
+    .info-box {
+      background: rgba(15, 15, 15, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+    }
+
+    .info-box h2 {
+      margin-bottom: 10px;
+      color: #00ff7f;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    /* STL Card */
+    .stl-card {
+      background: rgba(15, 15, 15, 0.9);
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stl-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+      border-color: #00ff7f;
+    }
+
+    .stl-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .stl-card:hover::before {
+      left: 100%;
+    }
+
+    .stl-thumbnail {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+      border: 1px solid #00ff00;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      font-size: 3rem;
+      overflow: hidden;
+    }
+
+    .stl-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stl-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00ff7f;
+      text-shadow: 0 0 5px #00ff7f;
+    }
+
+    .stl-description {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      color: #00ff00;
+    }
+
+    .stl-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+    }
+
+    .meta-tag {
+      background: rgba(0, 255, 0, 0.1);
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid #00ff00;
+    }
+
+    .download-button {
+      display: inline-block;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: #00ff00;
+      text-decoration: none;
+      border: 2px solid #00ff00;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .download-button:hover {
+      background: #00ff00;
+      color: #0f0f0f;
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    /* Search and Filter */
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px;
+      background: rgba(15, 15, 15, 0.8);
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1rem;
+    }
+
+    .search-box:focus {
+      outline: none;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .filter-button {
+      padding: 12px 20px;
+      background: transparent;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .filter-button:hover, .filter-button.active {
+      background: #00ff00;
+      color: #0f0f0f;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+    }
+
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+      color: #00ff7f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🖨️ 3D Print Files</h1>
+    <p class="subtitle">Free STL files for your 3D printing projects</p>
+    
+    <a class="back-button" href="index.html">⬅ Back to Home</a>
+
+    <div class="info-box">
+      <h2>📥 How to Use These Files</h2>
+      <p>1. Click the download button on any model below</p>
+      <p>2. Open the STL file in your slicer software (Cura, PrusaSlicer, etc.)</p>
+      <p>3. Adjust your print settings and slice</p>
+      <p>4. Print and enjoy!</p>
+      <p style="margin-top: 15px; color: #00ff7f;">💡 All files are free to use for personal projects. Attribution appreciated!</p>
+    </div>
+
+    <!-- Search and Filter Controls -->
+    <div class="controls">
+      <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search models...">
+      <button class="filter-button active" data-filter="all">All</button>
+      <button class="filter-button" data-filter="functional">Functional</button>
+      <button class="filter-button" data-filter="decorative">Decorative</button>
+      <button class="filter-button" data-filter="tools">Tools</button>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery" id="gallery">
+      
+      <div class="stl-card" data-category="decorative">
+        <div class="stl-thumbnail">🐱</div>
+        <div class="stl-title">Cat Echo Holder</div>
+        <div class="stl-description">
+          Adorable cat-shaped holder designed for Amazon Echo devices. Keep your smart speaker secure with style!
+        </div>
+        <div class="stl-meta">
+          <span class="meta-tag">📏 Fits: Echo Dot</span>
+          <span class="meta-tag">🎯 Difficulty: Easy</span>
+        </div>
+        <a href="caalexecho.stl" class="download-button" download>⬇️ Download STL</a>
+      </div>
+
+      <div class="stl-card" data-category="functional">
+        <div class="stl-thumbnail">📱</div>
+        <div class="stl-title">Samsung S24 Case</div>
+        <div class="stl-description">
+          Custom protective case designed specifically for the Samsung Galaxy S24. Durable and precise fit.
+        </div>
+        <div class="stl-meta">
+          <span class="meta-tag">📏 Fits: Galaxy S24</span>
+          <span class="meta-tag">🎯 Difficulty: Medium</span>
+        </div>
+        <a href="s24caset.stl" class="download-button" download>⬇️ Download STL</a>
+      </div>
+
+      <div class="stl-card" data-category="functional">
+        <div class="stl-thumbnail">🎮</div>
+        <div class="stl-title">HMD Vibe Case</div>
+        <div class="stl-description">
+          Protective phone case for HMD Vibe devices. Sleek design with full protection for your device.
+        </div>
+        <div class="stl-meta">
+          <span class="meta-tag">📏 Fits: HMD Vibe</span>
+          <span class="meta-tag">🎯 Difficulty: Medium</span>
+        </div>
+        <a href="hmdvibecase.stl" class="download-button" download>⬇️ Download STL</a>
+      </div>
+
+    </div>
+
+    <div class="no-results" id="noResults" style="display: none;">
+      No models found matching your search. Try different keywords!
+    </div>
+  </div>
+
+  <script>
+    // Search functionality
+    const searchBox = document.getElementById('searchBox');
+    const gallery = document.getElementById('gallery');
+    const cards = document.querySelectorAll('.stl-card');
+    const noResults = document.getElementById('noResults');
+    const filterButtons = document.querySelectorAll('.filter-button');
+    let currentFilter = 'all';
+
+    searchBox.addEventListener('input', filterCards);
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        filterCards();
+      });
+    });
+
+    function filterCards() {
+      const searchTerm = searchBox.value.toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const title = card.querySelector('.stl-title').textContent.toLowerCase();
+        const description = card.querySelector('.stl-description').textContent.toLowerCase();
+        const category = card.dataset.category;
+        
+        const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+        const matchesFilter = currentFilter === 'all' || category === currentFilter;
+
+        if (matchesSearch && matchesFilter) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
