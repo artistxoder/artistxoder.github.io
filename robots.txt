@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location (optional - update with your actual sitemap URL)
-Sitemap: https://artistxoder.github.io/sitemap.xml
+Sitemap: https://artistxoder.com/sitemap.xml
