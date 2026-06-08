@@ -277,8 +277,7 @@
 const UPPTIME_OWNER = 'artistxoder';
 const UPPTIME_REPO  = 'artistxoder.github.io';
 
-const UR_API_KEY    = 'UR_API_KEY_PLACEHOLDER';
-const UR_MONITOR_ID = 'UR_MONITOR_ID_PLACEHOLDER';
+const UR_STATUS_ID  = 'KRRBoycOht';
 // ───────────────────────────────────────────────────────────────────────────
 
 function setStatus(id, state) {
@@ -318,26 +317,16 @@ async function fetchUpptime(slug) {
 
 async function fetchUptimeRobot() {
   try {
-    const res = await fetch('https://api.uptimerobot.com/v2/getMonitors', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        api_key: UR_API_KEY,
-        monitors: UR_MONITOR_ID,
-        response_times: '0',
-        logs: '0',
-        custom_uptime_ratios: '90'
-      })
-    });
+    const res = await fetch(`https://stats.uptimerobot.com/api/getMonitorList/${UR_STATUS_ID}`);
     if (!res.ok) return null;
     const data = await res.json();
-    if (data.stat !== 'ok' || !data.monitors?.length) return null;
+    if (!data.monitors?.length) return null;
     return data.monitors[0];
   } catch { return null; }
 }
 
 function urStatusToState(status) {
-  // UptimeRobot: 0=paused, 1=not checked, 2=up, 8=seems down, 9=down
+  // UptimeRobot public: 2=up, 8=seems down, 9=down
   if (status === 2) return 'up';
   if (status === 8) return 'degraded';
   return 'down';
