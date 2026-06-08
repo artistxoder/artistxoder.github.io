@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Status — ArtistXoder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --border: #222222;
+    --border2: #2e2e2e;
+    --text: #f0f0f0;
+    --muted: #666666;
+    --muted2: #444444;
+    --green: #00ff87;
+    --green-dim: #00ff8722;
+    --green-border: #00ff8744;
+    --amber: #ffb830;
+    --amber-dim: #ffb83022;
+    --red: #ff4545;
+    --red-dim: #ff454522;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 16px;
+  }
+
+  .logo-block {}
+
+  .wordmark {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .page-title {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .overall-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--green-border);
+    background: var(--green-dim);
+    color: var(--green);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .overall-badge.degraded {
+    border-color: #ffb83044;
+    background: var(--amber-dim);
+    color: var(--amber);
+  }
+
+  .overall-badge.outage {
+    border-color: #ff454544;
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 40px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 12px;
+  }
+
+  /* Service rows */
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+
+  .service-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.15s;
+  }
+
+  .service-row:hover {
+    border-color: var(--border2);
+  }
+
+  .service-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .service-icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  .service-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--muted);
+  }
+
+  .service-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .service-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .service-url {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .service-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-up .status-dot { background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
+  .status-up .service-status { color: var(--green); }
+
+  .status-down .status-dot { background: var(--red); }
+  .status-down .service-status { color: var(--red); }
+
+  .status-degraded .status-dot { background: var(--amber); animation: pulse 2s ease-in-out infinite; }
+  .status-degraded .service-status { color: var(--amber); }
+
+  /* History bars */
+  .history-section {
+    margin-bottom: 48px;
+  }
+
+  .history-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .history-label {
+    font-size: 12px;
+    color: var(--muted);
+    width: 160px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .history-bars {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .bar {
+    flex: 1;
+    height: 24px;
+    border-radius: 2px;
+    background: var(--bg3);
+    transition: background 0.15s;
+    cursor: default;
+    position: relative;
+  }
+
+  .bar.up { background: #00ff8733; }
+  .bar.up:hover { background: #00ff8755; }
+  .bar.down { background: #ff454555; }
+  .bar.down:hover { background: #ff454577; }
+  .bar.partial { background: #ffb83033; }
+  .bar.partial:hover { background: #ffb83055; }
+  .bar.nodata { background: var(--bg3); }
+
+  .uptime-pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    width: 52px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-left {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted2);
+  }
+
+  .footer-left span {
+    color: var(--muted);
+  }
+
+  .powered-by {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+
+  .powered-by a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border2);
+    transition: color 0.15s;
+  }
+
+  .powered-by a:hover { color: var(--text); }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .header { flex-direction: column; }
+    .history-label { width: 110px; }
+    .page-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="wrap">
+
+  <header class="header">
+    <div class="logo-block">
+      <div class="wordmark">artistxoder</div>
+      <div class="page-title">system status</div>
+    </div>
+    <div class="overall-badge" id="overallBadge">
+      <span class="dot"></span>
+      <span id="overallText">All systems operational</span>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Services</div>
+  <div class="services" id="serviceList">
+
+    <div class="service-row status-up" id="row-website">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 2C8 6 8 18 12 22M12 2C16 6 16 18 12 22M2 12H22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="service-info">
+        <div class="service-name">ArtistXoder Website</div>
+        <div class="service-url">artistxoder.com</div>
+      </div>
+      <div class="service-status">
+        <span class="status-dot"></span>
+        <span>Operational</span>
+      </div>
+    </div>
+
+    <div class="service-row status-up" id="row-mc">
+      <div class="service-icon">
+        <img src="https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png" alt="" onerror="this.style.display='none';this.parentNode.querySelector('svg').style.display='block'">
+        <svg style="display:none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M3 9h18M9 3v18" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <div class="service-info">
+        <div class="service-name">Minecraft Bedrock Server</div>
+        <div class="service-url">mc.artistxoder.com:19132</div>
+      </div>
+      <div class="service-status">
+        <span class="status-dot"></span>
+        <span>Operational</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="history-section">
+    <div class="section-label">90-day uptime</div>
+
+    <div class="history-row">
+      <div class="history-label">ArtistXoder Website</div>
+      <div class="history-bars" id="bars-website"></div>
+      <div class="uptime-pct" id="pct-website">—</div>
+    </div>
+
+    <div class="history-row">
+      <div class="history-label">Minecraft Server</div>
+      <div class="history-bars" id="bars-mc"></div>
+      <div class="uptime-pct" id="pct-mc">—</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-left">
+      Last updated: <span id="lastUpdated">—</span>
+    </div>
+    <div class="powered-by">
+      Powered by <a href="https://upptime.js.org" target="_blank" rel="noopener">Upptime</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const OWNER = 'artistxoder';
+const REPO  = 'artistxoder.github.io';
+
+const services = [
+  { id: 'website', name: 'ArtistXoder Website',    slug: 'artistxoder-website' },
+  { id: 'mc',      name: 'Minecraft Bedrock Server', slug: 'minecraft-bedrock-server' }
+];
+
+function setStatus(id, state) {
+  const row = document.getElementById('row-' + id);
+  row.className = 'service-row status-' + state;
+  const label = row.querySelector('.service-status span:last-child');
+  label.textContent = state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
+}
+
+function renderBars(id, days) {
+  const container = document.getElementById('bars-' + id);
+  container.innerHTML = '';
+  let upCount = 0;
+  days.forEach(d => {
+    const b = document.createElement('div');
+    b.className = 'bar ' + (d === 1 ? 'up' : d === 0 ? 'down' : d === -1 ? 'partial' : 'nodata');
+    if (d === 1) upCount++;
+    container.appendChild(b);
+  });
+  const pct = Math.round((upCount / days.filter(d => d !== null).length) * 1000) / 10;
+  document.getElementById('pct-' + id).textContent = isNaN(pct) ? '—' : pct.toFixed(1) + '%';
+}
+
+async function fetchSummary(slug) {
+  try {
+    const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/master/history/summary.json`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.find(s => s.slug === slug) || null;
+  } catch { return null; }
+}
+
+async function load() {
+  document.getElementById('lastUpdated').textContent = new Date().toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+  });
+
+  let anyDown = false, anyDegraded = false;
+
+  for (const svc of services) {
+    const summary = await fetchSummary(svc.slug);
+    if (!summary) { renderBars(svc.id, Array(90).fill(null)); continue; }
+
+    const isUp = summary.status === 'up';
+    setStatus(svc.id, isUp ? 'up' : 'down');
+    if (!isUp) anyDown = true;
+
+    const dailyMinutes = summary.dailyMinutesDown || [];
+    const days = Array(90).fill(null).map((_, i) => {
+      const mins = dailyMinutes[i];
+      if (mins === undefined || mins === null) return null;
+      if (mins === 0) return 1;
+      if (mins >= 1440) return 0;
+      return -1;
+    });
+    renderBars(svc.id, days);
+  }
+
+  const badge = document.getElementById('overallBadge');
+  const text  = document.getElementById('overallText');
+  if (anyDown) {
+    badge.className = 'overall-badge outage';
+    text.textContent = 'Partial outage';
+  } else if (anyDegraded) {
+    badge.className = 'overall-badge degraded';
+    text.textContent = 'Degraded performance';
+  }
+}
+
+load();
+</script>
+</body>
+</html>
