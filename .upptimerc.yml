@@ -4,11 +4,11 @@ repo: artistxoder.github.io
 sites:
   - name: ArtistXoder Website
     url: https://artistxoder.com/
-    
+
   - name: Minecraft Bedrock Server
-    check: "ws-ping"  # Swapping to a stateless ping format
+    check: tcp-ping
     url: mc.artistxoder.com
-    port: 19132       # Standard Bedrock port (change back to 25565 if you explicitly mapped it there)
+    port: 19132
     icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png
 
 status-website:
