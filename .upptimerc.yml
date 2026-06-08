@@ -5,14 +5,13 @@ sites:
   - name: ArtistXoder Website
     url: https://artistxoder.com/
     
-  # ADD THIS SECTION FOR YOUR MINECRAFT SERVER:
-  - name: Minecraft Server
-    check: "tcp-ping"
+  - name: Minecraft Bedrock Server
+    check: "ws-ping"  # Swapping to a stateless ping format
     url: mc.artistxoder.com
-    port: 25565
-    icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png # Optional: gives it a clean block icon
+    port: 19132       # Standard Bedrock port (change back to 25565 if you explicitly mapped it there)
+    icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png
 
 status-website:
   name: System Status
-  baseUrl: /
+  baseUrl: /status
   cname: artistxoder.com
