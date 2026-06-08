@@ -277,7 +277,8 @@
 const UPPTIME_OWNER = 'artistxoder';
 const UPPTIME_REPO  = 'artistxoder.github.io';
 
-const UR_STATUS_ID  = 'KRRBoycOht';
+const UR_API_KEY    = 'UR_API_KEY_PLACEHOLDER';  // read-only monitor-specific key
+const UR_MONITOR_ID = 'UR_MONITOR_ID_PLACEHOLDER';
 // ───────────────────────────────────────────────────────────────────────────
 
 function setStatus(id, state) {
@@ -317,10 +318,11 @@ async function fetchUpptime(slug) {
 
 async function fetchUptimeRobot() {
   try {
-    const res = await fetch(`https://stats.uptimerobot.com/api/getMonitorList/${UR_STATUS_ID}`);
+    const url = `https://api.uptimerobot.com/v2/getMonitors?api_key=${UR_API_KEY}&monitors=${UR_MONITOR_ID}&custom_uptime_ratios=90&format=json`;
+    const res = await fetch(url);
     if (!res.ok) return null;
     const data = await res.json();
-    if (!data.monitors?.length) return null;
+    if (data.stat !== 'ok' || !data.monitors?.length) return null;
     return data.monitors[0];
   } catch { return null; }
 }
