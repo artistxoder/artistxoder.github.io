@@ -4,9 +4,14 @@ repo: artistxoder.github.io
 sites:
   - name: ArtistXoder Website
     url: https://artistxoder.com/
-  - name: 
 
 status-website:
   name: System Status
   baseUrl: /
   cname: status.artistxoder.com
+
+skipDeleteIssues: true
+commitMessages:
+  statusChange: "⬆️ $SITE_NAME is up"
+  incidentCreate: "🔴 $SITE_NAME is down"
+  incidentResolve: "✅ $SITE_NAME is back up"
