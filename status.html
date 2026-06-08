@@ -55,7 +55,6 @@
     z-index: 1;
   }
 
-  /* Header */
   .header {
     display: flex;
     align-items: flex-start;
@@ -63,8 +62,6 @@
     margin-bottom: 56px;
     gap: 16px;
   }
-
-  .logo-block {}
 
   .wordmark {
     font-family: var(--mono);
@@ -104,21 +101,11 @@
     margin-top: 4px;
   }
 
-  .overall-badge.degraded {
-    border-color: #ffb83044;
-    background: var(--amber-dim);
-    color: var(--amber);
-  }
-
-  .overall-badge.outage {
-    border-color: #ff454544;
-    background: var(--red-dim);
-    color: var(--red);
-  }
+  .overall-badge.degraded { border-color: #ffb83044; background: var(--amber-dim); color: var(--amber); }
+  .overall-badge.outage   { border-color: #ff454544; background: var(--red-dim);   color: var(--red);   }
 
   .dot {
-    width: 7px;
-    height: 7px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: currentColor;
     animation: pulse 2.4s ease-in-out infinite;
@@ -126,17 +113,11 @@
 
   @keyframes pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
+    50%       { opacity: 0.5; transform: scale(0.85); }
   }
 
-  /* Divider */
-  .divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 40px;
-  }
+  .divider { height: 1px; background: var(--border); margin-bottom: 40px; }
 
-  /* Section label */
   .section-label {
     font-family: var(--mono);
     font-size: 10px;
@@ -147,13 +128,7 @@
     margin-bottom: 12px;
   }
 
-  /* Service rows */
-  .services {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-bottom: 48px;
-  }
+  .services { display: flex; flex-direction: column; gap: 2px; margin-bottom: 48px; }
 
   .service-row {
     display: flex;
@@ -165,178 +140,57 @@
     border-radius: 8px;
     transition: border-color 0.15s;
   }
-
-  .service-row:hover {
-    border-color: var(--border2);
-  }
+  .service-row:hover { border-color: var(--border2); }
 
   .service-icon {
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     border-radius: 6px;
     background: var(--bg3);
     border: 1px solid var(--border2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
   }
+  .service-icon img { width: 18px; height: 18px; object-fit: contain; }
+  .service-icon svg { width: 16px; height: 16px; fill: var(--muted); }
 
-  .service-icon img {
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
-  }
-
-  .service-icon svg {
-    width: 16px;
-    height: 16px;
-    fill: var(--muted);
-  }
-
-  .service-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .service-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .service-url {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
+  .service-info { flex: 1; min-width: 0; }
+  .service-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .service-url  { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 
   .service-status {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    flex-shrink: 0;
+    display: flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; flex-shrink: 0;
   }
 
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  .status-up .status-dot { background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
-  .status-up .service-status { color: var(--green); }
-
-  .status-down .status-dot { background: var(--red); }
+  .status-up .status-dot       { background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
+  .status-up .service-status   { color: var(--green); }
+  .status-down .status-dot     { background: var(--red); }
   .status-down .service-status { color: var(--red); }
+  .status-degraded .status-dot       { background: var(--amber); animation: pulse 2s ease-in-out infinite; }
+  .status-degraded .service-status   { color: var(--amber); }
 
-  .status-degraded .status-dot { background: var(--amber); animation: pulse 2s ease-in-out infinite; }
-  .status-degraded .service-status { color: var(--amber); }
+  .history-section { margin-bottom: 48px; }
+  .history-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .history-label { font-size: 12px; color: var(--muted); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .history-bars { display: flex; gap: 2px; flex: 1; }
 
-  /* History bars */
-  .history-section {
-    margin-bottom: 48px;
-  }
+  .bar { flex: 1; height: 24px; border-radius: 2px; background: var(--bg3); transition: background 0.15s; cursor: default; }
+  .bar.up      { background: #00ff8733; } .bar.up:hover      { background: #00ff8755; }
+  .bar.down    { background: #ff454555; } .bar.down:hover    { background: #ff454577; }
+  .bar.partial { background: #ffb83033; } .bar.partial:hover { background: #ffb83055; }
 
-  .history-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
+  .uptime-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 52px; text-align: right; flex-shrink: 0; }
 
-  .history-label {
-    font-size: 12px;
-    color: var(--muted);
-    width: 160px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .history-bars {
-    display: flex;
-    gap: 2px;
-    flex: 1;
-  }
-
-  .bar {
-    flex: 1;
-    height: 24px;
-    border-radius: 2px;
-    background: var(--bg3);
-    transition: background 0.15s;
-    cursor: default;
-    position: relative;
-  }
-
-  .bar.up { background: #00ff8733; }
-  .bar.up:hover { background: #00ff8755; }
-  .bar.down { background: #ff454555; }
-  .bar.down:hover { background: #ff454577; }
-  .bar.partial { background: #ffb83033; }
-  .bar.partial:hover { background: #ffb83055; }
-  .bar.nodata { background: var(--bg3); }
-
-  .uptime-pct {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    width: 52px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  /* Footer */
-  .footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .footer-left {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted2);
-  }
-
-  .footer-left span {
-    color: var(--muted);
-  }
-
-  .powered-by {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted2);
-    letter-spacing: 0.05em;
-  }
-
-  .powered-by a {
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border2);
-    transition: color 0.15s;
-  }
-
+  .footer { display: flex; align-items: center; justify-content: space-between; padding-top: 32px; border-top: 1px solid var(--border); gap: 16px; flex-wrap: wrap; }
+  .footer-left { font-family: var(--mono); font-size: 11px; color: var(--muted2); }
+  .footer-left span { color: var(--muted); }
+  .powered-by { font-family: var(--mono); font-size: 10px; color: var(--muted2); letter-spacing: 0.05em; }
+  .powered-by a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border2); transition: color 0.15s; }
   .powered-by a:hover { color: var(--text); }
 
-  /* Responsive */
   @media (max-width: 500px) {
     .header { flex-direction: column; }
     .history-label { width: 110px; }
@@ -362,7 +216,7 @@
   <div class="divider"></div>
 
   <div class="section-label">Services</div>
-  <div class="services" id="serviceList">
+  <div class="services">
 
     <div class="service-row status-up" id="row-website">
       <div class="service-icon">
@@ -389,7 +243,7 @@
       </div>
       <div class="service-status">
         <span class="status-dot"></span>
-        <span>Operational</span>
+        <span id="mc-status-text">Checking...</span>
       </div>
     </div>
 
@@ -397,13 +251,11 @@
 
   <div class="history-section">
     <div class="section-label">90-day uptime</div>
-
     <div class="history-row">
       <div class="history-label">ArtistXoder Website</div>
       <div class="history-bars" id="bars-website"></div>
       <div class="uptime-pct" id="pct-website">—</div>
     </div>
-
     <div class="history-row">
       <div class="history-label">Minecraft Server</div>
       <div class="history-bars" id="bars-mc"></div>
@@ -412,54 +264,83 @@
   </div>
 
   <footer class="footer">
-    <div class="footer-left">
-      Last updated: <span id="lastUpdated">—</span>
-    </div>
+    <div class="footer-left">Last updated: <span id="lastUpdated">—</span></div>
     <div class="powered-by">
-      Powered by <a href="https://upptime.js.org" target="_blank" rel="noopener">Upptime</a>
+      Upptime + <a href="https://uptimerobot.com" target="_blank" rel="noopener">UptimeRobot</a>
     </div>
   </footer>
 
 </div>
 
 <script>
-const OWNER = 'artistxoder';
-const REPO  = 'artistxoder.github.io';
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+const UPPTIME_OWNER = 'artistxoder';
+const UPPTIME_REPO  = 'artistxoder.github.io';
 
-const services = [
-  { id: 'website', name: 'ArtistXoder Website',    slug: 'artistxoder-website' },
-  { id: 'mc',      name: 'Minecraft Bedrock Server', slug: 'minecraft-bedrock-server' }
-];
+const UR_API_KEY    = 'UR_API_KEY_PLACEHOLDER';
+const UR_MONITOR_ID = 'UR_MONITOR_ID_PLACEHOLDER';
+// ───────────────────────────────────────────────────────────────────────────
 
 function setStatus(id, state) {
   const row = document.getElementById('row-' + id);
   row.className = 'service-row status-' + state;
-  const label = row.querySelector('.service-status span:last-child');
-  label.textContent = state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
+  if (id === 'mc') {
+    document.getElementById('mc-status-text').textContent =
+      state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
+  } else {
+    row.querySelector('.service-status span:last-child').textContent =
+      state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
+  }
 }
 
 function renderBars(id, days) {
   const container = document.getElementById('bars-' + id);
   container.innerHTML = '';
-  let upCount = 0;
+  let upCount = 0, total = 0;
   days.forEach(d => {
     const b = document.createElement('div');
     b.className = 'bar ' + (d === 1 ? 'up' : d === 0 ? 'down' : d === -1 ? 'partial' : 'nodata');
-    if (d === 1) upCount++;
+    if (d !== null) { total++; if (d === 1) upCount++; }
     container.appendChild(b);
   });
-  const pct = Math.round((upCount / days.filter(d => d !== null).length) * 1000) / 10;
+  const pct = total ? Math.round((upCount / total) * 1000) / 10 : NaN;
   document.getElementById('pct-' + id).textContent = isNaN(pct) ? '—' : pct.toFixed(1) + '%';
 }
 
-async function fetchSummary(slug) {
+async function fetchUpptime(slug) {
   try {
-    const url = `https://raw.githubusercontent.com/${OWNER}/${REPO}/master/history/summary.json`;
-    const res = await fetch(url);
+    const res = await fetch(`https://raw.githubusercontent.com/${UPPTIME_OWNER}/${UPPTIME_REPO}/master/history/summary.json`);
     if (!res.ok) return null;
     const data = await res.json();
     return data.find(s => s.slug === slug) || null;
   } catch { return null; }
+}
+
+async function fetchUptimeRobot() {
+  try {
+    const res = await fetch('https://api.uptimerobot.com/v2/getMonitors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        api_key: UR_API_KEY,
+        monitors: UR_MONITOR_ID,
+        response_times: '0',
+        logs: '0',
+        custom_uptime_ratios: '90'
+      })
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.stat !== 'ok' || !data.monitors?.length) return null;
+    return data.monitors[0];
+  } catch { return null; }
+}
+
+function urStatusToState(status) {
+  // UptimeRobot: 0=paused, 1=not checked, 2=up, 8=seems down, 9=down
+  if (status === 2) return 'up';
+  if (status === 8) return 'degraded';
+  return 'down';
 }
 
 async function load() {
@@ -470,25 +351,51 @@ async function load() {
 
   let anyDown = false, anyDegraded = false;
 
-  for (const svc of services) {
-    const summary = await fetchSummary(svc.slug);
-    if (!summary) { renderBars(svc.id, Array(90).fill(null)); continue; }
-
-    const isUp = summary.status === 'up';
-    setStatus(svc.id, isUp ? 'up' : 'down');
-    if (!isUp) anyDown = true;
-
-    const dailyMinutes = summary.dailyMinutesDown || [];
-    const days = Array(90).fill(null).map((_, i) => {
-      const mins = dailyMinutes[i];
-      if (mins === undefined || mins === null) return null;
-      if (mins === 0) return 1;
-      if (mins >= 1440) return 0;
-      return -1;
-    });
-    renderBars(svc.id, days);
+  // ── Website via Upptime ──
+  const websiteSummary = await fetchUpptime('artistxoder-website');
+  if (websiteSummary) {
+    const state = websiteSummary.status === 'up' ? 'up' : 'down';
+    setStatus('website', state);
+    if (state === 'down') anyDown = true;
+    const mins = websiteSummary.dailyMinutesDown || [];
+    renderBars('website', Array(90).fill(null).map((_, i) => {
+      const m = mins[i];
+      if (m === undefined || m === null) return null;
+      return m === 0 ? 1 : m >= 1440 ? 0 : -1;
+    }));
+  } else {
+    renderBars('website', Array(90).fill(null));
   }
 
+  // ── Minecraft via UptimeRobot ──
+  const monitor = await fetchUptimeRobot();
+  if (monitor) {
+    const state = urStatusToState(monitor.status);
+    setStatus('mc', state);
+    if (state === 'down') anyDown = true;
+    if (state === 'degraded') anyDegraded = true;
+
+    // custom_uptime_ratios gives a single 90-day % — use it for the bar display
+    const uptime90 = parseFloat(monitor.custom_uptime_ratio) || 0;
+    document.getElementById('pct-mc').textContent = uptime90.toFixed(1) + '%';
+
+    // Fill bars proportionally based on uptime %
+    const upDays = Math.round((uptime90 / 100) * 90);
+    const bars = Array(90).fill(0).map((_, i) => i < upDays ? 1 : 0);
+    const barsContainer = document.getElementById('bars-mc');
+    barsContainer.innerHTML = '';
+    bars.forEach(d => {
+      const b = document.createElement('div');
+      b.className = 'bar ' + (d === 1 ? 'up' : 'down');
+      barsContainer.appendChild(b);
+    });
+  } else {
+    setStatus('mc', 'down');
+    anyDown = true;
+    renderBars('mc', Array(90).fill(null));
+  }
+
+  // ── Overall badge ──
   const badge = document.getElementById('overallBadge');
   const text  = document.getElementById('overallText');
   if (anyDown) {
