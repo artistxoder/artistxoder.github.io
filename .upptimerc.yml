@@ -4,11 +4,7 @@ repo: artistxoder.github.io
 sites:
   - name: ArtistXoder Website
     url: https://artistxoder.com/
-
-  - name: Minecraft Bedrock Server
-    check: icmp-ping
-    url: mc.artistxoder.com
-    icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png
+  - name: 
 
 status-website:
   name: System Status
