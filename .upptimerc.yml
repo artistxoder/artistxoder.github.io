@@ -6,12 +6,11 @@ sites:
     url: https://artistxoder.com/
 
   - name: Minecraft Bedrock Server
-    check: tcp-ping
+    check: icmp-ping
     url: mc.artistxoder.com
-    port: 19132
     icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png
 
 status-website:
   name: System Status
-  baseUrl: /status
-  cname: artistxoder.com
+  baseUrl: /
+  cname: status.artistxoder.com
