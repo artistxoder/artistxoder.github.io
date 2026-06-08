@@ -18,10 +18,10 @@
     "dailyMinutesDown": {}
   },
   {
-    "name": "Minecraft Server",
+    "name": "Minecraft Bedrock Server",
     "url": "mc.artistxoder.com",
     "icon": "https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png",
-    "slug": "minecraft-server",
+    "slug": "minecraft-bedrock-server",
     "status": "down",
     "uptime": "100.00%",
     "uptimeDay": "100.00%",
