@@ -1,20 +1,25 @@
 name: Inject config
+
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
-  build:
+  inject:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Inject API key
+
+      - name: Inject secrets into status.html
         run: |
           sed -i "s/UR_API_KEY_PLACEHOLDER/${{ secrets.UR_API_KEY }}/g" status.html
-      - name: Commit
+          sed -i "s/UR_MONITOR_ID_PLACEHOLDER/${{ secrets.UR_MONITOR_ID }}/g" status.html
+
+      - name: Commit and push
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add status.html
-          git commit -m "Inject config" || echo "No changes"
+          git commit -m "Inject config" || echo "No changes to commit"
           git push
