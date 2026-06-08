@@ -1,0 +1,38 @@
+[
+  {
+    "name": "ArtistXoder Website",
+    "url": "https://artistxoder.com/",
+    "icon": "https://icons.duckduckgo.com/ip3/artistxoder.com.ico",
+    "slug": "artist-xoder-website",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 160,
+    "timeDay": 160,
+    "timeWeek": 160,
+    "timeMonth": 160,
+    "timeYear": 160,
+    "dailyMinutesDown": {}
+  },
+  {
+    "name": "Minecraft Server",
+    "url": "mc.artistxoder.com",
+    "icon": "https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png",
+    "slug": "minecraft-server",
+    "status": "down",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 0,
+    "timeDay": 0,
+    "timeWeek": 0,
+    "timeMonth": 0,
+    "timeYear": 0,
+    "dailyMinutesDown": {}
+  }
+]
