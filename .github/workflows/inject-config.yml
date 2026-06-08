@@ -1,9 +1,9 @@
 name: Inject config
 
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   inject:
@@ -21,5 +21,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add status.html
-          git commit -m "Inject config" || echo "No changes to commit"
+          git commit -m "chore: inject config [skip ci]" || echo "No changes to commit"
           git push
