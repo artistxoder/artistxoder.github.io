@@ -1,0 +1,17 @@
+owner: artistxoder
+repo: artistxoder.github.io
+
+sites:
+  - name: ArtistXoder Website
+    url: https://artistxoder.com/
+    
+  # ADD THIS SECTION FOR YOUR MINECRAFT SERVER:
+  - name: Minecraft Server
+    check: "tcp-ping"
+    url: mc.artistxoder.com
+    port: 25565
+    icon: https://raw.githubusercontent.com/PolyhedralDev/Terraform/master/assets/icon.png # Optional: gives it a clean block icon
+
+status-website:
+  name: System Status
+  baseUrl: /
