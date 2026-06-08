@@ -1,0 +1,20 @@
+name: Setup CI
+on:
+  push:
+    paths:
+      - ".upptimerc.yml"
+  workflow_dispatch:
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+      - name: Upptime Setup
+        uses: upptime/uptime-monitor@master
+        with:
+          command: setup
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
