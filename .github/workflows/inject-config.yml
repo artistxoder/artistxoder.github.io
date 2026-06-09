@@ -5,11 +5,15 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+# This guarantees the bot has permission to push the commit
+permissions:
+  contents: write
+
 jobs:
   inject:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Inject secrets into status.html
         run: |
@@ -17,10 +21,10 @@ jobs:
           sed -i "s/UR_MONITOR_ID_PLACEHOLDER/${{ secrets.UR_MONITOR_ID }}/g" status.html
 
       - name: Commit and push
-    run: |
-    git config user.name github-actions
-    git config user.email github-actions@github.com
-    git add status.html
-    git commit -m "chore: inject config [skip ci]" || echo "No changes to commit"
-    git pull --rebase origin main
-    git push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add status.html
+          git commit -m "chore: inject config [skip ci]" || echo "No changes to commit"
+          git pull --rebase origin main
+          git push
