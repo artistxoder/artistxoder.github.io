@@ -6,24 +6,30 @@
 <title>System Status — ArtistXoder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #1a1a1a;
-    --border: #222222;
-    --border2: #2e2e2e;
-    --text: #f0f0f0;
-    --muted: #666666;
-    --muted2: #444444;
-    --green: #00ff87;
-    --green-dim: #00ff8722;
-    --green-border: #00ff8744;
-    --amber: #ffb830;
-    --amber-dim: #ffb83022;
-    --red: #ff4545;
-    --red-dim: #ff454522;
+    --bg: #050505;
+    --bg2: #121212;
+    --bg3: #1e1e1e;
+    --border: #2a2a2a;
+    --border-hover: #3a3a3a;
+    --text: #ffffff;
+    --text-muted: #888888;
+    --text-dim: #555555;
+    
+    --green: #10b981;
+    --green-dim: rgba(16, 185, 129, 0.1);
+    --green-glow: rgba(16, 185, 129, 0.4);
+    
+    --amber: #f59e0b;
+    --amber-dim: rgba(245, 158, 11, 0.1);
+    --amber-glow: rgba(245, 158, 11, 0.4);
+    
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.1);
+    --red-glow: rgba(239, 68, 68, 0.4);
+    
     --mono: 'Space Mono', monospace;
     --sans: 'DM Sans', sans-serif;
   }
@@ -35,215 +41,397 @@
     color: var(--text);
     font-family: var(--sans);
     min-height: 100vh;
-    padding: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Focus outline for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--text-muted);
+    outline-offset: 4px;
+    border-radius: 4px;
   }
 
   .noise {
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
-    opacity: 0.4;
   }
 
   .wrap {
     max-width: 760px;
     margin: 0 auto;
-    padding: 60px 24px 80px;
+    padding: 40px 24px 80px;
     position: relative;
     z-index: 1;
   }
+
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 8px 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    transform: translateX(-4px); /* Slick slide-left on hover */
+  }
+
+  #google_translate_element .goog-te-gadget-simple {
+    background-color: var(--bg2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-family: var(--sans) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    transition: border-color 0.2s ease;
+  }
+  
+  #google_translate_element .goog-te-gadget-simple:hover {
+    border-color: var(--border-hover) !important;
+  }
+
+  #google_translate_element .goog-te-gadget-simple span,
+  #google_translate_element .goog-te-menu-value span {
+    color: var(--text-muted) !important;
+  }
+
+  #google_translate_element .goog-te-gadget-simple:hover span {
+    color: var(--text) !important;
+  }
+  
+  /* Hide the Google Translate logo image entirely */
+  .goog-te-gadget-icon { display: none !important; }
 
   .header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 56px;
-    gap: 16px;
+    margin-bottom: 48px;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .wordmark {
     font-family: var(--mono);
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
   }
 
   .page-title {
-    font-family: var(--mono);
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     color: var(--text);
-    letter-spacing: -0.02em;
-    line-height: 1;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
   }
 
   .overall-badge {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
+    gap: 10px;
+    padding: 10px 18px;
     border-radius: 999px;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    border: 1px solid var(--green-border);
-    background: var(--green-dim);
-    color: var(--green);
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-top: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--text-muted);
+    transition: all 0.3s ease;
   }
 
-  .overall-badge.degraded { border-color: #ffb83044; background: var(--amber-dim); color: var(--amber); }
-  .overall-badge.outage   { border-color: #ff454544; background: var(--red-dim);   color: var(--red);   }
+  /* Status Colors for Overall Badge */
+  .overall-badge.up { border-color: var(--green-glow); background: var(--green-dim); color: var(--green); }
+  .overall-badge.degraded { border-color: var(--amber-glow); background: var(--amber-dim); color: var(--amber); }
+  .overall-badge.outage { border-color: var(--red-glow); background: var(--red-dim); color: var(--red); }
 
   .dot {
-    width: 7px; height: 7px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: currentColor;
-    animation: pulse 2.4s ease-in-out infinite;
+    position: relative;
   }
 
-  @keyframes pulse {
+  .overall-badge.up .dot, .status-up .status-dot {
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green-glow);
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+  
+  .overall-badge.degraded .dot, .status-degraded .status-dot {
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber-glow);
+    animation: pulse-amber 2s ease-in-out infinite;
+  }
+
+  .overall-badge.outage .dot, .status-down .status-dot {
+    background: var(--red);
+    box-shadow: 0 0 8px var(--red-glow);
+  }
+
+  @keyframes pulse-green {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(0.85); }
+    50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 2px var(--green-glow); }
+  }
+  
+  @keyframes pulse-amber {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 2px var(--amber-glow); }
   }
 
-  .divider { height: 1px; background: var(--border); margin-bottom: 40px; }
+  .divider { height: 1px; background: var(--border); margin-bottom: 48px; }
 
   .section-label {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted2);
-    margin-bottom: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
   }
 
-  .services { display: flex; flex-direction: column; gap: 2px; margin-bottom: 48px; }
+  .services { margin-bottom: 56px; }
+
+  .service-link-wrapper {
+    text-decoration: none;
+    display: block;
+    border-radius: 12px;
+  }
 
   .service-row {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
+    gap: 20px;
+    padding: 20px 24px;
     background: var(--bg2);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color 0.15s;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
   }
-  .service-row:hover { border-color: var(--border2); }
+  
+  .service-row:hover { 
+    border-color: var(--text-muted);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    background: var(--bg3);
+  }
 
   .service-icon {
-    width: 32px; height: 32px;
-    border-radius: 6px;
-    background: var(--bg3);
-    border: 1px solid var(--border2);
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; overflow: hidden;
+    flex-shrink: 0;
   }
-  .service-icon img { width: 18px; height: 18px; object-fit: contain; }
-  .service-icon svg { width: 16px; height: 16px; fill: var(--muted); }
+  .service-icon svg { width: 20px; height: 20px; color: var(--text); }
 
   .service-info { flex: 1; min-width: 0; }
-  .service-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .service-url  { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .service-name { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .service-url  { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
 
   .service-status {
-    display: flex; align-items: center; gap: 7px;
-    font-family: var(--mono); font-size: 11px; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase; flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0;
   }
 
-  .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .status-dot { 
+    width: 8px; height: 8px; 
+    border-radius: 50%; 
+    background: var(--text-dim); /* Default checking state */
+  }
 
-  .status-up .status-dot       { background: var(--green); animation: pulse 2.4s ease-in-out infinite; }
   .status-up .service-status   { color: var(--green); }
-  .status-down .status-dot     { background: var(--red); }
   .status-down .service-status { color: var(--red); }
-  .status-degraded .status-dot       { background: var(--amber); animation: pulse 2s ease-in-out infinite; }
-  .status-degraded .service-status   { color: var(--amber); }
+  .status-degraded .service-status { color: var(--amber); }
 
-  .history-section { margin-bottom: 48px; }
-  .history-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .history-label { font-size: 12px; color: var(--muted); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .history-bars { display: flex; gap: 2px; flex: 1; }
+  .history-section { margin-bottom: 56px; }
+  .history-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .history-label { font-size: 14px; font-weight: 500; color: var(--text-muted); width: 180px; flex-shrink: 0; }
+  
+  .history-bars { 
+    display: flex; gap: 3px; flex: 1; height: 32px; 
+    align-items: flex-end; /* Align bars to bottom */
+  }
 
-  .bar { flex: 1; height: 24px; border-radius: 2px; background: var(--bg3); transition: background 0.15s; cursor: default; }
-  .bar.up      { background: #00ff8733; } .bar.up:hover      { background: #00ff8755; }
-  .bar.down    { background: #ff454555; } .bar.down:hover    { background: #ff454577; }
-  .bar.partial { background: #ffb83033; } .bar.partial:hover { background: #ffb83055; }
+  .bar { 
+    flex: 1; 
+    height: 100%; 
+    border-radius: 3px; 
+    background: var(--bg3); 
+    transition: transform 0.15s, opacity 0.15s; 
+    cursor: crosshair; 
+    position: relative;
+  }
+  
+  .bar:hover { transform: scaleY(1.1); transform-origin: bottom; opacity: 0.8; }
+  
+  .bar.up      { background: var(--green-glow); } 
+  .bar.down    { background: var(--red-glow); } 
+  .bar.partial { background: var(--amber-glow); } 
 
-  .uptime-pct { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 52px; text-align: right; flex-shrink: 0; }
+  /* Advanced Tooltip for History Bars */
+  .bar::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  
+  /* Tooltip Arrow */
+  .bar::after {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    border-width: 4px;
+    border-style: solid;
+    border-color: var(--text) transparent transparent transparent;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+  }
 
-  .footer { display: flex; align-items: center; justify-content: space-between; padding-top: 32px; border-top: 1px solid var(--border); gap: 16px; flex-wrap: wrap; }
-  .footer-left { font-family: var(--mono); font-size: 11px; color: var(--muted2); }
-  .footer-left span { color: var(--muted); }
-  .powered-by { font-family: var(--mono); font-size: 10px; color: var(--muted2); letter-spacing: 0.05em; }
-  .powered-by a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border2); transition: color 0.15s; }
-  .powered-by a:hover { color: var(--text); }
+  .bar:hover::before, .bar:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 
-  @media (max-width: 500px) {
-    .header { flex-direction: column; }
-    .history-label { width: 110px; }
-    .page-title { font-size: 22px; }
+  .uptime-pct { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); width: 60px; text-align: right; flex-shrink: 0; }
+
+  .footer { 
+    display: flex; align-items: center; justify-content: space-between; 
+    padding-top: 32px; border-top: 1px solid var(--border); gap: 16px; flex-wrap: wrap; 
+  }
+  .footer-left { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .footer-left span { color: var(--text-muted); font-weight: 700;}
+  
+  .powered-by { font-family: var(--sans); font-size: 12px; color: var(--text-dim); }
+  .powered-by a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); transition: all 0.2s; font-weight: 500;}
+  .powered-by a:hover { color: var(--text); border-color: var(--text); }
+
+  @media (max-width: 600px) {
+    .history-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .history-label { width: 100%; }
+    .history-bars { width: 100%; }
+    .uptime-pct { width: 100%; text-align: left; }
+    .header { margin-bottom: 32px; }
   }
 </style>
 </head>
 <body>
 <div class="noise"></div>
-<div class="wrap">
+<main class="wrap">
+
+  <!-- Navigation Layer -->
+  <nav class="top-nav" aria-label="Top Navigation">
+    <a href="index.html" class="back-link" aria-label="Return to Home">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Return
+    </a>
+    <div id="google_translate_element"></div>
+  </nav>
 
   <header class="header">
     <div class="logo-block">
-      <div class="wordmark">artistxoder</div>
-      <div class="page-title">system status</div>
+      <h2 class="wordmark">ArtistXoder</h2>
+      <h1 class="page-title">System Status</h1>
     </div>
+    <!-- Badge defaults to "Checking..." on load -->
     <div class="overall-badge" id="overallBadge">
       <span class="dot"></span>
-      <span id="overallText">All systems operational</span>
+      <span id="overallText">Checking status...</span>
     </div>
   </header>
 
   <div class="divider"></div>
 
-  <div class="section-label">Services</div>
-  <div class="services">
+  <section aria-labelledby="services-heading">
+    <h3 id="services-heading" class="section-label">Active Services</h3>
+    <div class="services">
 
-    <div class="service-row status-up" id="row-website">
-      <div class="service-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 2C8 6 8 18 12 22M12 2C16 6 16 18 12 22M2 12H22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-      </div>
-      <div class="service-info">
-        <div class="service-name">ArtistXoder Website</div>
-        <div class="service-url">artistxoder.com</div>
-      </div>
-      <div class="service-status">
-        <span class="status-dot"></span>
-        <span>Operational</span>
-      </div>
+      <!-- Clickable UptimeRobot row connection -->
+      <a href="https://stats.uptimerobot.com/KRRBoycOht" target="_blank" rel="noopener noreferrer" class="service-link-wrapper" aria-label="View ArtistXoder Website Uptime Metrics">
+        <!-- Default class lacks status-up/down so it looks gray until JS loads -->
+        <div class="service-row" id="row-website">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 2C8 6 8 18 12 22M12 2C16 6 16 18 12 22M2 12H22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          </div>
+          <div class="service-info">
+            <div class="service-name">ArtistXoder Website</div>
+            <div class="service-url">artistxoder.com</div>
+          </div>
+          <div class="service-status">
+            <span class="status-dot"></span>
+            <span>Checking</span>
+          </div>
+        </div>
+      </a>
+
     </div>
+  </section>
 
-
-  </div>
-
-  <div class="history-section">
-    <div class="section-label">90-day uptime</div>
+  <section class="history-section" aria-labelledby="history-heading">
+    <h3 id="history-heading" class="section-label">90-Day Uptime History</h3>
     <div class="history-row">
       <div class="history-label">ArtistXoder Website</div>
-      <div class="history-bars" id="bars-website"></div>
-      <div class="uptime-pct" id="pct-website">—</div>
+      <div class="history-bars" id="bars-website" role="img" aria-label="90 day uptime bar chart">
+        <!-- Bars will be injected here via Javascript -->
+      </div>
+      <div class="uptime-pct" id="pct-website">—%</div>
     </div>
-
-  </div>
+  </section>
 
   <footer class="footer">
     <div class="footer-left">Last updated: <span id="lastUpdated">—</span></div>
@@ -252,37 +440,77 @@
     </div>
   </footer>
 
-</div>
+</main>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────────
 const UPPTIME_OWNER = 'artistxoder';
 const UPPTIME_REPO  = 'artistxoder.github.io';
 
-// ───────────────────────────────────────────────────────────────────────────
+// Format the date for the "Last updated" footer
+function updateTime() {
+  document.getElementById('lastUpdated').textContent = new Date().toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+  });
+}
 
+// Update the specific service row UI
 function setStatus(id, state) {
   const row = document.getElementById('row-' + id);
   row.className = 'service-row status-' + state;
-  if (id === 'mc') {
-    document.getElementById('mc-status-text').textContent =
-      state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
-  } else {
-    row.querySelector('.service-status span:last-child').textContent =
-      state === 'up' ? 'Operational' : state === 'down' ? 'Outage' : 'Degraded';
-  }
+  const textSpan = row.querySelector('.service-status span:last-child');
+  
+  if (state === 'up') textSpan.textContent = 'Operational';
+  else if (state === 'down') textSpan.textContent = 'Outage';
+  else textSpan.textContent = 'Degraded';
 }
 
 function renderBars(id, days) {
   const container = document.getElementById('bars-' + id);
   container.innerHTML = '';
-  let upCount = 0, total = 0;
-  days.forEach(d => {
+  
+  let upCount = 0;
+  let total = 0;
+  
+  // To assign accurate dates to each bar (from 89 days ago up to today)
+  const today = new Date();
+  
+  days.forEach((d, index) => {
     const b = document.createElement('div');
-    b.className = 'bar ' + (d === 1 ? 'up' : d === 0 ? 'down' : d === -1 ? 'partial' : 'nodata');
-    if (d !== null) { total++; if (d === 1) upCount++; }
+    
+    // Determine bar color class based on Upptime data (1 = up, 0 = down, -1 = degraded/partial)
+    let stateClass = 'nodata';
+    let tooltipText = 'No data available';
+    
+    // Calculate the actual date for this specific bar
+    const barDate = new Date(today);
+    barDate.setDate(today.getDate() - (89 - index));
+    const dateString = barDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    if (d !== null) { 
+      total++; 
+      if (d === 1) {
+        upCount++;
+        stateClass = 'up';
+        tooltipText = '100% Operational';
+      } else if (d === 0) {
+        stateClass = 'down';
+        tooltipText = 'Major Outage';
+      } else if (d === -1) {
+        stateClass = 'partial';
+        tooltipText = 'Partial Downtime / Degraded';
+      }
+    }
+    
+    b.className = 'bar ' + stateClass;
+    
+    // Apply the sophisticated custom tooltip logic we created in CSS
+    b.setAttribute('data-tooltip', `${dateString}: ${tooltipText}`);
+    
     container.appendChild(b);
   });
+  
+  // Calculate and display percentage
   const pct = total ? Math.round((upCount / total) * 1000) / 10 : NaN;
   document.getElementById('pct-' + id).textContent = isNaN(pct) ? '—' : pct.toFixed(1) + '%';
 }
@@ -290,53 +518,75 @@ function renderBars(id, days) {
 async function fetchUpptime(slug) {
   try {
     const res = await fetch(`https://raw.githubusercontent.com/${UPPTIME_OWNER}/${UPPTIME_REPO}/master/history/summary.json`);
-    if (!res.ok) return null;
+    if (!res.ok) throw new Error('Network response was not ok');
     const data = await res.json();
     return data.find(s => s.slug === slug) || null;
-  } catch { return null; }
+  } catch (error) { 
+    console.error("Failed to fetch Upptime data:", error);
+    return null; 
+  }
 }
 
+async function loadStatus() {
+  updateTime();
 
+  let anyDown = false;
+  let anyDegraded = false;
 
-async function load() {
-  document.getElementById('lastUpdated').textContent = new Date().toLocaleString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric',
-    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
-  });
-
-  let anyDown = false, anyDegraded = false;
-
-  // ── Website via Upptime ──
+  // Fetch Website status from standard Upptime slug
   const websiteSummary = await fetchUpptime('artistxoder-website');
+  
   if (websiteSummary) {
     const state = websiteSummary.status === 'up' ? 'up' : 'down';
     setStatus('website', state);
+    
     if (state === 'down') anyDown = true;
+    
     const mins = websiteSummary.dailyMinutesDown || [];
-    renderBars('website', Array(90).fill(null).map((_, i) => {
+    
+    // Build array of 90 days
+    const daysArray = Array(90).fill(null).map((_, i) => {
       const m = mins[i];
       if (m === undefined || m === null) return null;
+      // If 0 mins down -> 1 (Up). If >= 1440 mins (24hrs) down -> 0 (Down). Else -1 (Partial)
       return m === 0 ? 1 : m >= 1440 ? 0 : -1;
-    }));
+    });
+    
+    renderBars('website', daysArray);
   } else {
+    // If fetch fails, show empty gray bars
+    setStatus('website', 'nodata');
+    document.getElementById('row-website').querySelector('.service-status span:last-child').textContent = 'Unknown';
     renderBars('website', Array(90).fill(null));
   }
 
-
-
-  // ── Overall badge ──
+  // Update Overall Header Badge
   const badge = document.getElementById('overallBadge');
   const text  = document.getElementById('overallText');
+  
   if (anyDown) {
     badge.className = 'overall-badge outage';
-    text.textContent = 'Partial outage';
+    text.textContent = 'Partial Outage Detected';
   } else if (anyDegraded) {
     badge.className = 'overall-badge degraded';
-    text.textContent = 'Degraded performance';
+    text.textContent = 'Degraded Performance';
+  } else {
+    badge.className = 'overall-badge up';
+    text.textContent = 'All Systems Operational';
   }
 }
 
-load();
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,es,fr,de,ja,ko',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+
+// Start data fetch on page load
+loadStatus();
 </script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
