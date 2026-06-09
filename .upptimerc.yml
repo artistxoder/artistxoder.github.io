@@ -1,17 +1,25 @@
-owner: artistxoder
-repo: artistxoder.github.io
+name: Uptime CI
+on:
+  schedule:
+    - cron: 0/5 * * * *
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
-sites:
-  - name: ArtistXoder Website
-    url: https://artistxoder.com/
-
-status-website:
-  name: System Status
-  baseUrl: /
-  cname: status.artistxoder.com
-
-skipDeleteIssues: true
-commitMessages:
-  statusChange: "⬆️ $SITE_NAME is up"
-  incidentCreate: "🔴 $SITE_NAME is down"
-  incidentResolve: "✅ $SITE_NAME is back up"
+jobs:
+  release:
+    name: Check Status
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Update Uptime
+        uses: upptime/uptime-monitor@master
+        with:
+          user: artistxoder
+          repo: artistxoder.github.io
