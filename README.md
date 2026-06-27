@@ -2,27 +2,30 @@
 
 This is a showcase of my work as Garrett.
 
-### Structure
+## Structure
+* `index.html`: Main page
+* `styles.css`: Styling
+* `scripts/`: JavaScript files
+* `images/`: Image assets
+* `music/`: Audio Assets
 
-- index.html: Main page
-- styles.css: Styling
-- scripts: JavaScript files
-- images: Image assets
-- music: Audio Assets
+## Technologies
+* HTML
+* CSS
+* JavaScript
+* ChatGPT
+* Gemini
+* Udio
 
-### Technologies
-
-- HTML
-- CSS
-- JavaScript
-- ChatGPT
-- Gemini
-- Udio
-
-### Deployment
-
+## Deployment
 Deployed to GitHub Pages using GitHub Actions.
 
-### License
-
+## License
 The Unlicense
+
+---
+
+## About
+Personal Website Hosted on GitHub Pages.
+
+[artistxoder.github.io/](https://artistxoder.github.io/)
