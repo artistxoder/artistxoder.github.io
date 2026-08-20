@@ -31,9 +31,9 @@
             overflow: hidden;
         }
 
-        /* Sidebar File Tree */
+        /* Sidebar Repository List */
         aside {
-            width: 280px;
+            width: 300px;
             background-color: var(--bg-surface);
             border-right: 1px solid var(--border-color);
             display: flex;
@@ -48,33 +48,55 @@
             color: var(--text-primary);
         }
 
-        .file-list {
+        .repo-list {
             list-style: none;
             overflow-y: auto;
             padding: 8px;
         }
 
-        .file-item {
-            padding: 8px 12px;
+        .repo-item {
+            padding: 10px 12px;
             font-size: 13px;
             border-radius: 6px;
             cursor: pointer;
             color: var(--text-secondary);
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-direction: column;
+            gap: 4px;
             transition: background 0.15s ease, color 0.15s ease;
+            text-decoration: none;
+            margin-bottom: 4px;
+            border: 1px solid transparent;
         }
 
-        .file-item:hover {
+        .repo-item:hover {
             background-color: var(--bg-hover);
             color: var(--text-primary);
+            border-color: var(--border-color);
         }
 
-        .file-item.active {
+        .repo-item.active {
             background-color: var(--bg-hover);
             color: var(--accent-color);
+            border-color: var(--accent-color);
             font-weight: 500;
+        }
+
+        .repo-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .repo-item.active .repo-title {
+            color: var(--accent-color);
+        }
+
+        .repo-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
         }
 
         /* Main Content Editor Pane */
@@ -94,6 +116,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .editor-header a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .editor-header a:hover {
+            text-decoration: underline;
         }
 
         .editor-content {
@@ -128,54 +160,59 @@
 
     <!-- Sidebar -->
     <aside>
-        <div class="sidebar-header">Repository Files</div>
-        <ul class="file-list" id="fileList">
-            <!-- Dynamic file items can be added here or populated via JS -->
-            <li class="file-item active" onclick="loadContent('invoices.json')">📄 invoices.json</li>
-            <li class="file-item" onclick="loadContent('status.html')">🌐 status.html</li>
-            <li class="file-item" onclick="loadContent('README.md')">📖 README.md</li>
+        <div class="sidebar-header">My Repositories</div>
+        <ul class="repo-list" id="repoList">
+            <li class="repo-item active" onclick="loadRepo('fantastic-octo-memory', 'https://github.com/artistxoder/fantastic-octo-memory', event)">
+                <div class="repo-title">📦 fantastic-octo-memory</div>
+                <div class="repo-desc">Arduino air quality & temperature monitor</div>
+            </li>
+            <li class="repo-item" onclick="loadRepo('solid-chainsaw', 'https://github.com/artistxoder/solid-chainsaw', event)">
+                <div class="repo-title">📦 solid-chainsaw</div>
+                <div class="repo-desc">Raspberry Pi stock price display script</div>
+            </li>
+            <li class="repo-item" onclick="loadRepo('ubiquitous-lamp', 'https://github.com/artistxoder/ubiquitous-lamp', event)">
+                <div class="repo-title">📦 ubiquitous-lamp</div>
+                <div class="repo-desc">Discord moderation & commit announcement bot</div>
+            </li>
         </ul>
     </aside>
 
     <!-- Main Viewer -->
     <main>
         <div class="editor-header">
-            <span id="currentFileName">invoices.json</span>
-            <span style="font-size: 12px; color: var(--text-secondary);">UTF-8</span>
+            <span id="currentRepoName">README.md (fantastic-octo-memory)</span>
+            <a id="githubLink" href="https://github.com/artistxoder/fantastic-octo-memory" target="_blank">View on GitHub ↗</a>
         </div>
-        <div class="editor-content" id="fileContent">
-{
-  "client": "Igor Tylman",
-  "status": "Pending Customs Duties",
-  "tracking": "FedEx International",
-  "items": [
-    {
-      "description": "Custom 3D Printed Assemblies",
-      "value": "Pending Verification"
-    }
-  ]
-}
-        </div>
+        <div class="editor-content" id="fileContent"># fantastic-octo-memory
+
+Arduino UNO air quality and temperature monitoring board utilizing an MQ-135 sensor, DHT11, and an I2C OLED display.
+
+### Files Included:
+- Arduino_Hat_Garrett_Goben.cpp
+- arduinohatschematicgarrett.png
+- Upload Instructions for Air Quality Monitor Hat Arduino .pdf</div>
     </main>
 
     <script>
-        function loadContent(filename) {
+        function loadRepo(repoName, repoUrl, event) {
             // Update active state in sidebar
-            const items = document.querySelectorAll('.file-item');
+            const items = document.querySelectorAll('.repo-item');
             items.forEach(item => item.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            // Update header title
-            document.getElementById('currentFileName').innerText = filename;
+            // Update header title and external link
+            document.getElementById('currentRepoName').innerText = `README.md (${repoName})`;
+            const linkElem = document.getElementById('githubLink');
+            linkElem.href = repoUrl;
 
-            // Simple mock content loader (replace with your fetch logic if loading external files)
+            // Load mock README content based on selected repo
             const contentBox = document.getElementById('fileContent');
-            if (filename === 'invoices.json') {
-                contentBox.innerText = `{\n  "client": "Igor Tylman",\n  "status": "Pending Customs Duties",\n  "tracking": "FedEx International",\n  "items": [\n    {\n      "description": "Custom 3D Printed Assemblies",\n      "value": "Pending Verification"\n    }\n  ]\n}`;
-            } else if (filename === 'status.html') {
-                contentBox.innerText = `<!DOCTYPE html>\n<html>\n<head><title>Status</title></head>\n<body>\n  <h1>System Operational</h1>\n</body>\n</html>`;
-            } else {
-                contentBox.innerText = `# Archive Repository\n\nManaged via local home lab tools.`;
+            if (repoName === 'fantastic-octo-memory') {
+                contentBox.innerText = `# fantastic-octo-memory\n\nArduino UNO air quality and temperature monitoring board utilizing an MQ-135 sensor, DHT11, and an I2C OLED display.\n\n### Files Included:\n- Arduino_Hat_Garrett_Goben.cpp\n- arduinohatschematicgarrett.png\n- Upload Instructions for Air Quality Monitor Hat Arduino .pdf`;
+            } else if (repoName === 'solid-chainsaw') {
+                contentBox.innerText = `# solid-chainsaw\n\nRaspberry Pi stock price tracking and display script utilizing an I2C OLED screen[cite: 2].\n\n### Files Included:\n- stock.py[cite: 2]\n- setup.sh[cite: 2]\n- README.md[cite: 2]`;
+            } else if (repoName === 'ubiquitous-lamp') {
+                contentBox.innerText = `# ubiquitous-lamp\n\nDiscord bot built with Eris for server moderation and GitHub commit announcements[cite: 3].\n\n### Files Included:\n- index.js[cite: 3]\n- package.json[cite: 3]\n- .env[cite: 3]`;
             }
         }
     </script>
