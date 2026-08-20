@@ -84,7 +84,15 @@
       color: #00ff7f;
     }
 
-    /* Gallery Grid */
+    .disclaimer-box {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(255, 170, 0, 0.1);
+      border: 1px dashed #ffaa00;
+      border-radius: 6px;
+      color: #ffcc00;
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -101,6 +109,9 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .stl-card:hover {
@@ -157,6 +168,7 @@
       line-height: 1.6;
       margin-bottom: 15px;
       color: #00ff00;
+      flex-grow: 1;
     }
 
     .stl-meta {
@@ -172,6 +184,18 @@
       padding: 5px 10px;
       border-radius: 5px;
       border: 1px solid #00ff00;
+    }
+
+    .meta-tag.ai-tag {
+      background: rgba(255, 170, 0, 0.15);
+      border-color: #ffaa00;
+      color: #ffcc00;
+    }
+
+    .meta-tag.price-tag {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: #00e5ff;
+      color: #00e5ff;
     }
 
     .download-button {
@@ -192,6 +216,17 @@
       background: #00ff00;
       color: #0f0f0f;
       box-shadow: 0 0 20px #00ff00;
+    }
+
+    .download-button.external {
+      border-color: #00e5ff;
+      color: #00e5ff;
+    }
+
+    .download-button.external:hover {
+      background: #00e5ff;
+      color: #0f0f0f;
+      box-shadow: 0 0 20px #00e5ff;
     }
 
     /* Search and Filter */
@@ -263,17 +298,20 @@
 <body>
   <div class="container">
     <h1>🖨️ 3D Print Files</h1>
-    <p class="subtitle">Free STL files for your 3D printing projects</p>
+    <p class="subtitle">Free STL files & references for your 3D printing projects</p>
     
     <a class="back-button" href="index.html">⬅ Back to Home</a>
 
     <div class="info-box">
       <h2>📥 How to Use These Files</h2>
-      <p>1. Click the download button on any model below</p>
+      <p>1. Click the download or view button on any model below</p>
       <p>2. Open the STL file in your slicer software (Cura, PrusaSlicer, etc.)</p>
-      <p>3. Adjust your print settings and slice</p>
+      <p>3. Adjust your print settings, orientation, and slice</p>
       <p>4. Print and enjoy!</p>
-      <p style="margin-top: 15px; color: #00ff7f;">💡 All files are free to use for personal projects. Attribution appreciated!</p>
+
+      <div class="disclaimer-box">
+        ⚠️ <strong>Notice:</strong> Please note that free STL models provided in this repository serve as design references and prototypes. Some files are AI-generated or community models, so they may require sizing tweaks, test prints, or structural adjustments before final use.
+      </div>
     </div>
 
     <!-- Search and Filter Controls -->
@@ -282,47 +320,76 @@
       <button class="filter-button active" data-filter="all">All</button>
       <button class="filter-button" data-filter="functional">Functional</button>
       <button class="filter-button" data-filter="decorative">Decorative</button>
-      <button class="filter-button" data-filter="tools">Tools</button>
+      <button class="filter-button" data-filter="tools">Tools & Gadgets</button>
     </div>
 
     <!-- Gallery -->
     <div class="gallery" id="gallery">
       
-      <div class="stl-card" data-category="decorative">
-        <div class="stl-thumbnail">🐱</div>
-        <div class="stl-title">Cat Echo Holder</div>
-        <div class="stl-description">
-          Adorable cat-shaped holder designed for Amazon Echo devices. Keep your smart speaker secure with style!
+      <!-- Robotic Vacuum Soda Can Holder -->
+      <div class="stl-card" data-category="functional">
+        <div>
+          <div class="stl-thumbnail">🤖🥤</div>
+          <div class="stl-title">Robotic Vacuum Drink Holder</div>
+          <div class="stl-description">
+            Attachable soda/drink can mount for your robotic vacuum cleaner. Turn your robot vacuum into a beverage delivery bot!
+          </div>
+          <div class="stl-meta">
+            <span class="meta-tag">📏 Fits: Standard Cans</span>
+            <span class="meta-tag">🎯 Difficulty: Medium</span>
+            <span class="meta-tag price-tag">💵 $3.00 Model</span>
+          </div>
         </div>
-        <div class="stl-meta">
-          <span class="meta-tag">📏 Fits: Echo Dot</span>
-          <span class="meta-tag">🎯 Difficulty: Easy</span>
+        <a href="https://cults3d.com/en/3d-model/gadget/robotic-vacuum-drink-soda-can-holder-3d-print-file" target="_blank" rel="noopener noreferrer" class="download-button external">🔗 Buy for $3 on Cults3D</a>
+      </div>
+
+      <!-- Cat Echo Holder -->
+      <div class="stl-card" data-category="decorative">
+        <div>
+          <div class="stl-thumbnail">🐱</div>
+          <div class="stl-title">Cat Echo Holder</div>
+          <div class="stl-description">
+            Adorable cat-shaped holder designed for Amazon Echo devices. Keep your smart speaker secure with style!
+          </div>
+          <div class="stl-meta">
+            <span class="meta-tag">📏 Fits: Echo Dot</span>
+            <span class="meta-tag">🎯 Difficulty: Easy</span>
+            <span class="meta-tag ai-tag">🤖 Ref Model</span>
+          </div>
         </div>
         <a href="caalexecho.stl" class="download-button" download>⬇️ Download STL</a>
       </div>
 
+      <!-- Samsung S24 Case -->
       <div class="stl-card" data-category="functional">
-        <div class="stl-thumbnail">📱</div>
-        <div class="stl-title">Samsung S24 Case</div>
-        <div class="stl-description">
-          Custom protective case designed specifically for the Samsung Galaxy S24. Durable and precise fit.
-        </div>
-        <div class="stl-meta">
-          <span class="meta-tag">📏 Fits: Galaxy S24</span>
-          <span class="meta-tag">🎯 Difficulty: Medium</span>
+        <div>
+          <div class="stl-thumbnail">📱</div>
+          <div class="stl-title">Samsung S24 Case</div>
+          <div class="stl-description">
+            Custom protective case designed specifically for the Samsung Galaxy S24. Durable and precise fit.
+          </div>
+          <div class="stl-meta">
+            <span class="meta-tag">📏 Fits: Galaxy S24</span>
+            <span class="meta-tag">🎯 Difficulty: Medium</span>
+            <span class="meta-tag ai-tag">🤖 Ref Model</span>
+          </div>
         </div>
         <a href="s24caset.stl" class="download-button" download>⬇️ Download STL</a>
       </div>
 
+      <!-- HMD Vibe Case -->
       <div class="stl-card" data-category="functional">
-        <div class="stl-thumbnail">🎮</div>
-        <div class="stl-title">HMD Vibe Case</div>
-        <div class="stl-description">
-          Protective phone case for HMD Vibe devices. Sleek design with full protection for your device.
-        </div>
-        <div class="stl-meta">
-          <span class="meta-tag">📏 Fits: HMD Vibe</span>
-          <span class="meta-tag">🎯 Difficulty: Medium</span>
+        <div>
+          <div class="stl-thumbnail">🎮</div>
+          <div class="stl-title">HMD Vibe Case</div>
+          <div class="stl-description">
+            Protective phone case for HMD Vibe devices. Sleek design with full protection for your device.
+          </div>
+          <div class="stl-meta">
+            <span class="meta-tag">📏 Fits: HMD Vibe</span>
+            <span class="meta-tag">🎯 Difficulty: Medium</span>
+            <span class="meta-tag ai-tag">🤖 Ref Model</span>
+          </div>
         </div>
         <a href="hmdvibecase.stl" class="download-button" download>⬇️ Download STL</a>
       </div>
@@ -364,10 +431,10 @@
         const category = card.dataset.category;
         
         const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-        const matchesFilter = currentFilter === 'all' || category === currentFilter;
+        const matchesFilter = currentFilter === 'all' || category === currentFilter || (currentFilter === 'tools' && category === 'functional');
 
         if (matchesSearch && matchesFilter) {
-          card.style.display = 'block';
+          card.style.display = 'flex';
           visibleCount++;
         } else {
           card.style.display = 'none';
