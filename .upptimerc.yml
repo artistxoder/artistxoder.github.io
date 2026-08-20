@@ -13,7 +13,6 @@ jobs:
     name: Check Status
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       GH_PAT: ${{ secrets.GH_PAT }}
     permissions:
       contents: write
@@ -24,8 +23,3 @@ jobs:
 
       - name: Update Uptime
         uses: upptime/uptime-monitor@master
-      - name: Update Uptime
-        uses: upptime/uptime-monitor@master
-        with:
-          user: artistxoder
-          repo: artistxoder.github.io
