@@ -1,563 +1,1502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Status — ArtistXoder</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #050505;
-    --bg2: #121212;
-    --bg3: #1e1e1e;
-    --border: #2a2a2a;
-    --border-hover: #3a3a3a;
-    --text: #ffffff;
-    --text-muted: #888888;
-    --text-dim: #555555;
-    
-    --green: #10b981;
-    --green-dim: rgba(16, 185, 129, 0.1);
-    --green-glow: rgba(16, 185, 129, 0.4);
-    
-    --amber: #f59e0b;
-    --amber-dim: rgba(245, 158, 11, 0.1);
-    --amber-glow: rgba(245, 158, 11, 0.4);
-    
-    --red: #ef4444;
-    --red-dim: rgba(239, 68, 68, 0.1);
-    --red-glow: rgba(239, 68, 68, 0.4);
-    
-    --mono: 'Space Mono', monospace;
-    --sans: 'DM Sans', sans-serif;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  <title>System Status — ArtistXoder</title>
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    min-height: 100vh;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  >
 
-  *:focus-visible {
-    outline: 2px solid var(--text-muted);
-    outline-offset: 4px;
-    border-radius: 4px;
-  }
+  <style>
+    :root {
+      --bg: #050505;
+      --bg2: #121212;
+      --bg3: #1e1e1e;
 
-  .noise {
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
+      --border: #2a2a2a;
+      --border-hover: #3a3a3a;
 
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-    position: relative;
-    z-index: 1;
-  }
+      --text: #ffffff;
+      --text-muted: #888888;
+      --text-dim: #555555;
 
-  .top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
+      --green: #10b981;
+      --green-dim: rgba(16, 185, 129, 0.1);
+      --green-glow: rgba(16, 185, 129, 0.4);
 
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    padding: 8px 12px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-  }
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.1);
+      --amber-glow: rgba(245, 158, 11, 0.4);
 
-  .back-link:hover {
-    color: var(--text);
-    border-color: var(--border-hover);
-    transform: translateX(-4px);
-  }
+      --red: #ef4444;
+      --red-dim: rgba(239, 68, 68, 0.1);
+      --red-glow: rgba(239, 68, 68, 0.4);
 
-  #google_translate_element .goog-te-gadget-simple {
-    background-color: var(--bg2) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 6px !important;
-    padding: 6px 12px !important;
-    font-family: var(--sans) !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    transition: border-color 0.2s ease;
-  }
-  
-  #google_translate_element .goog-te-gadget-simple:hover {
-    border-color: var(--border-hover) !important;
-  }
+      --mono: 'Space Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
 
-  #google_translate_element .goog-te-gadget-simple span,
-  #google_translate_element .goog-te-menu-value span {
-    color: var(--text-muted) !important;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  #google_translate_element .goog-te-gadget-simple:hover span {
-    color: var(--text) !important;
-  }
-  
-  .goog-te-gadget-icon { display: none !important; }
+    html {
+      background: var(--bg);
+    }
 
-  .header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 48px;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .wordmark {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
+    *:focus-visible {
+      outline: 2px solid var(--text-muted);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
 
-  .page-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-  }
+    .noise {
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .overall-badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    background: var(--bg2);
-    color: var(--text-muted);
-    transition: all 0.3s ease;
-  }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
 
-  .overall-badge.up { border-color: var(--green-glow); background: var(--green-dim); color: var(--green); }
-  .overall-badge.degraded { border-color: var(--amber-glow); background: var(--amber-dim); color: var(--amber); }
-  .overall-badge.outage { border-color: var(--red-glow); background: var(--red-dim); color: var(--red); }
+    /* =========================
+       TOP NAVIGATION
+       ========================= */
 
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: currentColor;
-    position: relative;
-  }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-  .overall-badge.up .dot, .status-up .status-dot {
-    background: var(--green);
-    box-shadow: 0 0 8px var(--green-glow);
-    animation: pulse-green 2s ease-in-out infinite;
-  }
-  
-  .overall-badge.degraded .dot, .status-degraded .status-dot {
-    background: var(--amber);
-    box-shadow: 0 0 8px var(--amber-glow);
-    animation: pulse-amber 2s ease-in-out infinite;
-  }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
 
-  .overall-badge.outage .dot, .status-down .status-dot {
-    background: var(--red);
-    box-shadow: 0 0 8px var(--red-glow);
-  }
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
 
-  @keyframes pulse-green {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 2px var(--green-glow); }
-  }
-  
-  @keyframes pulse-amber {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 2px var(--amber-glow); }
-  }
+      color: var(--text-muted);
+      text-decoration: none;
 
-  .divider { height: 1px; background: var(--border); margin-bottom: 48px; }
+      transition: all 0.2s ease;
 
-  .section-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-  }
+      padding: 8px 12px;
 
-  .services { margin-bottom: 56px; }
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
 
-  .service-link-wrapper {
-    text-decoration: none;
-    display: block;
-    border-radius: 12px;
-  }
+    .back-link:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+      transform: translateX(-4px);
+    }
 
-  .service-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px 24px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-  }
-  
-  .service-row:hover { 
-    border-color: var(--text-muted);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    background: var(--bg3);
-  }
+    /* =========================
+       GOOGLE TRANSLATE
+       ========================= */
 
-  .service-icon {
-    width: 40px; height: 40px;
-    border-radius: 8px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .service-icon svg { width: 20px; height: 20px; color: var(--text); }
+    #google_translate_element .goog-te-gadget-simple {
+      background-color: var(--bg2) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 6px !important;
 
-  .service-info { flex: 1; min-width: 0; }
-  .service-name { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .service-url  { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+      padding: 6px 12px !important;
 
-  .service-status {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 12px; font-weight: 700;
-    letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0;
-  }
+      font-family: var(--sans) !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
 
-  .status-dot { 
-    width: 8px; height: 8px; 
-    border-radius: 50%; 
-    background: var(--text-dim);
-  }
+      transition: border-color 0.2s ease;
+    }
 
-  .status-up .service-status    { color: var(--green); }
-  .status-down .service-status { color: var(--red); }
-  .status-degraded .service-status { color: var(--amber); }
+    #google_translate_element .goog-te-gadget-simple:hover {
+      border-color: var(--border-hover) !important;
+    }
 
-  .history-section { margin-bottom: 56px; }
-  .history-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-  .history-label { font-size: 14px; font-weight: 500; color: var(--text-muted); width: 180px; flex-shrink: 0; }
-  
-  .history-bars { 
-    display: flex; gap: 3px; flex: 1; height: 32px; 
-    align-items: flex-end;
-  }
+    #google_translate_element .goog-te-gadget-simple span,
+    #google_translate_element .goog-te-menu-value span {
+      color: var(--text-muted) !important;
+    }
 
-  .bar { 
-    flex: 1; 
-    height: 100%; 
-    border-radius: 3px; 
-    background: var(--bg3); 
-    transition: transform 0.15s, opacity 0.15s; 
-    cursor: crosshair; 
-    position: relative;
-  }
-  
-  .bar:hover { transform: scaleY(1.1); transform-origin: bottom; opacity: 0.8; }
-  
-  .bar.up      { background: var(--green-glow); } 
-  .bar.down    { background: var(--red-glow); } 
-  .bar.partial { background: var(--amber-glow); } 
+    #google_translate_element .goog-te-gadget-simple:hover span {
+      color: var(--text) !important;
+    }
 
-  .bar::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: var(--text);
-    color: var(--bg);
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 700;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  }
-  
-  .bar::after {
-    content: '';
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    border-width: 4px;
-    border-style: solid;
-    border-color: var(--text) transparent transparent transparent;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
-  }
+    .goog-te-gadget-icon {
+      display: none !important;
+    }
 
-  .bar:hover::before, .bar:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+    /* =========================
+       HEADER
+       ========================= */
 
-  .uptime-pct { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); width: 60px; text-align: right; flex-shrink: 0; }
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
 
-  .footer { 
-    display: flex; align-items: center; justify-content: space-between; 
-    padding-top: 32px; border-top: 1px solid var(--border); gap: 16px; flex-wrap: wrap; 
-  }
-  .footer-left { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
-  .footer-left span { color: var(--text-muted); font-weight: 700;}
-  
-  .powered-by { font-family: var(--sans); font-size: 12px; color: var(--text-dim); }
-  .powered-by a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); transition: all 0.2s; font-weight: 500;}
-  .powered-by a:hover { color: var(--text); border-color: var(--text); }
+      margin-bottom: 48px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
 
-  @media (max-width: 600px) {
-    .history-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .history-label { width: 100%; }
-    .history-bars { width: 100%; }
-    .uptime-pct { width: 100%; text-align: left; }
-    .header { margin-bottom: 32px; }
-  }
-</style>
-</head>
-<body>
-<div class="noise"></div>
-<main class="wrap">
+    .wordmark {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
 
-  <nav class="top-nav" aria-label="Top Navigation">
-    <a href="index.html" class="back-link" aria-label="Return to Home">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Return
-    </a>
-    <div id="google_translate_element"></div>
-  </nav>
+      color: var(--text-muted);
 
-  <header class="header">
-    <div class="logo-block">
-      <h2 class="wordmark">ArtistXoder</h2>
-      <h1 class="page-title">System Status</h1>
-    </div>
-    <div class="overall-badge" id="overallBadge">
-      <span class="dot"></span>
-      <span id="overallText">Checking status...</span>
-    </div>
-  </header>
+      margin-bottom: 8px;
+    }
 
-  <div class="divider"></div>
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
 
-  <section aria-labelledby="services-heading">
-    <h3 id="services-heading" class="section-label">Active Services</h3>
-    <div class="services">
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
 
-      <a href="https://github.com/artistxoder/artistxoder.github.io" target="_blank" rel="noopener noreferrer" class="service-link-wrapper" aria-label="View ArtistXoder Website Uptime Metrics">
-        <div class="service-row" id="row-website">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 2C8 6 8 18 12 22M12 2C16 6 16 18 12 22M2 12H22" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-          </div>
-          <div class="service-info">
-            <div class="service-name">ArtistXoder Website</div>
-            <div class="service-url">artistxoder.com</div>
-          </div>
-          <div class="service-status">
-            <span class="status-dot"></span>
-            <span>Checking</span>
-          </div>
-        </div>
-      </a>
+    /* =========================
+       OVERALL STATUS
+       ========================= */
 
-    </div>
-  </section>
+    .overall-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-  <section class="history-section" aria-labelledby="history-heading">
-    <h3 id="history-heading" class="section-label">90-Day Uptime History</h3>
-    <div class="history-row">
-      <div class="history-label">ArtistXoder Website</div>
-      <div class="history-bars" id="bars-website" role="img" aria-label="90 day uptime bar chart"></div>
-      <div class="uptime-pct" id="pct-website">—%</div>
-    </div>
-  </section>
+      padding: 10px 18px;
 
-  <footer class="footer">
-    <div class="footer-left">Last updated: <span id="lastUpdated">—</span></div>
-    <div class="powered-by">
-      Powered by <a href="https://upptime.js.org" target="_blank" rel="noopener">Upptime</a>
-    </div>
-  </footer>
+      border-radius: 999px;
 
-</main>
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
 
-<script>
-const UPPTIME_OWNER = 'artistxoder';
-const UPPTIME_REPO  = 'artistxoder.github.io';
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text-muted);
 
-function updateTime() {
-  document.getElementById('lastUpdated').textContent = new Date().toLocaleString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric',
-    hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
-  });
-}
+      transition: all 0.3s ease;
+    }
 
-function setStatus(id, state) {
-  const row = document.getElementById('row-' + id);
-  row.className = 'service-row status-' + state;
-  const textSpan = row.querySelector('.service-status span:last-child');
-  
-  if (state === 'up') textSpan.textContent = 'Operational';
-  else if (state === 'down') textSpan.textContent = 'Outage';
-  else textSpan.textContent = 'Degraded';
-}
+    .overall-badge.up {
+      border-color: var(--green-glow);
+      background: var(--green-dim);
+      color: var(--green);
+    }
 
-function renderBars(id, days) {
-  const container = document.getElementById('bars-' + id);
-  container.innerHTML = '';
-  
-  let upCount = 0;
-  let total = 0;
-  const today = new Date();
-  
-  days.forEach((d, index) => {
-    const b = document.createElement('div');
-    let stateClass = 'nodata';
-    let tooltipText = 'No data available';
-    
-    const barDate = new Date(today);
-    barDate.setDate(today.getDate() - (89 - index));
-    const dateString = barDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    .overall-badge.degraded {
+      border-color: var(--amber-glow);
+      background: var(--amber-dim);
+      color: var(--amber);
+    }
 
-    if (d !== null) { 
-      total++; 
-      if (d === 1) {
-        upCount++;
-        stateClass = 'up';
-        tooltipText = '100% Operational';
-      } else if (d === 0) {
-        stateClass = 'down';
-        tooltipText = 'Major Outage';
-      } else if (d === -1) {
-        stateClass = 'partial';
-        tooltipText = 'Partial Downtime / Degraded';
+    .overall-badge.outage {
+      border-color: var(--red-glow);
+      background: var(--red-dim);
+      color: var(--red);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+      background: currentColor;
+
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .overall-badge.up .dot,
+    .status-up .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green-glow);
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    .overall-badge.degraded .dot,
+    .status-degraded .status-dot {
+      background: var(--amber);
+      box-shadow: 0 0 8px var(--amber-glow);
+      animation: pulse-amber 2s ease-in-out infinite;
+    }
+
+    .overall-badge.outage .dot,
+    .status-down .status-dot {
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red-glow);
+    }
+
+    @keyframes pulse-green {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.6;
+        transform: scale(0.85);
+        box-shadow: 0 0 2px var(--green-glow);
       }
     }
-    
-    b.className = 'bar ' + stateClass;
-    b.setAttribute('data-tooltip', `${dateString}: ${tooltipText}`);
-    container.appendChild(b);
-  });
-  
-  const pct = total ? Math.round((upCount / total) * 1000) / 10 : NaN;
-  document.getElementById('pct-' + id).textContent = isNaN(pct) ? '—' : pct.toFixed(1) + '%';
-}
 
-async function fetchUpptime(slug) {
-  try {
-    const res = await fetch(`https://raw.githubusercontent.com/${UPPTIME_OWNER}/${UPPTIME_REPO}/main/history/summary.json`);
-    if (!res.ok) throw new Error('Network response was not ok');
-    const data = await res.json();
-    return data.find(s => s.slug === slug || s.slug.includes(slug)) || null;
-  } catch (error) { 
-    console.error("Failed to fetch Upptime data:", error);
-    return null; 
-  }
-}
+    @keyframes pulse-amber {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
 
-async function loadStatus() {
-  updateTime();
+      50% {
+        opacity: 0.6;
+        transform: scale(0.85);
+        box-shadow: 0 0 2px var(--amber-glow);
+      }
+    }
 
-  let anyDown = false;
-  let anyDegraded = false;
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 48px;
+    }
 
-  const websiteSummary = await fetchUpptime('artistxoder');
-  
-  if (websiteSummary) {
-    const state = websiteSummary.status === 'up' ? 'up' : 'down';
-    setStatus('website', state);
-    
-    if (state === 'down') anyDown = true;
-    
-    const mins = websiteSummary.dailyMinutesDown || [];
-    const daysArray = Array(90).fill(null).map((_, i) => {
-      const m = mins[i];
-      if (m === undefined || m === null) return null;
-      return m === 0 ? 1 : m >= 1440 ? 0 : -1;
-    });
-    
-    renderBars('website', daysArray);
-  } else {
-    setStatus('website', 'nodata');
-    document.getElementById('row-website').querySelector('.service-status span:last-child').textContent = 'Unknown';
-    renderBars('website', Array(90).fill(null));
-  }
+    /* =========================
+       SECTION
+       ========================= */
 
-  const badge = document.getElementById('overallBadge');
-  const text  = document.getElementById('overallText');
-  
-  if (anyDown) {
-    badge.className = 'overall-badge outage';
-    text.textContent = 'Partial Outage Detected';
-  } else if (anyDegraded) {
-    badge.className = 'overall-badge degraded';
-    text.textContent = 'Degraded Performance';
-  } else {
-    badge.className = 'overall-badge up';
-    text.textContent = 'All Systems Operational';
-  }
-}
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
 
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,es,fr,de,ja,ko',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-  }, 'google_translate_element');
-}
+      color: var(--text-dim);
 
-loadStatus();
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      margin-bottom: 16px;
+    }
+
+    .services {
+      margin-bottom: 56px;
+    }
+
+    /* =========================
+       SERVICE
+       ========================= */
+
+    .service-link-wrapper {
+      text-decoration: none;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .service-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      padding: 20px 24px;
+
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      transition:
+        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+      cursor: pointer;
+    }
+
+    .service-row:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      background: var(--bg3);
+    }
+
+    .service-icon {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 8px;
+
+      background: var(--bg);
+      border: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+    }
+
+    .service-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text);
+    }
+
+    .service-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .service-url {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .service-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+
+      flex-shrink: 0;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+      background: var(--text-dim);
+
+      flex-shrink: 0;
+    }
+
+    .status-up .service-status {
+      color: var(--green);
+    }
+
+    .status-down .service-status {
+      color: var(--red);
+    }
+
+    .status-degraded .service-status {
+      color: var(--amber);
+    }
+
+    .status-nodata .service-status {
+      color: var(--text-muted);
+    }
+
+    /* =========================
+       HISTORY
+       ========================= */
+
+    .history-section {
+      margin-bottom: 56px;
+    }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .history-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .history-bars {
+      display: flex;
+      gap: 3px;
+
+      flex: 1;
+      height: 32px;
+
+      align-items: flex-end;
+      min-width: 0;
+    }
+
+    .bar {
+      flex: 1;
+
+      min-width: 2px;
+      height: 100%;
+
+      border-radius: 3px;
+
+      background: var(--bg3);
+
+      transition:
+        transform 0.15s,
+        opacity 0.15s;
+
+      cursor: crosshair;
+
+      position: relative;
+    }
+
+    .bar:hover {
+      transform: scaleY(1.1);
+      transform-origin: bottom;
+      opacity: 0.8;
+    }
+
+    .bar.up {
+      background: var(--green-glow);
+    }
+
+    .bar.down {
+      background: var(--red-glow);
+    }
+
+    .bar.partial {
+      background: var(--amber-glow);
+    }
+
+    .bar.nodata {
+      background: var(--bg3);
+    }
+
+    .bar::before {
+      content: attr(data-tooltip);
+
+      position: absolute;
+
+      bottom: calc(100% + 8px);
+      left: 50%;
+
+      transform: translateX(-50%) translateY(4px);
+
+      background: var(--text);
+      color: var(--bg);
+
+      padding: 6px 10px;
+
+      border-radius: 4px;
+
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+
+      white-space: nowrap;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+      z-index: 10;
+
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .bar::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: calc(100% + 4px);
+      left: 50%;
+
+      transform: translateX(-50%) translateY(4px);
+
+      border-width: 4px;
+      border-style: solid;
+
+      border-color:
+        var(--text)
+        transparent
+        transparent
+        transparent;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+      z-index: 10;
+    }
+
+    .bar:hover::before,
+    .bar:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .uptime-pct {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+
+      width: 60px;
+      text-align: right;
+
+      flex-shrink: 0;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding-top: 32px;
+
+      border-top: 1px solid var(--border);
+
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .footer-left span {
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .powered-by {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .powered-by a {
+      color: var(--text-muted);
+      text-decoration: none;
+
+      border-bottom: 1px solid var(--border);
+
+      transition: all 0.2s;
+
+      font-weight: 500;
+    }
+
+    .powered-by a:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 600px) {
+      .wrap {
+        padding: 24px 16px 60px;
+      }
+
+      .history-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .history-label {
+        width: 100%;
+      }
+
+      .history-bars {
+        width: 100%;
+      }
+
+      .uptime-pct {
+        width: 100%;
+        text-align: left;
+      }
+
+      .header {
+        margin-bottom: 32px;
+      }
+
+      .service-row {
+        padding: 18px;
+        gap: 14px;
+      }
+
+      .service-status {
+        font-size: 10px;
+      }
+
+      .page-title {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="noise"></div>
+
+  <main class="wrap">
+
+    <!-- =========================
+         TOP NAVIGATION
+         ========================= -->
+
+    <nav class="top-nav" aria-label="Top Navigation">
+
+      <a
+        href="index.html"
+        class="back-link"
+        aria-label="Return to Home"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+
+        Return
+      </a>
+
+      <div id="google_translate_element"></div>
+
+    </nav>
+
+
+    <!-- =========================
+         HEADER
+         ========================= -->
+
+    <header class="header">
+
+      <div class="logo-block">
+        <h2 class="wordmark">ArtistXoder</h2>
+        <h1 class="page-title">System Status</h1>
+      </div>
+
+      <div
+        class="overall-badge"
+        id="overallBadge"
+        aria-live="polite"
+      >
+        <span class="dot"></span>
+        <span id="overallText">Checking status...</span>
+      </div>
+
+    </header>
+
+
+    <div class="divider"></div>
+
+
+    <!-- =========================
+         SERVICES
+         ========================= -->
+
+    <section aria-labelledby="services-heading">
+
+      <h3
+        id="services-heading"
+        class="section-label"
+      >
+        Active Services
+      </h3>
+
+      <div class="services">
+
+        <a
+          href="https://artistxoder.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="service-link-wrapper"
+          aria-label="Visit ArtistXoder Website"
+        >
+
+          <div
+            class="service-row status-nodata"
+            id="row-website"
+          >
+
+            <div class="service-icon">
+
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  fill="none"
+                />
+
+                <path
+                  d="M12 2C8 6 8 18 12 22M12 2C16 6 16 18 12 22M2 12H22"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  fill="none"
+                />
+              </svg>
+
+            </div>
+
+
+            <div class="service-info">
+
+              <div class="service-name">
+                ArtistXoder Website
+              </div>
+
+              <div class="service-url">
+                artistxoder.github.io
+              </div>
+
+            </div>
+
+
+            <div class="service-status">
+
+              <span class="status-dot"></span>
+
+              <span>
+                Checking
+              </span>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         UPTIME HISTORY
+         ========================= -->
+
+    <section
+      class="history-section"
+      aria-labelledby="history-heading"
+    >
+
+      <h3
+        id="history-heading"
+        class="section-label"
+      >
+        90-Day Uptime History
+      </h3>
+
+      <div class="history-row">
+
+        <div class="history-label">
+          ArtistXoder Website
+        </div>
+
+        <div
+          class="history-bars"
+          id="bars-website"
+          role="img"
+          aria-label="90 day uptime bar chart"
+        ></div>
+
+        <div
+          class="uptime-pct"
+          id="pct-website"
+        >
+          —%
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
+    <footer class="footer">
+
+      <div class="footer-left">
+        Last updated:
+        <span id="lastUpdated">—</span>
+      </div>
+
+      <div class="powered-by">
+        Powered by
+        <a
+          href="https://upptime.js.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Upptime
+        </a>
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
+
+  <script>
+
+    const UPPTIME_OWNER = 'artistxoder';
+    const UPPTIME_REPO  = 'artistxoder.github.io';
+
+    const WEBSITE_URL =
+      'https://artistxoder.github.io/';
+
+
+    /*
+     * Update "Last updated" time.
+     */
+
+    function updateTime() {
+
+      document
+        .getElementById('lastUpdated')
+        .textContent =
+        new Date().toLocaleString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short'
+        });
+
+    }
+
+
+    /*
+     * Update individual service status.
+     */
+
+    function setStatus(id, state) {
+
+      const row =
+        document.getElementById('row-' + id);
+
+      if (!row) return;
+
+
+      row.className =
+        'service-row status-' + state;
+
+
+      const textSpan =
+        row.querySelector(
+          '.service-status span:last-child'
+        );
+
+      if (!textSpan) return;
+
+
+      if (state === 'up') {
+
+        textSpan.textContent =
+          'Operational';
+
+      } else if (state === 'down') {
+
+        textSpan.textContent =
+          'Outage';
+
+      } else if (state === 'degraded') {
+
+        textSpan.textContent =
+          'Degraded';
+
+      } else {
+
+        textSpan.textContent =
+          'Unknown';
+
+      }
+
+    }
+
+
+    /*
+     * Render the 90-day history bars.
+     */
+
+    function renderBars(id, days) {
+
+      const container =
+        document.getElementById(
+          'bars-' + id
+        );
+
+      if (!container) return;
+
+
+      container.innerHTML = '';
+
+
+      let upCount = 0;
+      let total = 0;
+
+
+      /*
+       * Always display exactly 90 bars.
+       */
+
+      const normalizedDays =
+        Array(90).fill(null);
+
+
+      const recentDays =
+        days.slice(-90);
+
+
+      const start =
+        Math.max(
+          0,
+          90 - recentDays.length
+        );
+
+
+      recentDays.forEach(
+        (value, index) => {
+
+          normalizedDays[
+            start + index
+          ] = value;
+
+        }
+      );
+
+
+      normalizedDays.forEach(
+        (value, index) => {
+
+          const bar =
+            document.createElement('div');
+
+
+          let stateClass =
+            'nodata';
+
+          let tooltipText =
+            'No data available';
+
+
+          const barDate =
+            new Date();
+
+
+          barDate.setDate(
+            barDate.getDate() -
+            (89 - index)
+          );
+
+
+          const dateString =
+            barDate.toLocaleDateString(
+              'en-US',
+              {
+                month: 'short',
+                day: 'numeric'
+              }
+            );
+
+
+          if (
+            value !== null &&
+            value !== undefined
+          ) {
+
+            total++;
+
+
+            if (value === 1) {
+
+              upCount++;
+
+              stateClass = 'up';
+
+              tooltipText =
+                '100% Operational';
+
+            } else if (value === 0) {
+
+              stateClass = 'down';
+
+              tooltipText =
+                'Major Outage';
+
+            } else if (value === -1) {
+
+              stateClass = 'partial';
+
+              tooltipText =
+                'Partial Downtime / Degraded';
+
+            }
+
+          }
+
+
+          bar.className =
+            'bar ' + stateClass;
+
+
+          bar.setAttribute(
+            'data-tooltip',
+            `${dateString}: ${tooltipText}`
+          );
+
+
+          container.appendChild(bar);
+
+        }
+      );
+
+
+      const pct =
+        total
+          ? Math.round(
+              (upCount / total) * 1000
+            ) / 10
+          : null;
+
+
+      document
+        .getElementById('pct-' + id)
+        .textContent =
+        pct === null
+          ? '—'
+          : pct.toFixed(1) + '%';
+
+    }
+
+
+    /*
+     * Fetch Upptime summary data.
+     */
+
+    async function fetchUpptime() {
+
+      const url =
+        `https://raw.githubusercontent.com/` +
+        `${UPPTIME_OWNER}/` +
+        `${UPPTIME_REPO}/` +
+        `main/history/summary.json`;
+
+
+      try {
+
+        const response =
+          await fetch(url, {
+            cache: 'no-store'
+          });
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `HTTP ${response.status}`
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (!Array.isArray(data)) {
+
+          throw new Error(
+            'Invalid Upptime summary format'
+          );
+
+        }
+
+
+        /*
+         * Find the ArtistXoder website monitor.
+         */
+
+        const service =
+          data.find(service => {
+
+            const slug =
+              String(
+                service.slug || ''
+              ).toLowerCase();
+
+
+            const serviceUrl =
+              String(
+                service.url || ''
+              ).toLowerCase();
+
+
+            return (
+              slug ===
+                'artistxoder-github-io' ||
+
+              slug ===
+                'artistxoder' ||
+
+              serviceUrl ===
+                WEBSITE_URL.toLowerCase()
+            );
+
+          });
+
+
+        return service || null;
+
+
+      } catch (error) {
+
+        console.error(
+          'Failed to fetch Upptime data:',
+          error
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+    /*
+     * Load current status.
+     */
+
+    async function loadStatus() {
+
+      updateTime();
+
+
+      let anyDown = false;
+      let anyDegraded = false;
+
+
+      const websiteSummary =
+        await fetchUpptime();
+
+
+      /*
+       * We successfully received
+       * Upptime information.
+       */
+
+      if (websiteSummary) {
+
+        let state = 'up';
+
+
+        const status =
+          String(
+            websiteSummary.status || ''
+          ).toLowerCase();
+
+
+        if (
+          status === 'down' ||
+          status === 'offline'
+        ) {
+
+          state = 'down';
+
+          anyDown = true;
+
+        } else if (
+          status === 'degraded' ||
+          status === 'partial'
+        ) {
+
+          state = 'degraded';
+
+          anyDegraded = true;
+
+        }
+
+
+        setStatus(
+          'website',
+          state
+        );
+
+
+        /*
+         * Process daily downtime.
+         */
+
+        const mins =
+          Array.isArray(
+            websiteSummary.dailyMinutesDown
+          )
+            ? websiteSummary.dailyMinutesDown
+            : [];
+
+
+        const daysArray =
+          mins
+            .slice(-90)
+            .map(minutes => {
+
+              if (
+                minutes === null ||
+                minutes === undefined
+              ) {
+
+                return null;
+
+              }
+
+
+              if (minutes === 0) {
+
+                return 1;
+
+              }
+
+
+              if (minutes >= 1440) {
+
+                return 0;
+
+              }
+
+
+              return -1;
+
+            });
+
+
+        renderBars(
+          'website',
+          daysArray
+        );
+
+
+      } else {
+
+        /*
+         * Upptime data wasn't available.
+         */
+
+        setStatus(
+          'website',
+          'nodata'
+        );
+
+
+        const statusText =
+          document
+            .getElementById(
+              'row-website'
+            )
+            .querySelector(
+              '.service-status span:last-child'
+            );
+
+
+        statusText.textContent =
+          'Unknown';
+
+
+        renderBars(
+          'website',
+          Array(90).fill(null)
+        );
+
+      }
+
+
+      /*
+       * Update overall status badge.
+       */
+
+      const badge =
+        document.getElementById(
+          'overallBadge'
+        );
+
+
+      const text =
+        document.getElementById(
+          'overallText'
+        );
+
+
+      if (anyDown) {
+
+        badge.className =
+          'overall-badge outage';
+
+        text.textContent =
+          'Outage Detected';
+
+
+      } else if (anyDegraded) {
+
+        badge.className =
+          'overall-badge degraded';
+
+        text.textContent =
+          'Degraded Performance';
+
+
+      } else if (websiteSummary) {
+
+        badge.className =
+          'overall-badge up';
+
+        text.textContent =
+          'All Systems Operational';
+
+
+      } else {
+
+        badge.className =
+          'overall-badge';
+
+        text.textContent =
+          'Status Unavailable';
+
+      }
+
+    }
+
+
+    /*
+     * Google Translate initialization.
+     */
+
+    function googleTranslateElementInit() {
+
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+
+          includedLanguages:
+            'en,es,fr,de,ja,ko',
+
+          layout:
+            google.translate.TranslateElement
+              .InlineLayout
+              .SIMPLE
+
+        },
+
+        'google_translate_element'
+      );
+
+    }
+
+
+    /*
+     * Initial status check.
+     */
+
+    loadStatus();
+
+
+    /*
+     * Refresh status every 5 minutes.
+     */
+
+    setInterval(
+      loadStatus,
+      5 * 60 * 1000
+    );
+
+  </script>
+
+
+  <!-- Google Translate -->
+
+  <script
+    type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  ></script>
+
 </body>
 </html>
