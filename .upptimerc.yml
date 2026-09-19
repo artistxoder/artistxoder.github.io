@@ -1,0 +1,15 @@
+owner: artistxoder
+repo: artistxoder.github.io
+
+sites:
+  - name: ArtistXoder Website
+    url: https://artistxoder.github.io/
+
+status-website:
+  cname: artistxoder.github.io
+  name: ArtistXoder System Status
+  introTitle: "ArtistXoder System Status"
+  introMessage: "Real-time status and uptime information for ArtistXoder services."
+
+assignees:
+  - artistxoder
