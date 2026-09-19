@@ -1,0 +1,17 @@
+name: Website Uptime Check
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  uptime:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check ArtistXoder website
+        run: |
+          curl --fail --silent --show-error \
+            --max-time 30 \
+            https://artistxoder.github.io/
